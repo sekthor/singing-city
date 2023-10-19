@@ -6,34 +6,32 @@ import (
 )
 
 type VenueRepo struct {
-    db *gorm.DB
+	db *gorm.DB
 }
 
 func NewVenueRepo(db *gorm.DB) VenueRepo {
-    return VenueRepo{
-        db: db,
-    }
+	return VenueRepo{
+		db: db,
+	}
 }
 
 func (r *VenueRepo) Create(venue model.Venue) (model.Venue, error) {
-    result := r.db.Create(&venue)
-    return venue, result.Error
+	result := r.db.Create(&venue)
+	return venue, result.Error
 }
 
 func (r *VenueRepo) FetchById(id int) (model.Venue, error) {
-    var venue model.Venue
-    result := r.db.First(&venue, id)
-    return venue, result.Error
+	var venue model.Venue
+	result := r.db.Preload("Slots").First(&venue, id)
+	return venue, result.Error
 }
 
-func (r *VenueRepo) FetchAll() ([]model.Venue) {
-    var venues []model.Venue
-    _ = r.db.Find(&venues)
-    return venues
+func (r *VenueRepo) FetchAll() []model.Venue {
+	var venues []model.Venue
+	_ = r.db.Preload("Slots").Find(&venues)
+	return venues
 }
 
 func (r *VenueRepo) DeleteById(id int) error {
-    return r.db.Delete(&model.Venue{}, id).Error
+	return r.db.Delete(&model.Venue{}, id).Error
 }
-
-

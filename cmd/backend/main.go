@@ -6,17 +6,17 @@ import (
 )
 
 func main() {
-    conf := config.LoadConfig()
-    api, err := api.NewApi(conf)
+	conf := config.LoadConfig()
+	api, err := api.NewApi(conf)
 
-    if err != nil {
-        // TODO: graceful shutdown
-    }
+	if err != nil {
+		// TODO: graceful shutdown
+	}
 
-    router := api.Router()
-    err = router.Run(conf.Server.Host + ":" + conf.Server.Port)
+	router := api.Router()
+	err = router.Run(conf.Server.Host + ":" + conf.Server.Port)
 
-    if err != nil {
-        // TODO: graceful shutdown
-    }
+	if err != nil {
+		// TODO: graceful shutdown
+	}
 }

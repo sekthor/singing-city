@@ -7,28 +7,27 @@ import (
 )
 
 type VenueService struct {
-    repo repo.VenueRepo
+	repo repo.VenueRepo
 }
 
 func NewVenueService(db *gorm.DB) VenueService {
-    return VenueService{
-        repo: repo.NewVenueRepo(db),
-    }
+	return VenueService{
+		repo: repo.NewVenueRepo(db),
+	}
 }
 
 func (s *VenueService) GetById(id int) (model.Venue, error) {
-    return s.repo.FetchById(id)
+	return s.repo.FetchById(id)
 }
 
-func (s *VenueService) GetAll() ([]model.Venue) {
-    return s.repo.FetchAll()
+func (s *VenueService) GetAll() []model.Venue {
+	return s.repo.FetchAll()
 }
 
 func (s *VenueService) Create(venue model.Venue) (model.Venue, error) {
-    return s.repo.Create(venue)
+	return s.repo.Create(venue)
 }
 
 func (s *VenueService) DeleteById(id int) error {
-    return s.repo.DeleteById(id)
+	return s.repo.DeleteById(id)
 }
-
