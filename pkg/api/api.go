@@ -35,6 +35,7 @@ func (api *api) Router() *gin.Engine {
 	router.POST("api/signup", api.Signup)
 	router.POST("api/login", api.Login)
 	router.GET("api/auth", middleware.RequireAuth, api.Restricted)
+	router.GET("api/auth/user/:id", middleware.RequireResourceOwnerAuth, api.Restricted)
 
 	router.GET("api/venues", api.GetAllVenues)
 	router.GET("api/venues/:id", api.GetVenueByID)
