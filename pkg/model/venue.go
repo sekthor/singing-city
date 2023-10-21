@@ -17,6 +17,8 @@ type Venue struct {
 
 type Timeslot struct {
 	gorm.Model
-	VenueID uint
-	Time    time.Time `json:"time"`
+	VenueID  uint
+	Time     time.Time `json:"time"`
+	Artist   Artist    `json:"artist"`
+	ArtistID uint      `json:"artistID"`
 }
