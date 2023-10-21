@@ -31,3 +31,9 @@ func (s *VenueService) Create(venue model.Venue) (model.Venue, error) {
 func (s *VenueService) DeleteById(id int) error {
 	return s.repo.DeleteById(id)
 }
+
+func (s *VenueService) AddTimeslot(venueId int, slot model.Timeslot) error {
+	slot.VenueID = uint(venueId)
+	_, err := s.repo.CreateTimeSlot(slot)
+	return err
+}

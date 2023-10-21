@@ -54,3 +54,9 @@ func (r *UserRepo) FetchAll() []model.User {
 func (r *UserRepo) DeleteById(id int) error {
 	return r.db.Delete(&model.User{}, id).Error
 }
+
+func (r *UserRepo) Exists(id int) bool {
+	var user model.User
+	result := r.db.First(&user, id)
+	return result.Error == nil && int(user.ID) == id
+}

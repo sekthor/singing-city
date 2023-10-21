@@ -5,6 +5,7 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
+	"github.com/sekthor/songbird-backend/pkg/model"
 )
 
 func (api *api) GetAllVenues(c *gin.Context) {
@@ -28,4 +29,27 @@ func (api *api) GetVenueByID(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, &venue)
+}
+
+func (api *api) AddTimeslot(c *gin.Context) {
+	var slot model.Timeslot
+	id, err := strconv.Atoi(c.Param("userid"))
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid id format"})
+		return
+	}
+
+	if c.BindJSON(&slot) != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid timeslot"})
+		return
+	}
+
+	err = api.venueService.AddTimeslot(id, slot)
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.Status(http.StatusAccepted)
 }

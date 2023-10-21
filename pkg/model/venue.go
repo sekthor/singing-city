@@ -12,12 +12,12 @@ type Venue struct {
 	Description string     `json:"description"`
 	Slots       []Timeslot `json:"slots"`
 	User        User       `json:"-"`
-	UserID      uint
+	UserID      uint       `json:"userID"`
 }
 
 type Timeslot struct {
 	gorm.Model
-	VenueID  uint
+	VenueID  uint      `json:"venueID"`
 	Time     time.Time `json:"time"`
 	Artist   Artist    `json:"artist"`
 	ArtistID uint      `json:"artistID"`

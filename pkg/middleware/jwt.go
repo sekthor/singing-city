@@ -42,7 +42,7 @@ func RequireResourceOwnerAuth(c *gin.Context) {
 		return
 	}
 
-	userId := c.Param("id")
+	userId := c.Param("userid")
 
 	if userId == "" {
 		c.AbortWithStatus(http.StatusUnauthorized)

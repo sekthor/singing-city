@@ -38,14 +38,18 @@ func (api *api) Router() *gin.Engine {
 	router.POST("api/register", api.Register)
 	router.POST("api/login", api.Login)
 	router.GET("api/auth", middleware.RequireAuth, api.Restricted)
-	router.GET("api/auth/user/:id", middleware.RequireResourceOwnerAuth, api.Restricted)
+	router.GET("api/auth/user/:userid", middleware.RequireResourceOwnerAuth, api.Restricted)
 
 	router.GET("api/venues", api.GetAllVenues)
 	router.GET("api/venues/:id", api.GetVenueByID)
 	router.POST("api/venues")
 	router.DELETE("api/venues/:id")
 
-	router.POST("api/timeslot/apply")
+	// as venue owner, add a timeslot to a venue
+	router.POST("api/venues/:userid/timeslot", middleware.RequireResourceOwnerAuth, api.AddTimeslot)
+
+	// as artist, apply for timeslot
+	router.POST("api/timeslot/:tsid/apply/:userid", middleware.RequireResourceOwnerAuth, api.Apply)
 
 	return router
 }

@@ -35,3 +35,8 @@ func (r *VenueRepo) FetchAll() []model.Venue {
 func (r *VenueRepo) DeleteById(id int) error {
 	return r.db.Delete(&model.Venue{}, id).Error
 }
+
+func (r *VenueRepo) CreateTimeSlot(slot model.Timeslot) (model.Timeslot, error) {
+	result := r.db.Create(&slot)
+	return slot, result.Error
+}
