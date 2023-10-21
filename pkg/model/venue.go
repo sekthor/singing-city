@@ -10,6 +10,8 @@ type Venue struct {
 	Name        string     `json:"name"`
 	Description string     `json:"description"`
 	Slots       []Timeslot `json:"slots"`
+	User        User
+	UserID      uint
 }
 
 type Timeslot struct {

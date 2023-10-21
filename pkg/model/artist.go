@@ -4,5 +4,7 @@ import "gorm.io/gorm"
 
 type Artist struct {
 	gorm.Model
-	Name string
+	Name   string
+	User   User
+	UserID uint
 }
