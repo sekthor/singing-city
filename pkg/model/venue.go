@@ -10,6 +10,7 @@ type Venue struct {
 	gorm.Model
 	Name        string     `json:"name"`
 	Description string     `json:"description"`
+	Address     string     `json:"address"`
 	Slots       []Timeslot `json:"slots"`
 	User        User       `json:"-"`
 	UserID      uint       `json:"userID"`
