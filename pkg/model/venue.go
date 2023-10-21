@@ -1,8 +1,9 @@
 package model
 
 import (
-	"gorm.io/gorm"
 	"time"
+
+	"gorm.io/gorm"
 )
 
 type Venue struct {
@@ -10,7 +11,7 @@ type Venue struct {
 	Name        string     `json:"name"`
 	Description string     `json:"description"`
 	Slots       []Timeslot `json:"slots"`
-	User        User
+	User        User       `json:"-"`
 	UserID      uint
 }
 

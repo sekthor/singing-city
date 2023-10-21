@@ -21,6 +21,7 @@ type User struct {
 	Username string `json:"username"`
 	Email    string `json:"email" gorm:"unique"`
 	Password string `json:"password"`
+	Type     int    `json:"type"` // 0: admin, 1: artist; 2: venue
 }
 
 func (u *User) Validate() error {
@@ -47,6 +48,12 @@ func (u *User) Validate() error {
 
 	if len(u.Password) < 8 {
 		return ErrorPasswordLength
+	}
+
+	// if invalid type, just default to artist
+	// do not accept 0 -> users should not be able to self assign admin
+	if u.Type < 1 || u.Type > 2 {
+		u.Type = 1
 	}
 
 	return nil

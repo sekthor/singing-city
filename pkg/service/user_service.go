@@ -57,15 +57,11 @@ func (s *UserService) Login(user model.User) (string, error) {
 	return tokenString, nil
 }
 
-func (s *UserService) Register(user model.User) error {
-	return nil
-}
-
 func (s *UserService) GetByEmail(email string) (model.User, error) {
 	return s.repo.FetchByEmail(email)
 }
 
-func (s *UserService) Create(user model.User) (model.User, error) {
+func (s *UserService) Register(user model.User) (model.User, error) {
 
 	var err error
 

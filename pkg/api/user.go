@@ -16,14 +16,37 @@ func (api *api) Register(c *gin.Context) {
 		return
 	}
 
-	user, err := api.userService.Create(user)
+	user, err := api.userService.Register(user)
 
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	c.JSON(http.StatusAccepted, gin.H{})
+	switch user.Type {
+	case 1:
+		artist := model.Artist{}
+		artist.ID = user.ID
+		artist.User = user
+		artist, err = api.artistService.Create(artist)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+		c.JSON(http.StatusAccepted, &artist)
+	case 2:
+		venue := model.Venue{}
+		venue.ID = user.ID
+		venue.User = user
+		venue, err = api.venueService.Create(venue)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+		c.JSON(http.StatusAccepted, &venue)
+	default:
+		c.JSON(http.StatusAccepted, gin.H{})
+	}
 }
 
 func (api *api) Login(c *gin.Context) {

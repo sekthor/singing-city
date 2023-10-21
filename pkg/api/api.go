@@ -26,6 +26,7 @@ func NewApi(conf config.Config) (api, error) {
 
 	api.userService = service.NewUserService(db)
 	api.venueService = service.NewVenueService(db)
+	api.artistService = service.NewArtistService(db)
 	api.applicationService = service.NewApplicationService(db)
 
 	return api, nil
