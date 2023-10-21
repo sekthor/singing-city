@@ -34,7 +34,7 @@ func NewApi(conf config.Config) (api, error) {
 func (api *api) Router() *gin.Engine {
 	router := gin.Default()
 
-	router.POST("api/signup", api.Signup)
+	router.POST("api/register", api.Register)
 	router.POST("api/login", api.Login)
 	router.GET("api/auth", middleware.RequireAuth, api.Restricted)
 	router.GET("api/auth/user/:id", middleware.RequireResourceOwnerAuth, api.Restricted)
@@ -43,6 +43,8 @@ func (api *api) Router() *gin.Engine {
 	router.GET("api/venues/:id", api.GetVenueByID)
 	router.POST("api/venues")
 	router.DELETE("api/venues/:id")
+
+	router.POST("api/timeslot/apply")
 
 	return router
 }

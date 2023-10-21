@@ -7,7 +7,7 @@ import (
 	"github.com/sekthor/songbird-backend/pkg/model"
 )
 
-func (api *api) Signup(c *gin.Context) {
+func (api *api) Register(c *gin.Context) {
 
 	var user model.User
 
