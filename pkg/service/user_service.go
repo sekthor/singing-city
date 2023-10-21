@@ -42,9 +42,10 @@ func (s *UserService) Login(user model.User) (string, error) {
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"sub": strconv.Itoa(int(u.ID)),
-		"iat": time.Now().Unix(),
-		"exp": time.Now().Add(time.Hour * 24).Unix(),
+		"sub":  strconv.Itoa(int(u.ID)),
+		"iat":  time.Now().Unix(),
+		"exp":  time.Now().Add(time.Hour * 24).Unix(),
+		"name": u.Username,
 	})
 
 	tokenString, err := token.SignedString([]byte("aaa"))
