@@ -37,6 +37,14 @@ func (r *VenueRepo) DeleteById(id int) error {
 }
 
 func (r *VenueRepo) CreateTimeSlot(slot model.Timeslot) (model.Timeslot, error) {
-	result := r.db.Create(&slot)
+	var result *gorm.DB
+
+	// if artistid is not set, it's value is 0 which will result in a sql foreign key error
+	// as there is not artist with id 0 -> ignore the artist_id if equal to 0
+	if slot.ArtistID == 0 {
+		result = r.db.Omit("artist_id").Create(&slot)
+	} else {
+		result = r.db.Create(&slot)
+	}
 	return slot, result.Error
 }
