@@ -46,6 +46,7 @@ func (s *UserService) Login(user model.User) (string, error) {
 		"iat":  time.Now().Unix(),
 		"exp":  time.Now().Add(time.Hour * 24).Unix(),
 		"name": u.Username,
+		"type": u.Type,
 	})
 
 	tokenString, err := token.SignedString([]byte("aaa"))
