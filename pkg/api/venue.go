@@ -53,3 +53,20 @@ func (api *api) AddTimeslot(c *gin.Context) {
 
 	c.Status(http.StatusAccepted)
 }
+
+func (api *api) DeleteTimeslot(c *gin.Context) {
+	tsid, err := strconv.Atoi(c.Param("tsid"))
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid id format"})
+		return
+	}
+
+	err = api.venueService.DeleteTimeslot(tsid)
+
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "could not delete timeslot"})
+		return
+	}
+
+	c.Status(http.StatusOK)
+}

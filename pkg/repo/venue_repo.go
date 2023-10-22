@@ -48,3 +48,7 @@ func (r *VenueRepo) CreateTimeSlot(slot model.Timeslot) (model.Timeslot, error) 
 	}
 	return slot, result.Error
 }
+
+func (r *VenueRepo) DeleteTimeslot(tsid int) error {
+	return r.db.Delete(&model.Timeslot{}, tsid).Error
+}

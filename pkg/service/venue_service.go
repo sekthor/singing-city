@@ -37,3 +37,7 @@ func (s *VenueService) AddTimeslot(venueId int, slot model.Timeslot) error {
 	_, err := s.repo.CreateTimeSlot(slot)
 	return err
 }
+
+func (s *VenueService) DeleteTimeslot(tsid int) error {
+	return s.repo.DeleteTimeslot(tsid)
+}
