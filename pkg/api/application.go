@@ -17,7 +17,7 @@ func (api *api) Apply(c *gin.Context) {
 		return
 	}
 
-	if timeslotId, err = strconv.Atoi(c.Param("userid")); err != nil && timeslotId <= 0 {
+	if timeslotId, err = strconv.Atoi(c.Param("tsid")); err != nil && timeslotId <= 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid timeslotId id"})
 		return
 	}
