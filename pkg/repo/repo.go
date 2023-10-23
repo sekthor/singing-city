@@ -21,5 +21,6 @@ func Migrate(db *gorm.DB) error {
 		&model.Venue{},
 		&model.Artist{},
 		&model.Timeslot{},
+		&model.Application{},
 	)
 }

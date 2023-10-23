@@ -44,25 +44,24 @@ func (s *ApplicationService) DeleteById(id int) error {
 }
 
 func (s *ApplicationService) Apply(artistID int, timeslotID int) error {
-	/*
-		// validate artist exists
-		artist, err := s.artistRepo.FetchById(artistID)
+	// validate artist exists
+	artist, err := s.artistRepo.FetchById(artistID)
 
-		if err != nil {
-			return ErrorArtistNotExist
-		}
+	if err != nil {
+		return ErrorArtistNotExist
+	}
 
-		// TODO: validate timeslot exists
-		slot, err := s.venueRepo.FetchById(timeslotID)
+	// validate timeslot exists
+	slot, err := s.venueRepo.FetchById(timeslotID)
 
-		// TODO: create application
-		application := model.Application{
-			ArtistID:   artist.ID,
-			TimeslotID: slot.ID,
-		}
+	// create application
+	application := model.Application{
+		ArtistID:   artist.ID,
+		TimeslotID: slot.ID,
+		Confirmed:  false,
+	}
 
-		// TODO: save application
-		application.TimeslotID = 1
-	*/
-	return nil
+	_, err = s.repo.Create(application)
+
+	return err
 }

@@ -12,5 +12,5 @@ type Application struct {
 	TimeslotID uint
 	Timeslot   Timeslot
 
-	Status string
+	Confirmed bool
 }
