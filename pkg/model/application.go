@@ -6,11 +6,11 @@ type Application struct {
 	gorm.Model
 
 	// the artist applying for the timeslot
-	ArtistID uint
-	Artist   Artist
+	ArtistID uint   `json:"artistID"`
+	Artist   Artist `json:"artist"`
 
-	TimeslotID uint
-	Timeslot   Timeslot
+	TimeslotID uint     `json:"timeslotID"`
+	Timeslot   Timeslot `json:"timeslot"`
 
-	Confirmed bool
+	Confirmed bool `json:"confirmed"`
 }
