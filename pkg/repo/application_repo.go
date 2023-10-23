@@ -26,10 +26,21 @@ func (r *ApplicationRepo) FetchById(id int) (model.Application, error) {
 	return application, result.Error
 }
 
-func (r *ApplicationRepo) FetchByVenueId(venueId int) (model.Application, error) {
-	var application model.Application
-	result := r.db.Where("venue_id = ?", venueId).Find(&application)
-	return application, result.Error
+func (r *ApplicationRepo) FetchByVenueId(venueId int) ([]model.Application, error) {
+	var applications []model.Application
+	result := r.db.
+		Where("timeslot_id IN (SELECT timeslots.ID FROM timeslots WHERE venue_id = ?)", venueId).
+		Find(&applications)
+	return applications, result.Error
+}
+
+func (r *ApplicationRepo) FetchByVenueIdAndStatus(venueId int, confirmed bool) ([]model.Application, error) {
+	var applications []model.Application
+	result := r.db.
+		Where("timeslot_id IN (SELECT timeslots.ID FROM timeslots WHERE venue_id = ?) AND confirmed = ?", venueId, confirmed).
+		Find(&applications)
+
+	return applications, result.Error
 }
 
 func (r *ApplicationRepo) FetchAll() []model.Application {

@@ -70,3 +70,21 @@ func (api *api) DeleteTimeslot(c *gin.Context) {
 
 	c.Status(http.StatusOK)
 }
+
+func (api *api) GetTimeslotsOfVenue(c *gin.Context) {
+	id, err := strconv.Atoi(c.Param("userid"))
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid id format"})
+		return
+	}
+	status := c.Query("status")
+
+	applications, err := api.applicationService.GetApplicationsByVenue(id, status)
+
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "could not find applications"})
+		return
+	}
+
+	c.JSON(http.StatusOK, &applications)
+}

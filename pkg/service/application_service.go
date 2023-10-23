@@ -11,6 +11,7 @@ import (
 var (
 	ErrorArtistNotExist = errors.New("artist does not exist")
 	ErrorSlotNotExist   = errors.New("timeslot does not exist")
+	ErrorInvalidStatus  = errors.New("invalid status")
 )
 
 type ApplicationService struct {
@@ -67,4 +68,23 @@ func (s *ApplicationService) Apply(artistID int, timeslotID int) error {
 	_, err = s.repo.Create(application)
 
 	return err
+}
+
+func (s *ApplicationService) GetApplicationsByVenue(venueId int, status string) ([]model.Application, error) {
+
+	var confirmed bool
+
+	switch status {
+	case "confirmed":
+		confirmed = true
+	case "open":
+		confirmed = false
+	case "":
+		// return all ts of venue
+		return s.repo.FetchByVenueId(venueId)
+	default:
+		return nil, ErrorInvalidStatus
+	}
+	// return all ts of venue with given status
+	return s.repo.FetchByVenueIdAndStatus(venueId, confirmed)
 }
