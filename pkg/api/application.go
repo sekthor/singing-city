@@ -5,6 +5,7 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
+	"github.com/sekthor/songbird-backend/pkg/model"
 )
 
 func (api *api) Apply(c *gin.Context) {
@@ -32,15 +33,28 @@ func (api *api) Apply(c *gin.Context) {
 	c.Status(http.StatusAccepted)
 }
 
-func (api *api) GetApplicationsOfVenue(c *gin.Context) {
+func (api *api) GetApplicationsOfUser(c *gin.Context) {
+
+	var applications []model.Application
+
+	status := c.Query("status")
+	usertype := c.Param("usertype")
 	id, err := strconv.Atoi(c.Param("userid"))
+
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid id format"})
 		return
 	}
-	status := c.Query("status")
 
-	applications, err := api.applicationService.GetApplicationsByVenue(id, status)
+	switch usertype {
+	case "artist":
+		applications, err = api.applicationService.GetApplicationsByArtist(id, status)
+	case "venue":
+		applications, err = api.applicationService.GetApplicationsByVenue(id, status)
+	default:
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid user type"})
+		return
+	}
 
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "could not find applications"})
@@ -48,8 +62,4 @@ func (api *api) GetApplicationsOfVenue(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, &applications)
-}
-
-func (api *api) GetApplicationsOfArtist(c *gin.Context) {
-
 }

@@ -88,3 +88,21 @@ func (s *ApplicationService) GetApplicationsByVenue(venueId int, status string) 
 	// return all ts of venue with given status
 	return s.repo.FetchByVenueIdAndStatus(venueId, confirmed)
 }
+
+func (s *ApplicationService) GetApplicationsByArtist(artistId int, status string) ([]model.Application, error) {
+
+	var confirmed bool
+
+	switch status {
+	case "confirmed":
+		confirmed = true
+	case "open":
+		confirmed = false
+	case "":
+		return s.repo.FetchByArtistId(artistId)
+	default:
+		return nil, ErrorInvalidStatus
+	}
+	// return all ts of venue with given status
+	return s.repo.FetchByArtistIdAndStatus(artistId, confirmed)
+}

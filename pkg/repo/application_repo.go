@@ -46,6 +46,27 @@ func (r *ApplicationRepo) FetchByVenueIdAndStatus(venueId int, confirmed bool) (
 	return applications, result.Error
 }
 
+func (r *ApplicationRepo) FetchByArtistId(artistId int) ([]model.Application, error) {
+	var applications []model.Application
+	result := r.db.
+		Preload(clause.Associations).
+		Where("artist_id = ?", artistId).
+		Find(&applications)
+
+	return applications, result.Error
+}
+
+func (r *ApplicationRepo) FetchByArtistIdAndStatus(artistId int, confirmed bool) ([]model.Application, error) {
+	var applications []model.Application
+	result := r.db.
+		Preload("Artist").
+		Preload("Timeslot").
+		Where("artist_id = ? AND confirmed = ?", artistId, confirmed).
+		Find(&applications)
+
+	return applications, result.Error
+}
+
 func (r *ApplicationRepo) FetchAll() []model.Application {
 	var applications []model.Application
 	_ = r.db.Find(&applications)
