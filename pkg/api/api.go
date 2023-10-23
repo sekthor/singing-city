@@ -48,7 +48,7 @@ func (api *api) Router() *gin.Engine {
 	// as venue owner, add a timeslot to a venue
 	router.POST("api/venues/:userid/timeslot", middleware.RequireResourceOwnerAuth, api.AddTimeslot)
 	router.DELETE("api/venues/:userid/timeslot/:tsid", middleware.RequireResourceOwnerAuth, api.DeleteTimeslot)
-	router.GET("api/applications/venue/:userid/", middleware.RequireResourceOwnerAuth, api.GetTimeslotsOfVenue)
+	router.GET("api/applications/venue/:userid", middleware.RequireResourceOwnerAuth, api.GetTimeslotsOfVenue)
 
 	// as artist, apply for timeslot
 	router.POST("api/timeslots/:tsid/apply/:userid", middleware.RequireResourceOwnerAuth, api.Apply)

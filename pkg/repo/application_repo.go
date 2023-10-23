@@ -3,6 +3,7 @@ package repo
 import (
 	"github.com/sekthor/songbird-backend/pkg/model"
 	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
 )
 
 type ApplicationRepo struct {
@@ -29,6 +30,7 @@ func (r *ApplicationRepo) FetchById(id int) (model.Application, error) {
 func (r *ApplicationRepo) FetchByVenueId(venueId int) ([]model.Application, error) {
 	var applications []model.Application
 	result := r.db.
+		Preload(clause.Associations).
 		Where("timeslot_id IN (SELECT timeslots.ID FROM timeslots WHERE venue_id = ?)", venueId).
 		Find(&applications)
 	return applications, result.Error
@@ -37,6 +39,7 @@ func (r *ApplicationRepo) FetchByVenueId(venueId int) ([]model.Application, erro
 func (r *ApplicationRepo) FetchByVenueIdAndStatus(venueId int, confirmed bool) ([]model.Application, error) {
 	var applications []model.Application
 	result := r.db.
+		Preload(clause.Associations).
 		Where("timeslot_id IN (SELECT timeslots.ID FROM timeslots WHERE venue_id = ?) AND confirmed = ?", venueId, confirmed).
 		Find(&applications)
 
