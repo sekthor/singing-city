@@ -41,3 +41,7 @@ func (s *VenueService) AddTimeslot(venueId int, slot model.Timeslot) error {
 func (s *VenueService) DeleteTimeslot(tsid int) error {
 	return s.repo.DeleteTimeslot(tsid)
 }
+
+func (s *VenueService) GetTimeslot(tsid int) (model.Timeslot, error) {
+	return s.repo.FetchTimeslotById(tsid)
+}

@@ -52,7 +52,10 @@ func (s *ApplicationService) Apply(artistID int, timeslotID int) error {
 	}
 
 	// validate timeslot exists
-	slot, err := s.venueRepo.FetchById(timeslotID)
+	slot, err := s.venueRepo.FetchTimeslotById(timeslotID)
+	if err != nil {
+		return ErrorSlotNotExist
+	}
 
 	// create application
 	application := model.Application{

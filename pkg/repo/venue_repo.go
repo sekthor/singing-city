@@ -52,3 +52,9 @@ func (r *VenueRepo) CreateTimeSlot(slot model.Timeslot) (model.Timeslot, error) 
 func (r *VenueRepo) DeleteTimeslot(tsid int) error {
 	return r.db.Delete(&model.Timeslot{}, tsid).Error
 }
+
+func (r *VenueRepo) FetchTimeslotById(tsid int) (model.Timeslot, error) {
+	var ts model.Timeslot
+	result := r.db.First(&ts, tsid)
+	return ts, result.Error
+}
