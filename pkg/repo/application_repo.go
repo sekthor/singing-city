@@ -59,8 +59,7 @@ func (r *ApplicationRepo) FetchByArtistId(artistId int) ([]model.Application, er
 func (r *ApplicationRepo) FetchByArtistIdAndStatus(artistId int, confirmed bool) ([]model.Application, error) {
 	var applications []model.Application
 	result := r.db.
-		Preload("Artist").
-		Preload("Timeslot").
+		Preload(clause.Associations).
 		Where("artist_id = ? AND confirmed = ?", artistId, confirmed).
 		Find(&applications)
 
