@@ -59,3 +59,8 @@ func (r *VenueRepo) FetchTimeslotById(tsid int) (model.Timeslot, error) {
 	result := r.db.First(&ts, tsid)
 	return ts, result.Error
 }
+
+func (r *VenueRepo) SaveTimeslot(ts model.Timeslot) (model.Timeslot, error) {
+	result := r.db.Save(&ts)
+	return ts, result.Error
+}

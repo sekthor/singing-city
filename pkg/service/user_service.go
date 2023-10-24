@@ -1,7 +1,6 @@
 package service
 
 import (
-	"errors"
 	"strconv"
 	"time"
 
@@ -10,11 +9,6 @@ import (
 	"github.com/sekthor/songbird-backend/pkg/repo"
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
-)
-
-var (
-	ErrorCouldNotHashPassword = errors.New("could not hash password")
-	ErrorInvalidCredentials   = errors.New("invalid credentials")
 )
 
 type UserService struct {

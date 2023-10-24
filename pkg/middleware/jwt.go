@@ -23,6 +23,8 @@ func RequireAuth(c *gin.Context) {
 		return
 	}
 
+	subject, err := token.Claims.GetSubject()
+	c.Set("userid", subject)
 	c.Next()
 }
 
@@ -56,6 +58,7 @@ func RequireResourceOwnerAuth(c *gin.Context) {
 		return
 	}
 
+	c.Set("userid", subject)
 	c.Next()
 }
 

@@ -8,12 +8,6 @@ import (
 	"gorm.io/gorm"
 )
 
-var (
-	ErrorArtistNotExist = errors.New("artist does not exist")
-	ErrorSlotNotExist   = errors.New("timeslot does not exist")
-	ErrorInvalidStatus  = errors.New("invalid status")
-)
-
 type ApplicationService struct {
 	repo       repo.ApplicationRepo
 	artistRepo repo.ArtistRepo
@@ -105,4 +99,40 @@ func (s *ApplicationService) GetApplicationsByArtist(artistId int, status string
 	}
 	// return all ts of venue with given status
 	return s.repo.FetchByArtistIdAndStatus(artistId, confirmed)
+}
+
+func (s *ApplicationService) AcceptApplication(applicationId int, userId int) error {
+
+	// find the application by id
+	application, err := s.repo.FetchById(applicationId)
+	if err != nil {
+		return errors.New("could not find application with id")
+	}
+
+	// make sure userid matches the venueid -> user must be resource owner
+	if application.Timeslot.VenueID != uint(userId) {
+		return ErrorUnauthorized
+	}
+
+	// update the confirmation status
+	application.Confirmed = true
+	application, err = s.repo.Save(application)
+	if err != nil {
+		return errors.New("could not update application with id")
+	}
+
+	// set the artist to the timeslot
+	application.Timeslot.ArtistID = application.ArtistID
+	_, err = s.venueRepo.SaveTimeslot(application.Timeslot)
+	if err != nil {
+		return errors.New("could not update artist of timeslot")
+	}
+
+	// soft delete all other applications for this timeslot
+	err = s.repo.DeleteByTimeslotIdExcept(int(application.TimeslotID), applicationId)
+	if err != nil {
+		return errors.New("could not delete remaining applications for same timeslot")
+	}
+
+	return nil
 }
