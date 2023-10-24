@@ -56,9 +56,16 @@ func (api *api) Router() *gin.Engine {
 	// as venue owner or artist, get all my applications
 	router.GET("api/applications/:usertype/:userid", middleware.RequireResourceOwnerAuth, api.GetApplicationsOfUser)
 
+	// as venue owner, I can accept an application
+	router.POST("api/applications/:id/accept", middleware.RequireAuth, api.AcceptApplication)
+
+	// TODO: as venue owner or artist, i can decline/retract an application
+	//router.DELETE("api/applications/:id/:usertype/:userid")
+
 	return router
 }
 
 func (api *api) Restricted(c *gin.Context) {
-	c.JSON(200, gin.H{"msg": "you are authenticated"})
+	val, _ := c.Get("userid")
+	c.JSON(200, gin.H{"msg": "you are authenticated. userid: " + val.(string)})
 }

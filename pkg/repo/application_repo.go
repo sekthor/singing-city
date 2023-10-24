@@ -23,7 +23,7 @@ func (r *ApplicationRepo) Create(application model.Application) (model.Applicati
 
 func (r *ApplicationRepo) FetchById(id int) (model.Application, error) {
 	var application model.Application
-	result := r.db.First(&application, id)
+	result := r.db.Preload("Timeslot").First(&application, id)
 	return application, result.Error
 }
 
@@ -74,4 +74,18 @@ func (r *ApplicationRepo) FetchAll() []model.Application {
 
 func (r *ApplicationRepo) DeleteById(id int) error {
 	return r.db.Delete(&model.Application{}, id).Error
+}
+
+func (r *ApplicationRepo) Save(application model.Application) (model.Application, error) {
+	result := r.db.Save(&application)
+	return application, result.Error
+}
+
+func (r *ApplicationRepo) DeleteByTimeslotIdExcept(tsid int, exceptions ...int) error {
+	var applications []model.Application
+	result := r.db.
+		Not(exceptions).
+		Where("timeslot_id = ?", tsid).
+		Delete(&applications)
+	return result.Error
 }
