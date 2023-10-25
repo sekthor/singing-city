@@ -70,3 +70,21 @@ func (api *api) DeleteTimeslot(c *gin.Context) {
 
 	c.Status(http.StatusOK)
 }
+
+func (api *api) GetTimeslots(c *gin.Context) {
+	userId, err := api.getUserIdFromContext(c)
+
+	if err != nil {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "unauthorized"})
+		return
+	}
+
+	timeslots, err := api.venueService.GetTimeslotsByUserId(userId)
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "could not get timestamps for user"})
+		return
+	}
+
+	c.JSON(http.StatusOK, &timeslots)
+}

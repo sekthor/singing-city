@@ -53,6 +53,9 @@ func (api *api) Router() *gin.Engine {
 	// as artist, apply for timeslot
 	router.POST("api/timeslots/:tsid/apply/:userid", middleware.RequireResourceOwnerAuth, api.Apply)
 
+	// as artist or venue, get my timeslots
+	router.GET("api/timeslots", middleware.RequireAuth, api.GetTimeslots)
+
 	// as venue owner or artist, get all my applications
 	router.GET("api/applications/:usertype/:userid", middleware.RequireResourceOwnerAuth, api.GetApplicationsOfUser)
 
