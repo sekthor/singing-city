@@ -64,3 +64,13 @@ func (r *VenueRepo) SaveTimeslot(ts model.Timeslot) (model.Timeslot, error) {
 	result := r.db.Save(&ts)
 	return ts, result.Error
 }
+
+func (r *VenueRepo) FetchTimeslotByUserId(userId int) ([]model.Timeslot, error) {
+	var timeslots []model.Timeslot
+	result := r.db.
+		Preload("Artist").
+		Where("venue_id = ? AND artist_id IS NOT NULL", userId).
+		Or("artist_id = ?", userId).
+		Find(&timeslots)
+	return timeslots, result.Error
+}
