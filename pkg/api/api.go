@@ -24,6 +24,8 @@ func NewApi(conf config.Config) (api, error) {
 
 	repo.Migrate(db)
 
+	middleware.SetServerSecret(conf.Server.Secret)
+
 	api.userService = service.NewUserService(db)
 	api.venueService = service.NewVenueService(db)
 	api.artistService = service.NewArtistService(db)

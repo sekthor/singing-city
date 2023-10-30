@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
+	"github.com/sekthor/songbird-backend/pkg/middleware"
 	"github.com/sekthor/songbird-backend/pkg/model"
 	"github.com/sekthor/songbird-backend/pkg/repo"
 	"golang.org/x/crypto/bcrypt"
@@ -43,7 +44,7 @@ func (s *UserService) Login(user model.User) (string, error) {
 		"type": u.Type,
 	})
 
-	tokenString, err := token.SignedString([]byte("aaa"))
+	tokenString, err := token.SignedString(middleware.ServerSecret)
 
 	if err != nil {
 		return "", err

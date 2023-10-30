@@ -8,6 +8,8 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 )
 
+var ServerSecret []byte
+
 func RequireAuth(c *gin.Context) {
 	tokenString, err := c.Cookie("Authorization")
 
@@ -68,9 +70,13 @@ func validateToken(token *jwt.Token) (interface{}, error) {
 		return nil, fmt.Errorf("Unexpected signing method: %v", token.Header["alg"])
 	}
 
-	return []byte("aaa"), nil
+	return ServerSecret, nil
 }
 
 func LoggedInAdmin(c *gin.Context) {
 
+}
+
+func SetServerSecret(secret string) {
+	ServerSecret = []byte(secret)
 }

@@ -8,8 +8,9 @@ type Config struct {
 }
 
 type ServerConfig struct {
-	Host string
-	Port string
+	Host   string
+	Port   string
+	Secret string
 }
 
 type DbConfig struct {
@@ -24,6 +25,7 @@ func LoadConfig() Config {
 	conf := Config{}
 	conf.Server.Host = os.Getenv("SERVERHOST")
 	conf.Server.Port = os.Getenv("SERVERPORT")
+	conf.Server.Secret = os.Getenv("SERVERSECRET")
 	conf.DB.Database = os.Getenv("DBDATABASE")
 	conf.DB.Host = os.Getenv("DBHOST")
 	conf.DB.Port = os.Getenv("DBPORT")
