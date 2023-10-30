@@ -16,7 +16,7 @@ export class VenueDetailComponent implements OnInit {
   isArtist: boolean = true
   id: number = 0;
 
-  newTimeslot: Timeslot = { ID:0, time: new Date(), artistID:0, venueID:0 }
+  newTimeslot: Timeslot = { ID:0, time: new Date(), artistID:0, venueID:0, pay:0 }
   newDate: string = ""
   newTime: string = ""
 
@@ -102,6 +102,11 @@ export class VenueDetailComponent implements OnInit {
 
     console.log(datepicker)
     datepicker.value = "2023/12/08"
+  }
+
+  createGoogleMapsQuery(venue: Venue): string {
+    let query = encodeURI(`${venue.address} ${venue.zip} ${venue.city}`)
+    return `https://www.google.com/maps/search/?api=1&query=${query}`
   }
 
 }

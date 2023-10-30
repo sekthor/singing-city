@@ -23,6 +23,16 @@
 <label for="name" class="mt-3">{{ registerRequest.type === 1 ? "artist name" : "venue name"}}</label>
 <input id="name" name="name" type="text" class="form-control" [(ngModel)]="registerRequest.name">
 
+
+<label *ngIf="registerRequest.type == 2" for="address" class="mt-3">address</label>
+<input *ngIf="registerRequest.type == 2" id="address" name="address" class="form-control" [(ngModel)]="registerRequest.address">
+
+<label *ngIf="registerRequest.type == 2" for="zip" class="mt-3">zip code</label>
+<input *ngIf="registerRequest.type == 2" id="zip" name="zip" type="number" class="form-control" [(ngModel)]="registerRequest.zip">
+
+<label *ngIf="registerRequest.type == 2" for="city" class="mt-3">city</label>
+<input *ngIf="registerRequest.type == 2" id="city" name="city" class="form-control" [(ngModel)]="registerRequest.city">
+
 <button class="btn btn-primary my-3" (click)="register()">register</button>
 
 

@@ -11,7 +11,10 @@ func (api *api) Register(c *gin.Context) {
 
 	var registerRequest struct {
 		model.User
-		Name string `json:"name"`
+		Name    string `json:"name"`
+		Address string `json:"address"`
+		ZipCode int    `json:"zip"`
+		City    string `json:"city"`
 	}
 
 	if c.BindJSON(&registerRequest) != nil {
@@ -44,6 +47,9 @@ func (api *api) Register(c *gin.Context) {
 		venue.ID = user.ID
 		venue.Name = registerRequest.Name
 		venue.User = user
+		venue.Address = registerRequest.Address
+		venue.ZipCode = registerRequest.ZipCode
+		venue.City = registerRequest.City
 		venue.Contact = user.Email
 		venue, err = api.venueService.Create(venue)
 		if err != nil {
