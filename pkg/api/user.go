@@ -32,6 +32,7 @@ func (api *api) Register(c *gin.Context) {
 		artist.ID = user.ID
 		artist.Name = registerRequest.Name
 		artist.User = user
+		artist.Contact = user.Email
 		artist, err = api.artistService.Create(artist)
 		if err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -43,6 +44,7 @@ func (api *api) Register(c *gin.Context) {
 		venue.ID = user.ID
 		venue.Name = registerRequest.Name
 		venue.User = user
+		venue.Contact = user.Email
 		venue, err = api.venueService.Create(venue)
 		if err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
