@@ -14,4 +14,5 @@ export interface Timeslot {
   artist?: Artist
   artistID: number
   venueID: number
+  pay: number
 }

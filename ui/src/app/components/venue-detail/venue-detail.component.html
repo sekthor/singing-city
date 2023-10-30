@@ -8,6 +8,7 @@
     <tr>
       <th>Date</th>
       <th>Time</th>
+      <th>Pay</th>
       <th>Availabilty</th>
       <th>Option</th>
     </tr>
@@ -16,10 +17,22 @@
 
     <tr *ngIf="isRessourceOwner" class="table-success">
       <td>
-        <input type="date" [(ngModel)]="newDate" min="2023-12-08" max="2023-12-23" id="tsdate" class="form-control">
+        <div class="form-floating">
+          <input id="newDate" type="date" [(ngModel)]="newDate" min="2023-12-08" max="2023-12-23" id="tsdate" class="form-control">
+          <label for="newDate">New Date</label>
+        </div>
       </td>
       <td>
-        <input type="time" [(ngModel)]="newTime" class="form-control">
+        <div class="form-floating">
+          <input id="newTime" type="time" [(ngModel)]="newTime" class="form-control">
+          <label for="newTime">New Time</label>
+        </div>
+      </td>
+      <td class="w-25">
+        <div class="form-floating">
+          <input id="pay" type="number" [(ngModel)]="newTimeslot.pay" class="form-control">
+          <label for="pay">CHF</label>
+        </div>
       </td>
       <td></td>
       <td>
@@ -31,8 +44,10 @@
 
       <td>{{ slot.time | date:"dd. MMM yyyy" }}</td>
       <td>{{ slot.time | date:"HH:mm" }}</td>
+      
+      <td class="text-end">{{ slot.pay }} CHF</td>
 
-      <td>
+      <td class="text-center">
         <span *ngIf="slot.artistID !== 0" class="badge text-bg-warning">booked</span>
         <span *ngIf="slot.artistID === 0" class="badge text-bg-success">available</span>
       </td>
@@ -45,7 +60,8 @@
       <td *ngIf="!isRessourceOwner && !isArtist"></td>
 
       <td *ngIf="isRessourceOwner">
-        <button class="btn btn-outline-danger" (click)="deleteTimeslot(slot)">delete</button>
+        <button *ngIf="slot.artistID === 0" class="btn btn-outline-danger" (click)="deleteTimeslot(slot)">delete</button>
+        <button *ngIf="slot.artistID !== 0" class="btn btn-outline-secondary" disabled>delete</button>
       </td>
 
     </tr>

@@ -20,6 +20,7 @@
         <th>Date</th>
         <th>Time</th>
         <th>{{ isArtist ? "Location" : "Artist" }}</th>
+        <th>Pay</th>
         <th>Option</th>
       </tr>
     </thead>
@@ -31,6 +32,7 @@
             <td *ngIf="!isArtist"><a [routerLink]="['/artists', application.artist.ID]">{{ application.artist.name }}</a></td>
             <td *ngIf="isArtist"><a [routerLink]="['/venues', application.timeslot.venueID]">{{ getVenueNameByVenueID(application.timeslot.venueID) }}</a></td>
 
+            <td>{{ application.timeslot.pay }} CHF</td>
             <td *ngIf="!isArtist">
                 <button class="btn btn-outline-success" (click)="acceptApplication(application)">accept</button>
                 <button class="btn btn-outline-danger mx-1">decline</button>
@@ -49,6 +51,7 @@
         <th>Date</th>
         <th>Time</th>
         <th>{{ isArtist ? "Location" : "Artist" }}</th>
+        <th>Pay</th>
         <th>Contact</th>
       </tr>
     </thead>
@@ -59,6 +62,8 @@
 
             <td *ngIf="!isArtist"><a [routerLink]="['/artists', 1]">{{ timeslot.artist?.name }}</a></td>
             <td *ngIf="isArtist"><a [routerLink]="['/venues', 1]">{{ getVenueNameByVenueID(timeslot.venueID) }}</a></td>
+
+            <td>{{ timeslot.pay }} CHF</td>
 
             <td>
                 <a *ngIf="!isArtist" href="mailto:{{ timeslot.artist?.contact }}">{{ timeslot.artist?.contact }}</a>
