@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 env:
-  PROJECT_ID: songbird
+  PROJECT_ID: songbird-403615
   GAR_LOCATION: europe-west6
   REPOSITORY: singing-city
   BACKEND_IMAGE: sbsc-backend
@@ -14,7 +14,7 @@ env:
 
 jobs:
   login-build-push:
-    name: Docker login, build, and push
+    name: Docker build
     runs-on: ubuntu-latest
 
     permissions:
