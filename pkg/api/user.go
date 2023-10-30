@@ -52,7 +52,7 @@ func (api *api) Register(c *gin.Context) {
 		}
 		c.JSON(http.StatusAccepted, &venue)
 	default:
-		c.JSON(http.StatusAccepted, gin.H{})
+		c.JSON(http.StatusBadRequest, gin.H{})
 	}
 }
 
