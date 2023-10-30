@@ -39,13 +39,13 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GH_API_KEY }}
 
     - name: docker tag backend
-      if: steps.semantic.outputs.new_release_version != ""
+      if: steps.semantic.outputs.new_release_version != null
       run: |-
         docker tag $BACKEND_IMAGE:latest "$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$BACKEND_IMAGE:${{ steps.semantic.outputs.new_release_version }}"  
         docker tag $BACKEND_IMAGE:latest "$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$BACKEND_IMAGE:latest"  
 
     - name: docker tag frontend
-      if: steps.semantic.outputs.new_release_version != ""
+      if: steps.semantic.outputs.new_release_version != null
       run: |-
         docker tag $FRONTEND_IMAGE:latest "$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$FRONTEND_IMAGE:${{ steps.semantic.outputs.new_release_version }}"  
         docker tag $FRONTEND_IMAGE:latest "$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$FRONTEND_IMAGE:latest"  
