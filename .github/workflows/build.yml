@@ -17,6 +17,9 @@ jobs:
     name: Docker login, build, and push
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: write
+
     steps:
     - name: checkout
       uses: actions/checkout@v3
