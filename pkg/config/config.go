@@ -22,6 +22,13 @@ type DbConfig struct {
 	Pass     string
 }
 
+type SmtpConfig struct {
+	Email    string
+	Password string
+	Server   string
+	Port     string
+}
+
 func LoadConfig() Config {
 	conf := Config{}
 	conf.Server.Host = os.Getenv("SERVERHOST")
