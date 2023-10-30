@@ -69,7 +69,8 @@ export class DashboardComponent implements OnInit {
   acceptApplication(application: Application) {
     this.applicationService.acceptApplication(application).subscribe(
       response => {
-        console.log("success")
+        this.getConfirmedPerformances()
+        this.openApplications = this.openApplications.filter(app => app.ID != application.ID)
       },
       error => {
         console.log(error)
