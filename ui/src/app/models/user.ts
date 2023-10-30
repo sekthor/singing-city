@@ -9,6 +9,9 @@ export interface RegisterRequest {
   username: string
   type: number
   name: string
+  address: string
+  zip: number
+  city: string
 }
 
 export interface AuthToken {

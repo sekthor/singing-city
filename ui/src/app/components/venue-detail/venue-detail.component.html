@@ -1,6 +1,8 @@
 <div class="container mt-4" *ngIf="venue">
 <h1>{{ venue.name }}</h1>
 
+<a href="{{ createGoogleMapsQuery(venue) }}">{{ venue.address }}</a>
+
 <p>{{ venue.description }}</p>
 
 <table class="table">

@@ -10,7 +10,17 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class RegisterComponent {
 
-  registerRequest: RegisterRequest = { email:"", username:"", password:"", type:1, name:""}
+  registerRequest: RegisterRequest = { 
+    email: "",
+    username: "",
+    password: "",
+    type: 1,
+    name: "",
+    address: "",
+    zip: 0,
+    city: ""
+  }
+
   error: string = ""
 
   constructor(

@@ -104,4 +104,9 @@ export class VenueDetailComponent implements OnInit {
     datepicker.value = "2023/12/08"
   }
 
+  createGoogleMapsQuery(venue: Venue): string {
+    let query = encodeURI(`${venue.address} ${venue.zip} ${venue.city}`)
+    return `https://www.google.com/maps/search/?api=1&query=${query}`
+  }
+
 }

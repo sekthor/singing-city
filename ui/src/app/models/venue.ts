@@ -6,6 +6,9 @@ export interface Venue {
   description: string
   slots: Timeslot[]
   contact: string
+  address: string
+  zip: number
+  city: string
 }
 
 export interface Timeslot {
