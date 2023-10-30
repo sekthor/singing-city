@@ -94,3 +94,33 @@ func (api *api) AcceptApplication(c *gin.Context) {
 
 	c.Status(http.StatusAccepted)
 }
+
+func (api *api) DeleteApplication(c *gin.Context) {
+
+	userid, err := api.getUserIdFromContext(c)
+	if err != nil {
+		c.Status(http.StatusUnauthorized)
+		return
+	}
+
+	applicationid, err := strconv.Atoi(c.Param("id"))
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid id format"})
+		return
+	}
+
+	err = api.applicationService.DeleteById(applicationid, userid)
+
+	if err != nil {
+		if errors.Is(err, service.ErrorUnauthorized) {
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "unauthorized"})
+			return
+		}
+
+		c.JSON(http.StatusBadRequest, gin.H{"error": "could not accept application"})
+		return
+	}
+
+	c.Status(http.StatusOK)
+}

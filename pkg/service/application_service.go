@@ -34,7 +34,16 @@ func (s *ApplicationService) Create(application model.Application) (model.Applic
 	return s.repo.Create(application)
 }
 
-func (s *ApplicationService) DeleteById(id int) error {
+func (s *ApplicationService) DeleteById(id int, userId int) error {
+	app, err := s.repo.FetchById(id)
+	if err != nil {
+		return err
+	}
+
+	if app.ArtistID != uint(userId) && app.Timeslot.VenueID != uint(userId) {
+		return ErrorUnauthorized
+	}
+
 	return s.repo.DeleteById(id)
 }
 

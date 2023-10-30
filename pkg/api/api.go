@@ -66,8 +66,8 @@ func (api *api) Router() *gin.Engine {
 	// as venue owner, I can accept an application
 	router.POST("api/applications/:id/accept", middleware.RequireAuth, api.AcceptApplication)
 
-	// TODO: as venue owner or artist, i can decline/retract an application
-	//router.DELETE("api/applications/:id/:usertype/:userid")
+	// as venue owner or artist, i can decline/retract an application
+	router.DELETE("api/applications/:id", middleware.RequireAuth, api.DeleteApplication)
 
 	return router
 }
