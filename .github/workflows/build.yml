@@ -1,0 +1,60 @@
+name: build and push docker images
+
+on:
+  push:
+    branches: [ main ]
+
+env:
+  PROJECT_ID: songbird
+  GAR_LOCATION: europe-west6
+  REPOSITORY: singing-city
+  BACKEND_IMAGE: sbsc-backend
+  FRONTEND_IMAGE: sbsc-frontend
+
+jobs:
+  login-build-push:
+    name: Docker login, build, and push
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: checkout
+      uses: actions/checkout@v3
+    
+    - name: docker build backend
+      run: |-
+        docker build -t $BACKEND_IMAGE:latest .
+
+    - name: docker build frontend
+      run: |-
+        docker build -t $FRONTEND_IMAGE:latest ./ui
+
+    - name: semantic release
+      id: semantic
+      uses: cycjimmy/semantic-release-action@v3
+      env:
+        GITHUB_TOKEN: ${{ secrets.GH_API_KEY }}
+
+    - name: docker tag backend
+      run: |-
+        docker tag $BACKEND_IMAGE:latest "$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$BACKEND_IMAGE:${{ steps.semantic.outputs.new_release_version }}"  
+        docker tag $BACKEND_IMAGE:latest "$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$BACKEND_IMAGE:latest"  
+
+    - name: docker tag frontend
+      run: |-
+        docker tag $FRONTEND_IMAGE:latest "$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$FRONTEND_IMAGE:${{ steps.semantic.outputs.new_release_version }}"  
+        docker tag $FRONTEND_IMAGE:latest "$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$FRONTEND_IMAGE:latest"  
+    
+    - name: login to artifact registry
+      uses: docker/login-action@v2
+      with:
+        registry: europe-west6-docker.pkg.dev
+        username: _json_key
+        password: ${{ secrets.SERVICE_ACCOUNT_KEY }}
+        
+    - name: docker push backend to artifact registry
+      run: |-
+        docker push "$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$BACKEND_IMAGE" --all-tags
+
+    - name: docker push frontend to artifact registry
+      run: |-
+        docker push "$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$FRONTEND_IMAGE" --all-tags
