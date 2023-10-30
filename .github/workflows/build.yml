@@ -23,20 +23,22 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v3
-    
-    - name: docker build backend
-      run: |-
-        docker build -t $BACKEND_IMAGE:latest .
-
-    - name: docker build frontend
-      run: |-
-        docker build -t $FRONTEND_IMAGE:latest ./ui
 
     - name: semantic release
       id: semantic
       uses: cycjimmy/semantic-release-action@v4
       env:
         GITHUB_TOKEN: ${{ secrets.GH_API_KEY }}
+    
+    - name: docker build backend
+      if: steps.semantic.outputs.new_release_version != null
+      run: |-
+        docker build -t $BACKEND_IMAGE:latest .
+
+    - name: docker build frontend
+      if: steps.semantic.outputs.new_release_version != null
+      run: |-
+        docker build -t $FRONTEND_IMAGE:latest ./ui
 
     - name: docker tag backend
       if: steps.semantic.outputs.new_release_version != null
