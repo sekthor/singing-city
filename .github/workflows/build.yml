@@ -31,7 +31,7 @@ jobs:
 
     - name: semantic release
       id: semantic
-      uses: cycjimmy/semantic-release-action@v3
+      uses: cycjimmy/semantic-release-action@v4
       env:
         GITHUB_TOKEN: ${{ secrets.GH_API_KEY }}
 
