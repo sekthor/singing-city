@@ -1,0 +1,73 @@
+<div class="container mt-4">
+<h1>Dashboard</h1>
+
+<ul class="nav nav-tabs mt-4">
+    <li class="nav-item nav-link" [ngClass]="{'active': !showConfirmed}" (click)="showConfirmed = false">
+        Pending 
+        <span *ngIf="openApplications.length > 0" class="badge rounded-pill bg-danger">{{ openApplications.length }}</span>
+    </li>
+    <li class="nav-item nav-link" [ngClass]="{'active': showConfirmed}" (click)="showConfirmed = true">
+        Confirmed
+        <span *ngIf="confirmedTimeslots.length > 0" class="badge rounded-pill bg-secondary">{{ confirmedTimeslots.length }}</span>
+    </li>
+</ul>
+
+<div class="container border-top-0 pt-4 px-0">
+
+<table *ngIf="!showConfirmed && openApplications.length > 0" class="table">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Time</th>
+        <th>{{ isArtist ? "Location" : "Artist" }}</th>
+        <th>Option</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let application of openApplications">
+            <td>{{ application.timeslot.time | date:"dd. MMM yyyy" }}</td>
+            <td>{{ application.timeslot.time | date:"HH:mm" }}</td>
+
+            <td *ngIf="!isArtist"><a [routerLink]="['/artists', application.artist.ID]">{{ application.artist.name }}</a></td>
+            <td *ngIf="isArtist"><a [routerLink]="['/venues', application.timeslot.venueID]">{{ getVenueNameByVenueID(application.timeslot.venueID) }}</a></td>
+
+            <td *ngIf="!isArtist">
+                <button class="btn btn-outline-success" (click)="acceptApplication(application)">accept</button>
+                <button class="btn btn-outline-danger mx-1">decline</button>
+            </td>
+            <td *ngIf="isArtist">
+                <button class="btn btn-outline-danger">retract</button>
+            </td>
+        </tr>
+</table>
+
+<p *ngIf="!showConfirmed && openApplications.length <= 0">No pending Applications</p>
+
+<table *ngIf="showConfirmed && confirmedTimeslots.length > 0" class="table">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Time</th>
+        <th>{{ isArtist ? "Location" : "Artist" }}</th>
+        <th>Contact</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let timeslot of confirmedTimeslots">
+            <td>{{ timeslot.time | date:"dd. MMM yyyy" }}</td>
+            <td>{{ timeslot.time | date:"HH:mm" }}</td>
+
+            <td *ngIf="!isArtist"><a [routerLink]="['/artists', 1]">{{ timeslot.artist?.name }}</a></td>
+            <td *ngIf="isArtist"><a [routerLink]="['/venues', 1]">{{ getVenueNameByVenueID(timeslot.venueID) }}</a></td>
+
+            <td>
+                <a *ngIf="!isArtist" href="mailto:{{ timeslot.artist?.contact }}">{{ timeslot.artist?.contact }}</a>
+                <a *ngIf="isArtist" href="mailto:{{ getVenueContactByVenueID(timeslot.venueID) }}">{{ getVenueContactByVenueID(timeslot.venueID) }}</a>
+            </td>
+        </tr>
+</table>
+
+<p *ngIf="showConfirmed && confirmedTimeslots.length <= 0">No confirmed Preformances</p>
+
+</div>
+</div>

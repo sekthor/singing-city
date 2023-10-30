@@ -1,0 +1,33 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
+  <div class="container-fluid">
+
+    <a class="navbar-brand" href="#">Singing City</a>
+
+    <div *ngIf="isLoggedIn" class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" href="/dashboard">Dashboard</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="/artists">Artists</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="/venues">Venues</a>
+        </li>
+      </ul>
+    </div>
+
+    <div>
+      <button *ngIf="isLoggedIn" class="btn btn-outline-light" type="submit" (click)="logout()">Logout</button>
+      <button *ngIf="!isLoggedIn" class="btn btn-light me-2" type="submit" routerLink="/login">Login</button>
+      <button *ngIf="!isLoggedIn" class="btn btn-outline-light" type="submit" routerLink="/register">Register</button>
+    </div>
+
+    <button *ngIf="isLoggedIn" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+</nav>

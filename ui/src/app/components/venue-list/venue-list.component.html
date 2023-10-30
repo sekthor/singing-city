@@ -1,0 +1,9 @@
+<div class="container mt-4">
+<h1>Venues</h1>
+<div class="list-group">
+  <a *ngFor="let venue of venues" class="list-group-item d-flex justify-content-between align-items-center" [routerLink]="['/venues', venue.ID]">
+    {{ venue.name }}
+    <span class="badge bg-success rounded-pill">{{ getAvailableSlotCount(venue) }}</span>
+  </a>
+</div>
+</div>

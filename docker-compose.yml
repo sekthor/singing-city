@@ -1,0 +1,11 @@
+version: '3'
+services:
+  frontend:
+    image: sbsc-frontend
+    ports:
+      - "8081:80"
+
+  backend:
+    image: sbsc-backend
+    ports:
+      - "8080:8080"
