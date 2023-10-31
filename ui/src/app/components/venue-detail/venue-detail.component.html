@@ -10,6 +10,7 @@
     <tr>
       <th>Date</th>
       <th>Time</th>
+      <th>Duration</th>
       <th>Type</th>
       <th class="text-end">Pay</th>
       <th class="text-center">Availabilty</th>
@@ -25,30 +26,42 @@
           <label for="newDate">New Date</label>
         </div>
       </td>
+
       <td>
         <div class="form-floating">
           <input id="newTime" type="time" [(ngModel)]="newTime" class="form-control">
           <label for="newTime">New Time</label>
         </div>
       </td>
+
       <td>
         <div class="form-floating">
-          <select class="form-select" [(ngModel)]="newTimeslot.private">
+          <input id="duration" type="number" [(ngModel)]="newTimeslot.duration" class="form-control">
+          <label for="duration">Duration (min)</label>
+        </div>
+      </td>
+
+      <td>
+        <div class="form-floating">
+          <select id="newType" class="form-select" [(ngModel)]="newTimeslot.private">
             <option [ngValue]="false">public</option>
             <option [ngValue]="true">private</option>
           </select>
-          <label for="newTime">New Time</label>
+          <label for="newType">Type</label>
         </div>
       </td>
+
       <td class="w-25">
         <div class="form-floating">
           <input id="pay" type="number" [(ngModel)]="newTimeslot.pay" class="form-control">
           <label for="pay">CHF</label>
         </div>
       </td>
+
       <td></td>
+
       <td>
-        <button class="btn btn-outline-success" (click)="addTimeSlot()">add timeslot</button>
+        <button class="btn btn-outline-success" (click)="addTimeSlot()">add</button>
       </td>
     </tr>
 
@@ -56,6 +69,8 @@
 
       <td>{{ slot.time | date:"dd. MMM yyyy" }}</td>
       <td>{{ slot.time | date:"HH:mm" }}</td>
+
+      <td class="text-end">{{ slot.duration }} min</td>
 
       <td><i class="{{ slot.private ? 'bi bi-house-lock' : 'bi bi-people-fill' }}" title="{{ slot.private ? 'private' : 'public' }}"></i></td>
       

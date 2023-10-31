@@ -19,4 +19,5 @@ export interface Timeslot {
   venueID: number
   pay: number
   private: boolean
+  duration: number
 }
