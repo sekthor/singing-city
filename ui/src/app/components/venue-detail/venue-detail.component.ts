@@ -16,7 +16,7 @@ export class VenueDetailComponent implements OnInit {
   isArtist: boolean = true
   id: number = 0;
 
-  newTimeslot: Timeslot = { ID:0, time: new Date(), artistID:0, venueID:0, pay:0 }
+  newTimeslot: Timeslot = { ID:0, time: new Date(), artistID:0, venueID:0, pay:0, private:false }
   newDate: string = ""
   newTime: string = ""
 

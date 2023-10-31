@@ -10,8 +10,9 @@
     <tr>
       <th>Date</th>
       <th>Time</th>
-      <th>Pay</th>
-      <th>Availabilty</th>
+      <th>Type</th>
+      <th class="text-end">Pay</th>
+      <th class="text-center">Availabilty</th>
       <th>Option</th>
     </tr>
   </thead>
@@ -27,6 +28,15 @@
       <td>
         <div class="form-floating">
           <input id="newTime" type="time" [(ngModel)]="newTime" class="form-control">
+          <label for="newTime">New Time</label>
+        </div>
+      </td>
+      <td>
+        <div class="form-floating">
+          <select class="form-select" [(ngModel)]="newTimeslot.private">
+            <option [ngValue]="false">public</option>
+            <option [ngValue]="true">private</option>
+          </select>
           <label for="newTime">New Time</label>
         </div>
       </td>
@@ -46,6 +56,8 @@
 
       <td>{{ slot.time | date:"dd. MMM yyyy" }}</td>
       <td>{{ slot.time | date:"HH:mm" }}</td>
+
+      <td><i class="{{ slot.private ? 'bi bi-house-lock' : 'bi bi-people-fill' }}" title="{{ slot.private ? 'private' : 'public' }}"></i></td>
       
       <td class="text-end">{{ slot.pay }} CHF</td>
 
@@ -71,3 +83,4 @@
 </table>
 </div>
 
+<i class="bi bi-incognito"></i>

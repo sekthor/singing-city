@@ -26,4 +26,5 @@ type Timeslot struct {
 	Artist   Artist    `json:"artist"`
 	ArtistID uint      `json:"artistID"`
 	Pay      int       `json:"pay"`
+	Private  bool      `json:"private"`
 }

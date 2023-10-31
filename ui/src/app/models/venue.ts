@@ -18,4 +18,5 @@ export interface Timeslot {
   artistID: number
   venueID: number
   pay: number
+  private: boolean
 }
