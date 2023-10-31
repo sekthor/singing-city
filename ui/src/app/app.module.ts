@@ -10,7 +10,6 @@ import { VenueDetailComponent } from './components/venue-detail/venue-detail.com
 import { LoginComponent } from './components/login/login.component';
 import { FormsModule } from '@angular/forms';
 import { RegisterComponent } from './components/register/register.component';
-import { HomeComponent } from './components/home/home.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ArtistDetailComponent } from './components/artist-detail/artist-detail.component';
 
@@ -22,7 +21,6 @@ import { ArtistDetailComponent } from './components/artist-detail/artist-detail.
     VenueDetailComponent,
     LoginComponent,
     RegisterComponent,
-    HomeComponent,
     DashboardComponent,
     ArtistDetailComponent,
   ],

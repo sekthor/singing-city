@@ -35,6 +35,7 @@ export class UserService implements OnInit {
 
   logout() {
     this.token = null
+    this.loggedIn = false
     this.cookie.delete("Authorization")
   }
 
