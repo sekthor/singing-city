@@ -37,16 +37,20 @@ func NewApi(conf config.Config) (api, error) {
 func (api *api) Router() *gin.Engine {
 	router := gin.Default()
 
+	// register as user
 	router.POST("api/register", api.Register)
+
+	// optain jwt token as cookie
 	router.POST("api/login", api.Login)
-	router.GET("api/auth", middleware.RequireAuth, api.Restricted)
-	router.GET("api/auth/user/:userid", middleware.RequireResourceOwnerAuth, api.Restricted)
 
-	router.GET("api/venues", api.GetAllVenues)
-	router.GET("api/venues/:id", api.GetVenueByID)
-	router.POST("api/venues")
+	// get a list of all venues
+	router.GET("api/venues", middleware.RequireAuth, api.GetAllVenues)
 
-	router.GET("api/artists/:id", api.GetArtistById)
+	// get a venue by its ID
+	router.GET("api/venues/:id", middleware.RequireAuth, api.GetVenueByID)
+
+	// get an artist by their ID
+	router.GET("api/artists/:id", middleware.RequireAuth, api.GetArtistById)
 
 	// as venue owner, add a timeslot to a venue
 	router.POST("api/timeslots/venues/:userid", middleware.RequireResourceOwnerAuth, api.AddTimeslot)
@@ -70,9 +74,4 @@ func (api *api) Router() *gin.Engine {
 	router.DELETE("api/applications/:id", middleware.RequireAuth, api.DeleteApplication)
 
 	return router
-}
-
-func (api *api) Restricted(c *gin.Context) {
-	val, _ := c.Get("userid")
-	c.JSON(200, gin.H{"msg": "you are authenticated. userid: " + val.(string)})
 }
