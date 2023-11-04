@@ -2,6 +2,7 @@ package api
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/rs/zerolog"
 	"github.com/sekthor/songbird-backend/pkg/config"
 	"github.com/sekthor/songbird-backend/pkg/middleware"
 	"github.com/sekthor/songbird-backend/pkg/repo"
@@ -16,6 +17,9 @@ type api struct {
 }
 
 func NewApi(conf config.Config) (api, error) {
+
+	zerolog.SetGlobalLevel(conf.Server.GetLoglevel())
+
 	api := api{}
 	db, err := repo.Connect(conf.DB)
 	if err != nil {
@@ -23,7 +27,6 @@ func NewApi(conf config.Config) (api, error) {
 	}
 
 	repo.Migrate(db)
-
 	middleware.SetServerSecret(conf.Server.Secret)
 
 	api.userService = service.NewUserService(db)
@@ -35,7 +38,11 @@ func NewApi(conf config.Config) (api, error) {
 }
 
 func (api *api) Router() *gin.Engine {
-	router := gin.Default()
+
+	gin.SetMode(gin.ReleaseMode)
+	router := gin.New()
+	router.Use(gin.Recovery())
+	router.Use(middleware.LogRequest)
 
 	// register as user
 	router.POST("api/register", api.Register)
