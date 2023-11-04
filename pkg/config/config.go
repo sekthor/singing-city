@@ -1,6 +1,10 @@
 package config
 
-import "os"
+import (
+	"os"
+
+	"github.com/rs/zerolog"
+)
 
 type Config struct {
 	Server ServerConfig
@@ -8,9 +12,10 @@ type Config struct {
 }
 
 type ServerConfig struct {
-	Host   string
-	Port   string
-	Secret string
+	Host     string
+	Port     string
+	Secret   string
+	Loglevel string
 }
 
 type DbConfig struct {
@@ -27,6 +32,7 @@ func LoadConfig() Config {
 	conf.Server.Host = os.Getenv("SERVERHOST")
 	conf.Server.Port = os.Getenv("SERVERPORT")
 	conf.Server.Secret = os.Getenv("SERVERSECRET")
+	conf.Server.Loglevel = os.Getenv("SERVERLOGLEVEL")
 	conf.DB.Type = os.Getenv("DBTYPE")
 	conf.DB.Database = os.Getenv("DBDATABASE")
 	conf.DB.Host = os.Getenv("DBHOST")
@@ -34,4 +40,25 @@ func LoadConfig() Config {
 	conf.DB.User = os.Getenv("DBUSER")
 	conf.DB.Pass = os.Getenv("DBPASS")
 	return conf
+}
+
+func (c ServerConfig) GetLoglevel() zerolog.Level {
+	switch c.Loglevel {
+	case "panic":
+		return zerolog.PanicLevel
+	case "fatal":
+		return zerolog.FatalLevel
+	case "error":
+		return zerolog.ErrorLevel
+	case "warn":
+		return zerolog.WarnLevel
+	case "info":
+		return zerolog.InfoLevel
+	case "debug":
+		return zerolog.DebugLevel
+	case "trace":
+		return zerolog.TraceLevel
+	default:
+		return zerolog.InfoLevel
+	}
 }
