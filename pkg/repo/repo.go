@@ -14,11 +14,17 @@ func Connect(conf config.DbConfig) (*gorm.DB, error) {
 
 	switch conf.Type {
 	case "sqlite":
-		return gorm.Open(sqlite.Open(conf.Database), &gorm.Config{TranslateError: false})
+		return gorm.Open(sqlite.Open(conf.Database), &gorm.Config{
+			TranslateError: false,
+			Logger:         GormLogger{},
+		})
 	default:
 		dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?%s",
 			conf.User, conf.Pass, conf.Host, conf.Port, conf.Database, "charset=utf8mb4&parseTime=True&loc=Local")
-		return gorm.Open(mysql.Open(dsn), &gorm.Config{TranslateError: false})
+		return gorm.Open(mysql.Open(dsn), &gorm.Config{
+			TranslateError: false,
+			Logger:         GormLogger{},
+		})
 	}
 }
 
