@@ -8,4 +8,5 @@ type Artist struct {
 	User    User   `json:"-"`
 	UserID  uint   `json:"userID"`
 	Contact string `json:"contact"`
+	Genere  string `json:"genere"`
 }
