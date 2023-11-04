@@ -35,7 +35,11 @@ func NewApi(conf config.Config) (api, error) {
 }
 
 func (api *api) Router() *gin.Engine {
-	router := gin.Default()
+
+	gin.SetMode(gin.ReleaseMode)
+	router := gin.New()
+	router.Use(gin.Recovery())
+	router.Use(middleware.LogRequest)
 
 	// register as user
 	router.POST("api/register", api.Register)
