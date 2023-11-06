@@ -35,5 +35,6 @@ func Migrate(db *gorm.DB) error {
 		&model.Artist{},
 		&model.Timeslot{},
 		&model.Application{},
+		&model.SocialLink{},
 	)
 }
