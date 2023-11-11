@@ -20,8 +20,8 @@
 
         <li>
           <select name="lang" id="lang" class="form-select" [(ngModel)]="language" (change)="setLanguage(language)">
-            <option value="en">en</option>
-            <option value="de">de</option>
+            <option [ngValue]="'en'">en</option>
+            <option [ngValue]="'de'">de</option>
           </select>
         </li>
       </ul>

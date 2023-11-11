@@ -16,11 +16,12 @@ export class HeaderComponent implements OnInit {
   constructor(
     private userService: UserService, 
     private router: Router, 
-    private translate: TranslateService) { }
+    private translate: TranslateService
+  ) { }
 
   ngOnInit(): void {
     this.isLoggedIn = this.userService.isLoggedIn()
-    this.language = this.translate.currentLang
+    this.language = localStorage.getItem("lang") || "en"
   }
 
   logout() {
@@ -30,6 +31,8 @@ export class HeaderComponent implements OnInit {
   }
 
   setLanguage(language: string) {
+    localStorage.setItem("lang", language)
     this.translate.use(language)
+    this.translate.setDefaultLang(language)
   }
 }
