@@ -1,4 +1,12 @@
 {
+    "header": {
+        "dashboard": "Übersicht",
+        "artists": "Künstler",
+        "venues": "Veranstaltungsorte",
+        "login": "Login",
+        "logout": "Ausloggen",
+        "register": "Registrieren"
+    },
     "dashboard": {
         "dashboard": "Übersicht",
         "pending": "Ausstehend",

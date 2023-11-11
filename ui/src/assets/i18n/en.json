@@ -1,4 +1,12 @@
 {
+    "header": {
+        "dashboard": "Dashboard",
+        "artists": "Artists",
+        "venues": "Venues",
+        "login": "Login",
+        "logout": "Logout",
+        "register": "Register"
+    },
     "dashboard": {
         "dashboard": "Dashboard",
         "pending": "Pending",
