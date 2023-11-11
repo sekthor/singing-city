@@ -5,11 +5,13 @@ services:
     image: europe-west6-docker.pkg.dev/songbird-403615/singing-city/sbsc-frontend:latest
     ports:
       - "8081:80"
+    restart: always
 
   backend:
     image: europe-west6-docker.pkg.dev/songbird-403615/singing-city/sbsc-backend:latest
     ports:
       - "8080:8080"
+    restart: always
     environment:
       - SERVERHOST=0.0.0.0
       - SERVERPORT=8080
