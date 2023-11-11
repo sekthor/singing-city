@@ -12,7 +12,13 @@ export class AppComponent {
   constructor(translate: TranslateService){
     translate.addLangs(['en', 'english']);
     translate.addLangs(['de', 'deutsch']);
-    translate.setDefaultLang(localStorage.getItem("lang") || "en")
+    let lang = localStorage.getItem("lang")
+    if (lang === null) {
+      lang = navigator.language.slice(0,2);
+      lang = translate.getLangs().find(l => l === lang) || "en"
+      localStorage.setItem("lang", lang)
+    }
+    translate.setDefaultLang(lang)
   }
 
   
