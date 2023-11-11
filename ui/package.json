@@ -18,6 +18,8 @@
     "@angular/platform-browser": "^16.2.10",
     "@angular/platform-browser-dynamic": "^16.2.10",
     "@angular/router": "^16.2.10",
+    "@ngx-translate/core": "^15.0.0",
+    "@ngx-translate/http-loader": "^8.0.0",
     "bootstrap-icons": "^1.11.1",
     "jwt-decode": "^3.1.2",
     "ngx-cookie-service": "^16.0.1",

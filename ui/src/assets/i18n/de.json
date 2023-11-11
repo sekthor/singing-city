@@ -1,0 +1,15 @@
+{
+    "dashboard": {
+        "dashboard": "Übersicht",
+        "pending": "Ausstehend",
+        "confirmed": "Bestätigt",
+        "noPending": "Keine ausstehenden Bewerbungen",
+        "noConfirmed": "Keine bestätigten Aufführungen",
+        "retract": "zurückziehen",
+        "decline": "ablehnen",
+        "accept": "akzeptieren"
+    },
+    "venuelist": {
+        "venues": "Veranstaltungsorte"
+    }
+}

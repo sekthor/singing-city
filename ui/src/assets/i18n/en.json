@@ -1,0 +1,15 @@
+{
+    "dashboard": {
+        "dashboard": "Dashboard",
+        "pending": "Pending",
+        "confirmed": "Confirmed",
+        "noPending": "No pending applications",
+        "noConfirmed": "No confirmed performances",
+        "retract": "retract",
+        "decline": "decline",
+        "accept": "accept"
+    },
+    "venuelist": {
+        "venues": "Venues"
+    }
+}
