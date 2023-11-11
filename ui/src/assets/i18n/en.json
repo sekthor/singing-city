@@ -19,6 +19,17 @@
         "type": "Type",
         "pay": "Pay",
         "availability": "Availability",
-        "option": "Option"
+        "option": "Option",
+        "newDate": "New Date",
+        "newTime": "New Time",
+        "durationMinutes": "Duration (min)",
+        "private": "private",
+        "public": "public",
+        "add": "add",
+        "booked": "booked",
+        "available": "avaliable",
+        "pending": "pending",
+        "apply": "apply",
+        "delete": "delete"
     }
 }

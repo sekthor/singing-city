@@ -19,6 +19,17 @@
         "type": "Typ",
         "pay": "Gage",
         "availability": "Verfügbarkeit",
-        "option": "Option"
+        "option": "Option",
+        "newDate": "Neues Datum",
+        "newTime": "Neue Zeit",
+        "durationMinutes": "Dauer (min)",
+        "private": "privat",
+        "public": "öffentlich",
+        "add": "hinzufügen",
+        "booked": "gebucht",
+        "available": "verfügbar",
+        "pending": "ausstehend",
+        "apply": "bewerben",
+        "delete": "löschen"
     }
 }
