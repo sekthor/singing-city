@@ -21,12 +21,19 @@ func NewApi(conf config.Config) (api, error) {
 	zerolog.SetGlobalLevel(conf.Server.GetLoglevel())
 
 	api := api{}
+
+	// establish database connection
 	db, err := repo.Connect(conf.DB)
 	if err != nil {
 		return api, err
 	}
 
-	repo.Migrate(db)
+	// migrate database schema
+	err = repo.Migrate(db)
+	if err != nil {
+		return api, err
+	}
+
 	middleware.SetServerSecret(conf.Server.Secret)
 
 	api.userService = service.NewUserService(db)
