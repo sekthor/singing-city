@@ -1,11 +1,21 @@
 version: '3'
+
 services:
   frontend:
-    image: sbsc-frontend
+    image: europe-west6-docker.pkg.dev/songbird-403615/singing-city/sbsc-frontend:latest
     ports:
       - "8081:80"
 
   backend:
-    image: sbsc-backend
+    image: europe-west6-docker.pkg.dev/songbird-403615/singing-city/sbsc-backend:latest
     ports:
       - "8080:8080"
+    environment:
+      - SERVERHOST=0.0.0.0
+      - SERVERPORT=8080
+      - SERVERSECRET=32charserversecretsign32
+      - SERVERLOGLEVEL=debug
+      - DBTYPE=sqlite
+      - DBDATABASE=/app/data/songbird.db
+    volumes:
+      - /home/sekthor/code/apps/songbird/backend/data:/app/data
