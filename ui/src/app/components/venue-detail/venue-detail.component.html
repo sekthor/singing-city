@@ -8,13 +8,13 @@
 <table class="table">
   <thead>
     <tr>
-      <th>Date</th>
-      <th>Time</th>
-      <th>Duration</th>
-      <th>Type</th>
-      <th class="text-end">Pay</th>
-      <th class="text-center">Availabilty</th>
-      <th>Option</th>
+      <th>{{ "venue.date" | translate }}</th>
+      <th>{{ "venue.time" | translate }}</th>
+      <th>{{ "venue.duration" | translate }}</th>
+      <th>{{ "venue.type" | translate }}</th>
+      <th class="text-end">{{ "venue.pay" | translate }}</th>
+      <th class="text-center">{{ "venue.availability" | translate }}</th>
+      <th>{{ "venue.option" | translate }}</th>
     </tr>
   </thead>
   <tbody>
@@ -23,31 +23,31 @@
       <td>
         <div class="form-floating">
           <input id="newDate" type="date" [(ngModel)]="newDate" min="2023-12-08" max="2023-12-23" id="tsdate" class="form-control">
-          <label for="newDate">New Date</label>
+          <label for="newDate">{{ "venue.newDate" | translate }}</label>
         </div>
       </td>
 
       <td>
         <div class="form-floating">
           <input id="newTime" type="time" [(ngModel)]="newTime" class="form-control">
-          <label for="newTime">New Time</label>
+          <label for="newTime">{{ "venue.newTime" | translate }}</label>
         </div>
       </td>
 
       <td>
         <div class="form-floating">
           <input id="duration" type="number" [(ngModel)]="newTimeslot.duration" class="form-control">
-          <label for="duration">Duration (min)</label>
+          <label for="duration">{{ "venue.durationMinutes" | translate }}</label>
         </div>
       </td>
 
       <td>
         <div class="form-floating">
           <select id="newType" class="form-select" [(ngModel)]="newTimeslot.private">
-            <option [ngValue]="false">public</option>
-            <option [ngValue]="true">private</option>
+            <option [ngValue]="false">{{ "venue.public" | translate }}</option>
+            <option [ngValue]="true">{{ "venue.private" | translate }}</option>
           </select>
-          <label for="newType">Type</label>
+          <label for="newType">{{ "venue.type" | translate }}</label>
         </div>
       </td>
 
@@ -61,7 +61,7 @@
       <td></td>
 
       <td>
-        <button class="btn btn-outline-success" (click)="addTimeSlot()">add</button>
+        <button class="btn btn-outline-success" (click)="addTimeSlot()">{{ "venue.add" | translate }}</button>
       </td>
     </tr>
 
@@ -72,26 +72,26 @@
 
       <td class="text-end">{{ slot.duration }} min</td>
 
-      <td><i class="{{ slot.private ? 'bi bi-house-lock' : 'bi bi-people-fill' }}" title="{{ slot.private ? 'private' : 'public' }}"></i></td>
+      <td><i class="{{ slot.private ? 'bi bi-house-lock' : 'bi bi-people-fill' }}" title="{{ slot.private ? ('venue.private' | translate) : ('venue.public' | translate) }}"></i></td>
       
       <td class="text-end">{{ slot.pay }} CHF</td>
 
       <td class="text-center">
-        <span *ngIf="slot.artistID !== 0" class="badge text-bg-warning">booked</span>
-        <span *ngIf="slot.artistID === 0" class="badge text-bg-success">available</span>
+        <span *ngIf="slot.artistID !== 0" class="badge text-bg-warning">{{ "venue.booked" | translate }}</span>
+        <span *ngIf="slot.artistID === 0" class="badge text-bg-success">{{ "venue.available" | translate }}</span>
       </td>
 
       <td *ngIf="!isRessourceOwner && isArtist">
         <button *ngIf="slot.artistID === 0" class="btn"
           class="{{ hasAlreadyApplied(slot) ? 'disabled btn-sm btn-outline-warning' : 'btn-success' }}" 
-          (click)="applyForTimeslot($event, slot)">{{ hasAlreadyApplied(slot) ? "pending" : "apply" }}</button>
+          (click)="applyForTimeslot($event, slot)">{{ hasAlreadyApplied(slot) ? ("venue.pending" | translate) : ("venue.apply" | translate) }}</button>
       </td>
 
       <td *ngIf="!isRessourceOwner && !isArtist"></td>
 
       <td *ngIf="isRessourceOwner">
-        <button *ngIf="slot.artistID === 0" class="btn btn-outline-danger" (click)="deleteTimeslot(slot)">delete</button>
-        <button *ngIf="slot.artistID !== 0" class="btn btn-outline-secondary" disabled>delete</button>
+        <button *ngIf="slot.artistID === 0" class="btn btn-outline-danger" (click)="deleteTimeslot(slot)">{{ "venue.delete" | translate }}</button>
+        <button *ngIf="slot.artistID !== 0" class="btn btn-outline-secondary" disabled>{{ "venue.delete" | translate }}</button>
       </td>
 
     </tr>

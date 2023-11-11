@@ -1,0 +1,67 @@
+{
+    "header": {
+        "dashboard": "Übersicht",
+        "artists": "Künstler",
+        "venues": "Veranstaltungsorte",
+        "login": "Login",
+        "logout": "Ausloggen",
+        "register": "Registrieren"
+    },
+    "login": {
+        "email": "E-Mail",
+        "password": "Passwort",
+        "login": "login",
+        "register": "registrieren",
+        "error": "Fehler",
+        "success": "Erfolgreich",
+        "successMsg": "Registrierung war erfolgreich, bitte loggen sie sich ein"
+    },
+    "register": {
+        "email": "E-Mail",
+        "username": "Nutzername",
+        "password": "Passwort",
+        "registerAs": "Registeren als",
+        "artist": "Künstler",
+        "venue": "Veranstaltungsort",
+        "artistName": "Name Künstler",
+        "venueName": "Name Veranstaltungsort",
+        "address": "Adresse",
+        "zip": "Postleitzahl",
+        "city": "Ortschaft",
+        "register": "Registrieren",
+        "error": "Fehler"
+    },
+    "dashboard": {
+        "dashboard": "Übersicht",
+        "pending": "Ausstehend",
+        "confirmed": "Bestätigt",
+        "noPending": "Keine ausstehenden Bewerbungen",
+        "noConfirmed": "Keine bestätigten Aufführungen",
+        "retract": "zurückziehen",
+        "decline": "ablehnen",
+        "accept": "akzeptieren"
+    },
+    "venuelist": {
+        "venues": "Veranstaltungsorte"
+    },
+    "venue": {
+        "date": "Datum",
+        "time": "Zeit",
+        "duration": "Dauer",
+        "type": "Typ",
+        "pay": "Gage",
+        "availability": "Verfügbarkeit",
+        "option": "Option",
+        "newDate": "Neues Datum",
+        "newTime": "Neue Zeit",
+        "durationMinutes": "Dauer (min)",
+        "private": "privat",
+        "public": "öffentlich",
+        "add": "hinzufügen",
+        "booked": "gebucht",
+        "available": "verfügbar",
+        "pending": "ausstehend",
+        "apply": "bewerben",
+        "delete": "löschen"
+    }
+}

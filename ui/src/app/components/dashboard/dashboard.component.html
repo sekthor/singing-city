@@ -1,13 +1,13 @@
 <div class="container mt-4">
-<h1>Dashboard</h1>
+<h1>{{ "dashboard.dashboard" | translate }}</h1>
 
 <ul class="nav nav-tabs mt-4">
     <li class="nav-item nav-link" [ngClass]="{'active': !showConfirmed}" (click)="showConfirmed = false">
-        Pending 
+        {{ "dashboard.pending" | translate }}
         <span *ngIf="openApplications.length > 0" class="badge rounded-pill bg-danger">{{ openApplications.length }}</span>
     </li>
     <li class="nav-item nav-link" [ngClass]="{'active': showConfirmed}" (click)="showConfirmed = true">
-        Confirmed
+        {{ "dashboard.confirmed" | translate }}
         <span *ngIf="confirmedTimeslots.length > 0" class="badge rounded-pill bg-secondary">{{ confirmedTimeslots.length }}</span>
     </li>
 </ul>
@@ -34,16 +34,16 @@
 
             <td>{{ application.timeslot.pay }} CHF</td>
             <td *ngIf="!isArtist">
-                <button class="btn btn-outline-success" (click)="acceptApplication(application)">accept</button>
-                <button class="btn btn-outline-danger mx-1" (click)="revokeApplication(application)">decline</button>
+                <button class="btn btn-outline-success" (click)="acceptApplication(application)">{{ "dashboard.accept" | translate }}</button>
+                <button class="btn btn-outline-danger mx-1" (click)="revokeApplication(application)">{{ "dashoard.decline" | translate }}</button>
             </td>
             <td *ngIf="isArtist">
-                <button class="btn btn-outline-danger" (click)="revokeApplication(application)">retract</button>
+                <button class="btn btn-outline-danger" (click)="revokeApplication(application)">{{ "dashboard.retract" | translate }}</button>
             </td>
         </tr>
 </table>
 
-<p *ngIf="!showConfirmed && openApplications.length <= 0">No pending Applications</p>
+<p *ngIf="!showConfirmed && openApplications.length <= 0">{{ "dashboard.noPending" | translate }}</p>
 
 <table *ngIf="showConfirmed && confirmedTimeslots.length > 0" class="table">
     <thead>
@@ -72,7 +72,7 @@
         </tr>
 </table>
 
-<p *ngIf="showConfirmed && confirmedTimeslots.length <= 0">No confirmed Preformances</p>
+<p *ngIf="showConfirmed && confirmedTimeslots.length <= 0">{{ "dashboard.noConfirmed" | translate }}</p>
 
 </div>
 </div>

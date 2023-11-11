@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { Application } from 'src/app/models/application';
 import { Timeslot, Venue } from 'src/app/models/venue';
 import { ApplicationService } from 'src/app/services/application.service';
@@ -28,10 +29,12 @@ export class VenueDetailComponent implements OnInit {
     private venueService: VenueService,
     private route: ActivatedRoute,
     private userService: UserService,
-    private applicationService: ApplicationService
+    private applicationService: ApplicationService,
+    private translate: TranslateService
   ) {}
 
   ngOnInit(): void {
+    this.translate.use(localStorage.getItem("lang") || "en")
     let id = this.route.snapshot.paramMap.get("id")
     if (id !== null) {
       this.getVenue(parseInt(id))

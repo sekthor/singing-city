@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { Venue } from 'src/app/models/venue';
 import { VenueService } from 'src/app/services/venue.service';
 
@@ -13,10 +14,12 @@ export class VenueListComponent implements OnInit {
   selectedVenue?: Venue
 
   constructor(
-    private venueService: VenueService
+    private venueService: VenueService,
+    private translate: TranslateService
   ) {}
 
   ngOnInit(): void {
+    this.translate.use(localStorage.getItem("lang") || "en")
     this.venueService.getVenues().subscribe(venues => this.venues = venues);
   }
 

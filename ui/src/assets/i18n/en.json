@@ -1,0 +1,67 @@
+{
+    "header": {
+        "dashboard": "Dashboard",
+        "artists": "Artists",
+        "venues": "Venues",
+        "login": "Login",
+        "logout": "Logout",
+        "register": "Register"
+    },
+    "login": {
+        "email": "E-mail",
+        "password": "Password",
+        "login": "login",
+        "register": "registrier",
+        "error": "Error",
+        "success": "Success",
+        "successMsg": "Registration was successful, please log in"
+    },
+    "register": {
+        "email": "e-mail",
+        "username": "username",
+        "password": "password",
+        "registerAs": "register as",
+        "artist": "artist",
+        "venue": "venue",
+        "artistName": "artist name",
+        "venueName": "venue name",
+        "address": "address",
+        "zip": "zip code",
+        "city": "city",
+        "register": "registrier",
+        "error": "error"
+    },
+    "dashboard": {
+        "dashboard": "Dashboard",
+        "pending": "Pending",
+        "confirmed": "Confirmed",
+        "noPending": "No pending applications",
+        "noConfirmed": "No confirmed performances",
+        "retract": "retract",
+        "decline": "decline",
+        "accept": "accept"
+    },
+    "venuelist": {
+        "venues": "Venues"
+    },
+    "venue": {
+        "date": "Date",
+        "time": "Time",
+        "duration": "Duration",
+        "type": "Type",
+        "pay": "Pay",
+        "availability": "Availability",
+        "option": "Option",
+        "newDate": "New Date",
+        "newTime": "New Time",
+        "durationMinutes": "Duration (min)",
+        "private": "private",
+        "public": "public",
+        "add": "add",
+        "booked": "booked",
+        "available": "avaliable",
+        "pending": "pending",
+        "apply": "apply",
+        "delete": "delete"
+    }
+}
