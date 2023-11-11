@@ -76,7 +76,18 @@ export class DashboardComponent implements OnInit {
         console.log(error)
       }
     )
+  }
 
+  revokeApplication(application: Application) {
+    this.applicationService.deleteApplication(application).subscribe(
+      response => {
+        this.getConfirmedPerformances()
+        this.openApplications = this.openApplications.filter(app => app.ID != application.ID)
+      },
+      error => {
+        console.log(error)
+      }
+    )
   }
 
 }

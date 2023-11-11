@@ -38,7 +38,7 @@
                 <button class="btn btn-outline-danger mx-1">decline</button>
             </td>
             <td *ngIf="isArtist">
-                <button class="btn btn-outline-danger">retract</button>
+                <button class="btn btn-outline-danger" (click)="revokeApplication(application)">retract</button>
             </td>
         </tr>
 </table>

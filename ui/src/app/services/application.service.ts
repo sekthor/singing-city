@@ -20,4 +20,9 @@ export class ApplicationService {
   acceptApplication(application: Application) {
     return this.http.post(`api/applications/${application.ID}/accept`, {})
   }
+
+  deleteApplication(application: Application) {
+    return this.http.delete(`api/applications/${application.ID}`, {})
+  }
+  
 }
