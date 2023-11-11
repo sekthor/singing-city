@@ -15,7 +15,6 @@ services:
     environment:
       - SERVERHOST=0.0.0.0
       - SERVERPORT=8080
-      - SERVERSECRET=32charserversecretsign32
       - SERVERLOGLEVEL=debug
       - DBTYPE=sqlite
       - DBDATABASE=/app/data/songbird.db
