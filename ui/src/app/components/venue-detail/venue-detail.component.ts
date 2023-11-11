@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Application } from 'src/app/models/application';
 import { Timeslot, Venue } from 'src/app/models/venue';
+import { ApplicationService } from 'src/app/services/application.service';
 import { UserService } from 'src/app/services/user.service';
 import { VenueService } from 'src/app/services/venue.service';
 
@@ -16,6 +18,8 @@ export class VenueDetailComponent implements OnInit {
   isArtist: boolean = true
   id: number = 0;
 
+  openApplications: Application[] = []
+
   newTimeslot: Timeslot = { ID:0, time: new Date(), artistID:0, venueID:0, pay:0, private:false, duration:0 }
   newDate: string = ""
   newTime: string = ""
@@ -23,7 +27,8 @@ export class VenueDetailComponent implements OnInit {
   constructor(
     private venueService: VenueService,
     private route: ActivatedRoute,
-    private userService: UserService
+    private userService: UserService,
+    private applicationService: ApplicationService
   ) {}
 
   ngOnInit(): void {
@@ -35,6 +40,13 @@ export class VenueDetailComponent implements OnInit {
 
     this.isRessourceOwner = (this.userService.getSubject() === id) 
     this.isArtist = this.userService.isArtist()
+
+    if (this.isArtist)
+      this.applicationService.getApplications(
+        "artist", this.userService.getSubject(), "open").subscribe(
+          applications => this.openApplications = applications
+        )
+
     this.setDate()
   }
 
@@ -85,7 +97,7 @@ export class VenueDetailComponent implements OnInit {
       this.venue?.slots.sort((a: Timeslot, b: Timeslot) => { return a.time.getTime() - b.time.getTime()})
   }
 
-  applyForTimeslot(slot: Timeslot) {
+  applyForTimeslot(event: any, slot: Timeslot) {
     let artistId = this.userService.getSubject()
     this.venueService.applyForTimeslot(parseInt(artistId), slot.ID).subscribe(
       response => {
@@ -95,6 +107,7 @@ export class VenueDetailComponent implements OnInit {
         console.log(error)
       }
     )
+    event.target.disabled = true
   }
 
   setDate() {
@@ -107,6 +120,11 @@ export class VenueDetailComponent implements OnInit {
   createGoogleMapsQuery(venue: Venue): string {
     let query = encodeURI(`${venue.address} ${venue.zip} ${venue.city}`)
     return `https://www.google.com/maps/search/?api=1&query=${query}`
+  }
+
+  hasAlreadyApplied(ts: Timeslot): boolean{
+    return this.openApplications
+      .find(application => ts.ID === application.timeslot.ID) !== undefined
   }
 
 }
