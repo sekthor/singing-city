@@ -1,11 +1,13 @@
 package middleware
 
 import (
+	"crypto/rand"
 	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
+	"github.com/rs/zerolog/log"
 )
 
 var ServerSecret []byte
@@ -79,4 +81,12 @@ func LoggedInAdmin(c *gin.Context) {
 
 func SetServerSecret(secret string) {
 	ServerSecret = []byte(secret)
+
+	if len(ServerSecret) == 0 {
+		ServerSecret := make([]byte, 64)
+		_, err := rand.Read(ServerSecret)
+		if err != nil {
+			log.Fatal().Err(err).Msg("could not generate server signing key")
+		}
+	}
 }
