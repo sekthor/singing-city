@@ -11,5 +11,14 @@
     },
     "venuelist": {
         "venues": "Venues"
+    },
+    "venue": {
+        "date": "Date",
+        "time": "Time",
+        "duration": "Duration",
+        "type": "Type",
+        "pay": "Pay",
+        "availability": "Availability",
+        "option": "Option"
     }
 }

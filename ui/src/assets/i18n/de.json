@@ -11,5 +11,14 @@
     },
     "venuelist": {
         "venues": "Veranstaltungsorte"
+    },
+    "venue": {
+        "date": "Datum",
+        "time": "Zeit",
+        "duration": "Dauer",
+        "type": "Typ",
+        "pay": "Gage",
+        "availability": "Verfügbarkeit",
+        "option": "Option"
     }
 }
