@@ -12,7 +12,7 @@ export class AppComponent {
   constructor(translate: TranslateService){
     translate.addLangs(['en', 'english']);
     translate.addLangs(['de', 'deutsch']);
-    translate.setDefaultLang("en")
+    translate.setDefaultLang(localStorage.getItem("lang") || "en")
   }
 
   
