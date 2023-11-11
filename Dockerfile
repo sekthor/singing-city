@@ -1,5 +1,5 @@
-FROM golang:1.20.10-alpine as backendbuild
-RUN apk add --no-cache git
+FROM golang:1.20-alpine as backendbuild
+RUN apk add --no-cache git build-base
 WORKDIR /app
 COPY ./ ./
 RUN go build -o /backend ./cmd/backend/main.go
