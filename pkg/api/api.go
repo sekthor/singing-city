@@ -50,6 +50,15 @@ func (api *api) Router() *gin.Engine {
 	// optain jwt token as cookie
 	router.POST("api/login", api.Login)
 
+	// update own user details
+	router.PUT("api/users/:id")
+
+	// update venue details
+	router.PUT("api/venues/:id")
+
+	// update artist details
+	router.PUT("api/artists/:userid", middleware.RequireResourceOwnerAuth, api.UpdateArtist)
+
 	// get a list of all venues
 	router.GET("api/venues", middleware.RequireAuth, api.GetAllVenues)
 

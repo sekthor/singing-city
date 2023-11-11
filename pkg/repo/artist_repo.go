@@ -20,6 +20,11 @@ func (r *ArtistRepo) Create(artist model.Artist) (model.Artist, error) {
 	return artist, result.Error
 }
 
+func (r *ArtistRepo) Save(artist model.Artist) (model.Artist, error) {
+	result := r.db.Save(&artist)
+	return artist, result.Error
+}
+
 func (r *ArtistRepo) FetchById(id int) (model.Artist, error) {
 	var artist model.Artist
 	result := r.db.First(&artist, id)

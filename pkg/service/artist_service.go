@@ -28,6 +28,11 @@ func (s *ArtistService) Create(artist model.Artist) (model.Artist, error) {
 	return s.repo.Create(artist)
 }
 
+func (s *ArtistService) Update(id int, artist model.Artist) (model.Artist, error) {
+	artist.ID = uint(id)
+	return s.repo.Save(artist)
+}
+
 func (s *ArtistService) DeleteById(id int) error {
 	return s.repo.DeleteById(id)
 }
