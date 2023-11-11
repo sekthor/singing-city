@@ -9,4 +9,5 @@ var (
 	ErrorArtistNotExist       = errors.New("artist does not exist")
 	ErrorSlotNotExist         = errors.New("timeslot does not exist")
 	ErrorInvalidStatus        = errors.New("invalid status")
+	ErrorAlreadyApplied       = errors.New("already applied")
 )

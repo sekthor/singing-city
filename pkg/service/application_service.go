@@ -68,6 +68,16 @@ func (s *ApplicationService) Apply(artistID int, timeslotID int) error {
 		Confirmed:  false,
 	}
 
+	apps, err := s.repo.FetchByArtistId(artistID)
+	if err != nil {
+		return err
+	}
+	for _, a := range apps {
+		if a.TimeslotID == application.TimeslotID {
+			return ErrorAlreadyApplied
+		}
+	}
+
 	_, err = s.repo.Create(application)
 
 	return err

@@ -82,8 +82,9 @@
       </td>
 
       <td *ngIf="!isRessourceOwner && isArtist">
-        <button *ngIf="slot.artistID !== 0" class="btn btn-outline-secondary" disabled>apply</button>
-        <button *ngIf="slot.artistID === 0" class="btn btn-dark" (click)="applyForTimeslot(slot)">apply</button>
+        <button *ngIf="slot.artistID === 0" class="btn"
+          class="{{ hasAlreadyApplied(slot) ? 'disabled btn-sm btn-outline-warning' : 'btn-success' }}" 
+          (click)="applyForTimeslot($event, slot)">{{ hasAlreadyApplied(slot) ? "pending" : "apply" }}</button>
       </td>
 
       <td *ngIf="!isRessourceOwner && !isArtist"></td>
