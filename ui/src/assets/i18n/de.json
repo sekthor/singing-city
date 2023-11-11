@@ -16,6 +16,21 @@
         "success": "Erfolgreich",
         "successMsg": "Registrierung war erfolgreich, bitte loggen sie sich ein"
     },
+    "register": {
+        "email": "E-Mail",
+        "username": "Nutzername",
+        "password": "Passwort",
+        "registerAs": "Registeren als",
+        "artist": "Künstler",
+        "venue": "Veranstaltungsort",
+        "artistName": "Name Künstler",
+        "venueName": "Name Veranstaltungsort",
+        "address": "Adresse",
+        "zip": "Postleitzahl",
+        "city": "Ortschaft",
+        "register": "Registrieren",
+        "error": "Fehler"
+    },
     "dashboard": {
         "dashboard": "Übersicht",
         "pending": "Ausstehend",

@@ -11,10 +11,25 @@
         "email": "E-mail",
         "password": "Password",
         "login": "login",
-        "register": "registrieren",
+        "register": "registrier",
         "error": "Error",
         "success": "Success",
         "successMsg": "Registration was successful, please log in"
+    },
+    "register": {
+        "email": "e-mail",
+        "username": "username",
+        "password": "password",
+        "registerAs": "register as",
+        "artist": "artist",
+        "venue": "venue",
+        "artistName": "artist name",
+        "venueName": "venue name",
+        "address": "address",
+        "zip": "zip code",
+        "city": "city",
+        "register": "registrier",
+        "error": "error"
     },
     "dashboard": {
         "dashboard": "Dashboard",
