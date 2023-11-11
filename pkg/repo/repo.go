@@ -1,7 +1,9 @@
 package repo
 
 import (
+	"errors"
 	"fmt"
+	"os"
 
 	"github.com/sekthor/songbird-backend/pkg/config"
 	"github.com/sekthor/songbird-backend/pkg/model"
@@ -14,6 +16,17 @@ func Connect(conf config.DbConfig) (*gorm.DB, error) {
 
 	switch conf.Type {
 	case "sqlite":
+		// make sure the sqlite database file exits
+		if _, err := os.Stat(conf.Database); err != nil {
+			if errors.Is(err, os.ErrNotExist) {
+				file, err := os.Create(conf.Database)
+				if err != nil {
+					return nil, err
+				}
+				file.Close()
+			}
+			return nil, err
+		}
 		return gorm.Open(sqlite.Open(conf.Database), &gorm.Config{
 			TranslateError: false,
 			Logger:         GormLogger{},
