@@ -49,8 +49,6 @@ export class VenueDetailComponent implements OnInit {
         "artist", this.userService.getSubject(), "open").subscribe(
           applications => this.openApplications = applications
         )
-
-    this.setDate()
   }
 
   getVenue(id: number) {
@@ -113,13 +111,6 @@ export class VenueDetailComponent implements OnInit {
     event.target.disabled = true
   }
 
-  setDate() {
-    let datepicker = <HTMLInputElement>document.getElementById("tsdate")
-
-    console.log(datepicker)
-    datepicker.value = "2023/12/08"
-  }
-
   createGoogleMapsQuery(venue: Venue): string {
     let query = encodeURI(`${venue.address} ${venue.zip} ${venue.city}`)
     return `https://www.google.com/maps/search/?api=1&query=${query}`
@@ -128,6 +119,14 @@ export class VenueDetailComponent implements OnInit {
   hasAlreadyApplied(ts: Timeslot): boolean{
     return this.openApplications
       .find(application => ts.ID === application.timeslot.ID) !== undefined
+  }
+
+  getValidTimes(): string[] {
+    let times: string[] = []
+    for (let hour = 0; hour < 24; hour++) {
+      times.push(`${hour}:00`,`${hour}:15`,`${hour}:30`,`${hour}:45`)
+    }
+    return times
   }
 
 }

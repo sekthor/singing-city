@@ -29,7 +29,9 @@
 
       <td>
         <div class="form-floating">
-          <input id="newTime" type="time" [(ngModel)]="newTime" class="form-control">
+          <select id="newType" class="form-select" [(ngModel)]="newTime">
+            <option *ngFor="let time of getValidTimes()" [ngValue]="time">{{ time }}</option>
+          </select>
           <label for="newTime">{{ "venue.newTime" | translate }}</label>
         </div>
       </td>
