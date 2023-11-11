@@ -7,6 +7,15 @@
         "logout": "Logout",
         "register": "Register"
     },
+    "login": {
+        "email": "E-mail",
+        "password": "Password",
+        "login": "login",
+        "register": "registrieren",
+        "error": "Error",
+        "success": "Success",
+        "successMsg": "Registration was successful, please log in"
+    },
     "dashboard": {
         "dashboard": "Dashboard",
         "pending": "Pending",

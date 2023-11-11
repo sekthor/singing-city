@@ -7,6 +7,15 @@
         "logout": "Ausloggen",
         "register": "Registrieren"
     },
+    "login": {
+        "email": "E-Mail",
+        "password": "Passwort",
+        "login": "login",
+        "register": "registrieren",
+        "error": "Fehler",
+        "success": "Erfolgreich",
+        "successMsg": "Registrierung war erfolgreich, bitte loggen sie sich ein"
+    },
     "dashboard": {
         "dashboard": "Übersicht",
         "pending": "Ausstehend",
