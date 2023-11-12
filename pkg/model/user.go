@@ -24,6 +24,22 @@ type User struct {
 	Type     int    `json:"type"` // 0: admin, 1: artist; 2: venue
 }
 
+type UserDTO struct {
+	gorm.Model
+	Username string `json:"username"`
+	Email    string `json:"email" gorm:"unique"`
+	Type     int    `json:"type"` // 0: admin, 1: artist; 2: venue
+}
+
+func (u *User) DTO() UserDTO {
+	return UserDTO{
+		Model:    u.Model,
+		Username: u.Username,
+		Email:    u.Email,
+		Type:     u.Type,
+	}
+}
+
 func (u *User) Validate() error {
 
 	if u.Email == "" {

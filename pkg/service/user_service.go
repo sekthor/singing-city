@@ -57,6 +57,10 @@ func (s *UserService) GetByEmail(email string) (model.User, error) {
 	return s.repo.FetchByEmail(email)
 }
 
+func (s *UserService) GetById(id int) (model.User, error) {
+	return s.repo.FetchById(id)
+}
+
 func (s *UserService) Register(user model.User) (model.User, error) {
 
 	var err error
