@@ -61,7 +61,7 @@ func (api *api) Router() *gin.Engine {
 	router.PUT("api/users/:id")
 
 	// update venue details
-	router.PUT("api/venues/:id")
+	router.PUT("api/venues/:userid", middleware.RequireResourceOwnerAuth, api.UpdateVenue)
 
 	// update artist details
 	router.PUT("api/artists/:userid", middleware.RequireResourceOwnerAuth, api.UpdateArtist)
