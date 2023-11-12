@@ -2,6 +2,7 @@ package api
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"github.com/sekthor/songbird-backend/pkg/model"
@@ -80,4 +81,71 @@ func (api *api) Login(c *gin.Context) {
 	c.SetSameSite(http.SameSiteLaxMode)
 	c.SetCookie("Authorization", token, 3600*24, "", "", false, false)
 	c.JSON(http.StatusOK, gin.H{"token": token})
+}
+
+func (api *api) GetProfile(c *gin.Context) {
+
+	// get the userid
+	id, err := api.getUserIdFromContext(c)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	var response struct {
+		User   model.UserDTO `json:"user"`
+		Artist model.Artist  `json:"artist,omitempty"`
+		Venue  model.Venue   `json:"venue,omitempty"`
+	}
+
+	user, err := api.userService.GetById(id)
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "no such user"})
+		return
+	}
+
+	response.User = user.DTO()
+
+	switch user.Type {
+	case 1:
+		artist, err := api.artistService.GetById(id)
+		if err != nil {
+			c.JSON(http.StatusNotFound, gin.H{"error": "artist not found"})
+			return
+		}
+		response.Artist = artist
+	case 2:
+		venue, err := api.venueService.GetById(id)
+		if err != nil {
+			c.JSON(http.StatusNotFound, gin.H{"error": "venue not found"})
+			return
+		}
+		response.Venue = venue
+	}
+
+	c.JSON(http.StatusOK, &response)
+}
+
+func (api *api) UpdateUser(c *gin.Context) {
+	id, err := strconv.Atoi(c.Param("userid"))
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid id format"})
+		return
+	}
+
+	var user model.User
+	if c.BindJSON(&user) != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid data format"})
+		return
+	}
+
+	user, err = api.userService.Update(id, user)
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "could not update artist"})
+		return
+	}
+
+	c.JSON(http.StatusAccepted, &user)
 }

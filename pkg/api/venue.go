@@ -31,6 +31,28 @@ func (api *api) GetVenueByID(c *gin.Context) {
 	c.JSON(http.StatusOK, &venue)
 }
 
+func (api *api) UpdateVenue(c *gin.Context) {
+
+	id, err := strconv.Atoi(c.Param("userid"))
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid id format"})
+		return
+	}
+
+	var venue model.Venue
+	if c.BindJSON(&venue) != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid data format"})
+		return
+	}
+
+	venue, err = api.venueService.Update(id, venue)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+}
+
 func (api *api) AddTimeslot(c *gin.Context) {
 	var slot model.Timeslot
 	id, err := strconv.Atoi(c.Param("userid"))

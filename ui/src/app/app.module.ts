@@ -14,6 +14,7 @@ import { FormsModule } from '@angular/forms';
 import { RegisterComponent } from './components/register/register.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ArtistDetailComponent } from './components/artist-detail/artist-detail.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -29,6 +30,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     RegisterComponent,
     DashboardComponent,
     ArtistDetailComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,

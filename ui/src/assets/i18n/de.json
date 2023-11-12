@@ -3,6 +3,7 @@
         "dashboard": "Übersicht",
         "artists": "Künstler",
         "venues": "Veranstaltungsorte",
+        "profile": "Profil",
         "login": "Login",
         "logout": "Ausloggen",
         "register": "Registrieren"
@@ -18,16 +19,19 @@
     },
     "register": {
         "email": "E-Mail",
-        "username": "Nutzername",
+        "username": "Benutzername",
         "password": "Passwort",
         "registerAs": "Registeren als",
         "artist": "Künstler",
         "venue": "Veranstaltungsort",
+        "contact": "Kontakt E-Mail",
         "artistName": "Name Künstler",
+        "genere": "Genere",
         "venueName": "Name Veranstaltungsort",
         "address": "Adresse",
         "zip": "Postleitzahl",
         "city": "Ortschaft",
+        "description": "Beschreibung",
         "register": "Registrieren",
         "error": "Fehler"
     },
@@ -40,6 +44,14 @@
         "retract": "zurückziehen",
         "decline": "ablehnen",
         "accept": "akzeptieren"
+    },
+    "profile": {
+        "updateUser": "Benutzerinfo ändern",
+        "updateVenue": "Veranstaltungsort ändern",
+        "updateArtist": "Künstlerinfo ändern",
+        "update": "ändern",
+        "success": "erfolgreich geändert",
+        "failure": "konnte nicht geändert werden"
     },
     "venuelist": {
         "venues": "Veranstaltungsorte"

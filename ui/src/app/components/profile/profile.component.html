@@ -1,0 +1,67 @@
+
+
+<div class="container p-3 mt-3">
+
+<h3>{{ "profile.updateUser" | translate }}</h3>
+
+<label for="username" class="mt-3">{{ "register.username" | translate }}</label>
+<input type="text" id="username" class="form-control" [(ngModel)]="profile.user.username">
+
+<label for="email" class="mt-3">{{ "register.email" | translate }}</label>
+<input type="text" id="email" class="form-control" [(ngModel)]="profile.user.email">
+
+<button class="btn btn-success mt-2" (click)="updateUser()">{{ "profile.update" | translate }}</button>
+<span *ngIf="userSuccess" class="m-3 text-success">{{ userSuccess }}</span>
+<span *ngIf="userError" class="m-3 text-danger">{{ userError }}</span>
+
+
+</div>
+
+
+
+<div *ngIf="profile.user.type == 2" class="container p-3 mt-3">
+
+<h3>{{ "profile.updateVenue" | translate }}</h3>
+
+<label for="venuename" class="mt-3">{{ "register.venueName" | translate }}</label>
+<input type="text" id="venuename" class="form-control" [(ngModel)]="profile.venue.name">
+
+<label for="venuecontact" class="mt-3">{{ "register.contact" | translate }}</label>
+<input type="text" id="venuecontact" class="form-control" [(ngModel)]="profile.venue.contact">
+
+<label for="address" class="mt-3">{{ "register.address" | translate }}</label>
+<input type="text" id="address" class="form-control" [(ngModel)]="profile.venue.address">
+
+<label for="zip" class="mt-3">{{ "register.zip" | translate }}</label>
+<input type="number" id="zip" class="form-control" [(ngModel)]="profile.venue.zip">
+
+<label for="city" class="mt-3">{{ "register.city" | translate }}</label>
+<input type="text" id="city" class="form-control" [(ngModel)]="profile.venue.city">
+
+<label for="description" class="mt-3">{{ "register.description" | translate }}</label>
+<textarea id="city" class="form-control" [(ngModel)]="profile.venue.description"></textarea>
+
+<button class="btn btn-success mt-2" (click)="updateVenue()">{{ "profile.update" | translate }}</button>
+<span *ngIf="detailSuccess" class="m-3 text-success">{{ detailSuccess }}</span>
+<span *ngIf="detailError" class="m-3 text-danger">{{ detailError }}</span>
+</div>
+
+
+
+<div *ngIf="profile.user.type == 1" class="container p-3 mt-3">
+
+<h3>{{ "profile.updateArtist" | translate }}</h3>
+
+<label for="artistname" class="mt-3">{{ "register.artistName" | translate }}</label>
+<input type="text" id="artistname" class="form-control" [(ngModel)]="profile.artist.name">
+
+<label for="artistcontact" class="mt-3">{{ "register.contact" | translate }}</label>
+<input type="text" id="artistcontact" class="form-control" [(ngModel)]="profile.artist.contact">
+
+<label for="genere" class="mt-3">{{ "register.genere" | translate }}</label>
+<input type="text" id="genere" class="form-control" [(ngModel)]="profile.artist.genere">
+
+<button class="btn btn-success mt-2" (click)="updateArtist()">{{ "profile.update" | translate }}</button>
+<span *ngIf="detailSuccess" class="m-3 text-success">{{ detailSuccess }}</span>
+<span *ngIf="detailError" class="m-3 text-danger">{{ detailError }}</span>
+</div>

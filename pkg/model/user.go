@@ -24,10 +24,42 @@ type User struct {
 	Type     int    `json:"type"` // 0: admin, 1: artist; 2: venue
 }
 
+type UserDTO struct {
+	gorm.Model
+	Username string `json:"username"`
+	Email    string `json:"email" gorm:"unique"`
+	Type     int    `json:"type"` // 0: admin, 1: artist; 2: venue
+}
+
+func (u *User) DTO() UserDTO {
+	return UserDTO{
+		Model:    u.Model,
+		Username: u.Username,
+		Email:    u.Email,
+		Type:     u.Type,
+	}
+}
 func (u *User) Validate() error {
 
-	if u.Email == "" {
+	if err := u.ValidateIngorePassword(); err != nil {
+		return err
+	}
+
+	if u.Password == "" {
 		return ErrorMissingPassword
+	}
+
+	if len(u.Password) < 8 {
+		return ErrorPasswordLength
+	}
+
+	return nil
+}
+
+func (u *User) ValidateIngorePassword() error {
+
+	if u.Email == "" {
+		return ErrorMissingEmail
 	}
 
 	if ok, err := regexp.MatchString("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,}$", u.Email); !ok || err != nil {
@@ -40,14 +72,6 @@ func (u *User) Validate() error {
 
 	if ok, err := regexp.MatchString("^[a-zA-Z0-9]{4,}", u.Username); !ok || err != nil {
 		return ErrorInvalidUsername
-	}
-
-	if u.Password == "" {
-		return ErrorMissingPassword
-	}
-
-	if len(u.Password) < 8 {
-		return ErrorPasswordLength
 	}
 
 	// if invalid type, just default to artist

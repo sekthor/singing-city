@@ -60,3 +60,8 @@ func (r *UserRepo) Exists(id int) bool {
 	result := r.db.First(&user, id)
 	return result.Error == nil && int(user.ID) == id
 }
+
+func (r *UserRepo) SaveOmitPassword(user model.User) (model.User, error) {
+	result := r.db.Omit("Password").Save(&user)
+	return user, result.Error
+}

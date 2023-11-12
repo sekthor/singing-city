@@ -20,6 +20,11 @@ func (r *VenueRepo) Create(venue model.Venue) (model.Venue, error) {
 	return venue, result.Error
 }
 
+func (r *VenueRepo) Save(venue model.Venue) (model.Venue, error) {
+	result := r.db.Save(&venue)
+	return venue, result.Error
+}
+
 func (r *VenueRepo) FetchById(id int) (model.Venue, error) {
 	var venue model.Venue
 	result := r.db.Preload("Slots").First(&venue, id)

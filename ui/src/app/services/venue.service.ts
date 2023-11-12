@@ -21,6 +21,10 @@ export class VenueService {
     return this.http.get<Venue>(`/api/venues/${id}`)
   }
 
+  updateVenue(venue: Venue): Observable<any> {
+    return this.http.put(`/api/venues/${venue.ID}`, venue)
+  }
+
   addTimeslot(venueId: number, slot: Timeslot): Observable<any> {
     return this.http.post(`/api/timeslots/venues/${venueId}`, slot)
   }

@@ -13,4 +13,8 @@ export class ArtistService {
   getArtistById(id: string): Observable<Artist> {
     return this.http.get<Artist>(`api/artists/${id}`)
   }
+  
+  updateArtist(artist: Artist): Observable<any> {
+    return this.http.put(`/api/artists/${artist.ID}`, artist)
+  }
 }

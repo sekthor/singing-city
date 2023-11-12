@@ -28,6 +28,24 @@ func (s *VenueService) Create(venue model.Venue) (model.Venue, error) {
 	return s.repo.Create(venue)
 }
 
+func (s *VenueService) Update(id int, venue model.Venue) (model.Venue, error) {
+
+	// make sure venue exists
+	_, err := s.repo.FetchById(id)
+	if err != nil {
+		return venue, ErrorVenueNotExist
+	}
+
+	venue.ID = uint(id)
+
+	venue, err = s.repo.Save(venue)
+	if err != nil {
+		return venue, ErrorUpdateVenueFailed
+	}
+
+	return venue, nil
+}
+
 func (s *VenueService) DeleteById(id int) error {
 	return s.repo.DeleteById(id)
 }

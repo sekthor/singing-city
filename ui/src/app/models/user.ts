@@ -1,3 +1,17 @@
+import { Artist } from "./artist"
+import { Venue } from "./venue"
+
+export interface Profile {
+  user: UserDTO
+  artist: Artist
+  venue: Venue
+}
+export interface UserDTO {
+  ID: number
+  email: string
+  username: string
+  type: number
+}
 export interface LoginRequest {
   email: string
   password: string
