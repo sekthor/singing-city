@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/smtp"
 
+	"github.com/jordan-wright/email"
 	"github.com/sekthor/songbird-backend/pkg/config"
 )
 
@@ -17,13 +18,15 @@ func NewNotificationService(conf config.SmtpConfig) NotificationService {
 	}
 }
 
-func (s *NotificationService) send(msg string, recipients ...string) error {
-	auth := smtp.PlainAuth("", s.conf.Email, s.conf.Password, s.conf.Server)
-	return smtp.SendMail(
-		fmt.Sprintf("%s:%s", s.conf.Server, s.conf.Port),
-		auth,
-		"Singing City",
-		recipients,
-		[]byte(msg),
-	)
+func (s *NotificationService) Send(subject string, msg string, recipients ...string) error {
+	e := email.NewEmail()
+	e.From = fmt.Sprintf("%s <%s>", s.conf.SenderName, s.conf.SenderEmail)
+	e.Subject = subject
+	e.HTML = []byte(msg)
+	e.To = recipients
+
+	auth := smtp.PlainAuth("", s.conf.SenderEmail, s.conf.Password, s.conf.Server)
+	host := fmt.Sprintf("%s:%s", s.conf.Server, s.conf.Port)
+
+	return e.Send(host, auth)
 }
