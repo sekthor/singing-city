@@ -10,10 +10,11 @@ import (
 )
 
 type api struct {
-	userService        service.UserService
-	venueService       service.VenueService
-	artistService      service.ArtistService
-	applicationService service.ApplicationService
+	userService         service.UserService
+	venueService        service.VenueService
+	artistService       service.ArtistService
+	applicationService  service.ApplicationService
+	notificationService service.NotificationService
 }
 
 func NewApi(conf config.Config) (api, error) {
@@ -40,6 +41,7 @@ func NewApi(conf config.Config) (api, error) {
 	api.venueService = service.NewVenueService(db)
 	api.artistService = service.NewArtistService(db)
 	api.applicationService = service.NewApplicationService(db)
+	api.notificationService = service.NewNotificationService(conf.Smtp)
 
 	return api, nil
 }
