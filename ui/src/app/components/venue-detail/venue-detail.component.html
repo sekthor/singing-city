@@ -22,14 +22,14 @@
     <tr *ngIf="isRessourceOwner" class="table-success">
       <td>
         <div class="form-floating">
-          <input id="newDate" type="date" [(ngModel)]="newDate" min="2023-12-08" max="2023-12-23" id="tsdate" class="form-control">
+          <input id="newDate" type="date" [(ngModel)]="newDate" min="2023-12-08" max="2023-12-23" class="form-control">
           <label for="newDate">{{ "venue.newDate" | translate }}</label>
         </div>
       </td>
 
       <td>
         <div class="form-floating">
-          <select id="newType" class="form-select" [(ngModel)]="newTime">
+          <select id="newTime" class="form-select" [(ngModel)]="newTime">
             <option *ngFor="let time of getValidTimes()" [ngValue]="time">{{ time }}</option>
           </select>
           <label for="newTime">{{ "venue.newTime" | translate }}</label>
