@@ -35,7 +35,7 @@
             <td>{{ application.timeslot.pay }} CHF</td>
             <td *ngIf="!isArtist">
                 <button class="btn btn-outline-success" (click)="acceptApplication(application)">{{ "dashboard.accept" | translate }}</button>
-                <button class="btn btn-outline-danger mx-1" (click)="revokeApplication(application)">{{ "dashoard.decline" | translate }}</button>
+                <button class="btn btn-outline-danger mx-1" (click)="revokeApplication(application)">{{ "dashboard.decline" | translate }}</button>
             </td>
             <td *ngIf="isArtist">
                 <button class="btn btn-outline-danger" (click)="revokeApplication(application)">{{ "dashboard.retract" | translate }}</button>
