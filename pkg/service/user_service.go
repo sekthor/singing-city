@@ -61,6 +61,14 @@ func (s *UserService) GetById(id int) (model.User, error) {
 	return s.repo.FetchById(id)
 }
 
+func (s *UserService) Update(id int, user model.User) (model.User, error) {
+	user.ID = uint(id)
+	if err := user.ValidateIngorePassword(); err != nil {
+		return user, err
+	}
+	return s.repo.SaveOmitPassword(user)
+}
+
 func (s *UserService) Register(user model.User) (model.User, error) {
 
 	var err error

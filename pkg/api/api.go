@@ -60,7 +60,7 @@ func (api *api) Router() *gin.Engine {
 	router.GET("api/profile", middleware.RequireAuth, api.GetProfile)
 
 	// update own user details
-	router.PUT("api/users/:id")
+	router.PUT("api/users/:userid", middleware.RequireResourceOwnerAuth, api.UpdateUser)
 
 	// update venue details
 	router.PUT("api/venues/:userid", middleware.RequireResourceOwnerAuth, api.UpdateVenue)

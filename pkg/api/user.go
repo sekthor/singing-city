@@ -2,6 +2,7 @@ package api
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"github.com/sekthor/songbird-backend/pkg/model"
@@ -123,4 +124,28 @@ func (api *api) GetProfile(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, &response)
+}
+
+func (api *api) UpdateUser(c *gin.Context) {
+	id, err := strconv.Atoi(c.Param("userid"))
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid id format"})
+		return
+	}
+
+	var user model.User
+	if c.BindJSON(&user) != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid data format"})
+		return
+	}
+
+	user, err = api.userService.Update(id, user)
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "could not update artist"})
+		return
+	}
+
+	c.JSON(http.StatusAccepted, &user)
 }
