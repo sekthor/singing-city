@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AuthToken, LoginRequest, RegisterRequest } from '../models/user';
+import { AuthToken, LoginRequest, Profile, RegisterRequest, UserDTO } from '../models/user';
 
 import jwt_decode from "jwt-decode";
 import { CookieService } from 'ngx-cookie-service';
@@ -46,6 +46,14 @@ export class UserService implements OnInit {
 
   register(register: RegisterRequest): Observable<any> {
     return this.http.post(`/api/register`, register)
+  }
+
+  getProfile(): Observable<Profile> {
+    return this.http.get<Profile>(`/api/profile`)
+  }
+
+  updateUser(user: UserDTO): Observable<any> {
+    return this.http.put(`/api/users/${user.ID}`, user)
   }
 
   getSubject(): string {

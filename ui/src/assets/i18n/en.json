@@ -3,6 +3,7 @@
         "dashboard": "Dashboard",
         "artists": "Artists",
         "venues": "Venues",
+        "profile": "Profile",
         "login": "Login",
         "logout": "Logout",
         "register": "Register"
@@ -23,11 +24,14 @@
         "registerAs": "register as",
         "artist": "artist",
         "venue": "venue",
+        "contact": "contact e-mail",
         "artistName": "artist name",
+        "genere": "genere",
         "venueName": "venue name",
         "address": "address",
         "zip": "zip code",
         "city": "city",
+        "description": "description",
         "register": "registrier",
         "error": "error"
     },
@@ -40,6 +44,14 @@
         "retract": "retract",
         "decline": "decline",
         "accept": "accept"
+    },
+    "profile": {
+        "updateUser": "Update user details",
+        "updateVenue": "Update venue details",
+        "updateArtist": "Update artist details",
+        "update": "update",
+        "success": "updated successfully",
+        "failure": "could not update"
     },
     "venuelist": {
         "venues": "Venues"
