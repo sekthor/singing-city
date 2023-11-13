@@ -13,12 +13,14 @@ import (
 )
 
 type UserService struct {
-	repo repo.UserRepo
+	repo   repo.UserRepo
+	notify NotificationService
 }
 
-func NewUserService(db *gorm.DB) UserService {
+func NewUserService(db *gorm.DB, notify *NotificationService) UserService {
 	return UserService{
-		repo: repo.NewUserRepo(db),
+		repo:   repo.NewUserRepo(db),
+		notify: *notify,
 	}
 }
 
@@ -85,7 +87,13 @@ func (s *UserService) Register(user model.User) (model.User, error) {
 
 	user.Password = string(hash)
 
-	return s.repo.Create(user)
+	if user, err := s.repo.Create(user); err != nil {
+		return user, err
+	}
+
+	s.notify.SendRegisterMessage(user)
+
+	return user, nil
 }
 
 func (s *UserService) DeleteById(id int) error {

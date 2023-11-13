@@ -25,8 +25,8 @@ func Connect(conf config.DbConfig) (*gorm.DB, error) {
 				}
 				file.Close()
 			}
-			return nil, err
 		}
+
 		return gorm.Open(sqlite.Open(conf.Database), &gorm.Config{
 			TranslateError: false,
 			Logger:         GormLogger{},

@@ -34,7 +34,7 @@ type SmtpConfig struct {
 	Password    string
 	Server      string
 	Port        string
-	EnableMail  string
+	EnableMail  bool
 }
 
 func LoadConfig() Config {
@@ -54,6 +54,7 @@ func LoadConfig() Config {
 	conf.Smtp.SenderEmail = os.Getenv("SMTPSENDEREMAIL")
 	conf.Smtp.Port = os.Getenv("SMTPSERVERPORT")
 	conf.Smtp.Server = os.Getenv("SMTPSERVER")
+	conf.Smtp.EnableMail = os.Getenv("SMTPENABLE") == "true"
 	return conf
 }
 

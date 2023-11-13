@@ -37,11 +37,11 @@ func NewApi(conf config.Config) (api, error) {
 
 	middleware.SetServerSecret(conf.Server.Secret)
 
-	api.userService = service.NewUserService(db)
+	api.notificationService = service.NewNotificationService(conf.Smtp)
+	api.userService = service.NewUserService(db, &api.notificationService)
 	api.venueService = service.NewVenueService(db)
 	api.artistService = service.NewArtistService(db)
 	api.applicationService = service.NewApplicationService(db)
-	api.notificationService = service.NewNotificationService(conf.Smtp)
 
 	return api, nil
 }
