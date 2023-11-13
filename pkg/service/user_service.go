@@ -87,7 +87,7 @@ func (s *UserService) Register(user model.User) (model.User, error) {
 
 	user.Password = string(hash)
 
-	if user, err := s.repo.Create(user); err != nil {
+	if user, err = s.repo.Create(user); err != nil {
 		return user, err
 	}
 
