@@ -13,10 +13,11 @@ type Config struct {
 }
 
 type ServerConfig struct {
-	Host     string
-	Port     string
-	Secret   string
-	Loglevel string
+	Host      string
+	Port      string
+	Secret    string
+	Loglevel  string
+	AdminPass string
 }
 
 type DbConfig struct {
@@ -43,6 +44,7 @@ func LoadConfig() Config {
 	conf.Server.Port = os.Getenv("SERVERPORT")
 	conf.Server.Secret = os.Getenv("SERVERSECRET")
 	conf.Server.Loglevel = os.Getenv("SERVERLOGLEVEL")
+	conf.Server.AdminPass = os.Getenv("ADMINPASS")
 	conf.DB.Type = os.Getenv("DBTYPE")
 	conf.DB.Database = os.Getenv("DBDATABASE")
 	conf.DB.Host = os.Getenv("DBHOST")

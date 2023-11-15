@@ -3,6 +3,7 @@ package api
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog"
+	"github.com/rs/zerolog/log"
 	"github.com/sekthor/songbird-backend/pkg/config"
 	"github.com/sekthor/songbird-backend/pkg/middleware"
 	"github.com/sekthor/songbird-backend/pkg/repo"
@@ -42,6 +43,12 @@ func NewApi(conf config.Config) (api, error) {
 	api.venueService = service.NewVenueService(db)
 	api.artistService = service.NewArtistService(db)
 	api.applicationService = service.NewApplicationService(db)
+
+	err = api.userService.EnsureAdminUser(conf.Server.AdminPass)
+	if err != nil {
+		log.Error().Err(err).Msg("could not ensure admin user")
+		return api, err
+	}
 
 	return api, nil
 }

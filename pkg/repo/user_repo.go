@@ -21,6 +21,11 @@ func NewUserRepo(db *gorm.DB) UserRepo {
 	}
 }
 
+func (r *UserRepo) Save(user model.User) (model.User, error) {
+	result := r.db.Save(&user)
+	return user, result.Error
+}
+
 func (r *UserRepo) Create(user model.User) (model.User, error) {
 	result := r.db.Create(&user)
 

@@ -79,3 +79,11 @@ func (r *VenueRepo) FetchTimeslotByUserId(userId int) ([]model.Timeslot, error) 
 		Find(&timeslots)
 	return timeslots, result.Error
 }
+
+func (r *VenueRepo) FetchAllConfirmedTimeslots() ([]model.Timeslot, error) {
+	var timeslots []model.Timeslot
+	result := r.db.
+		Where("artist_id IS NOT NULL").
+		Find(&timeslots)
+	return timeslots, result.Error
+}

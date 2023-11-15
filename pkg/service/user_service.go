@@ -87,13 +87,32 @@ func (s *UserService) Register(user model.User) (model.User, error) {
 
 	user.Password = string(hash)
 
-	if user, err := s.repo.Create(user); err != nil {
+	if user, err = s.repo.Create(user); err != nil {
 		return user, err
 	}
 
 	s.notify.SendRegisterMessage(user)
 
 	return user, nil
+}
+
+func (s *UserService) EnsureAdminUser(password string) error {
+
+	hash, err := bcrypt.GenerateFromPassword([]byte(password), 10)
+	if err != nil {
+		return ErrorCouldNotHashPassword
+	}
+
+	var user model.User
+	user.ID = 1
+	user.Username = "admin"
+	user.Email = "admin@songbird.ch"
+	user.Password = string(hash)
+	user.Type = 0
+
+	_, err = s.repo.Save(user)
+
+	return err
 }
 
 func (s *UserService) DeleteById(id int) error {
