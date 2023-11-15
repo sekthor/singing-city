@@ -12,13 +12,15 @@ type ApplicationService struct {
 	repo       repo.ApplicationRepo
 	artistRepo repo.ArtistRepo
 	venueRepo  repo.VenueRepo
+	notify     *NotificationService
 }
 
-func NewApplicationService(db *gorm.DB) ApplicationService {
+func NewApplicationService(db *gorm.DB, notify *NotificationService) ApplicationService {
 	return ApplicationService{
 		repo:       repo.NewApplicationRepo(db),
 		artistRepo: repo.NewArtistRepo(db),
 		venueRepo:  repo.NewVenueRepo(db),
+		notify:     notify,
 	}
 }
 
@@ -78,9 +80,25 @@ func (s *ApplicationService) Apply(artistID int, timeslotID int) error {
 		}
 	}
 
-	_, err = s.repo.Create(application)
+	venue, err := s.venueRepo.FetchByIdWithUser(int(slot.VenueID))
+	if err != nil {
+		return err
+	}
 
-	return err
+	application, err = s.repo.Create(application)
+
+	if err != nil {
+		return err
+	}
+	params := ApplicationMessageParams{
+		Username: venue.User.Username,
+		Artist:   artist.Name,
+		Time:     slot.Time.Format("15:04"),
+		Date:     slot.Time.Format("02.01.2006"),
+	}
+	s.notify.SendApplicationMessage(venue.Contact, params)
+
+	return nil
 }
 
 func (s *ApplicationService) GetApplicationsByVenue(venueId int, status string) ([]model.Application, error) {

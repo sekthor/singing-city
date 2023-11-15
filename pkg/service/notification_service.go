@@ -56,3 +56,26 @@ func (s *NotificationService) SendRegisterMessage(user model.User) error {
 	log.Info().Msg(fmt.Sprintf("sent register email to %s", user.Email))
 	return nil
 }
+
+func (s *NotificationService) SendApplicationMessage(recipient string, params ApplicationMessageParams) error {
+
+	// do not send mails unless it is enabled in the config
+	if !s.conf.EnableMail {
+		return nil
+	}
+
+	var msg bytes.Buffer
+	if err := applicationMessageTmpl.Execute(&msg, params); err != nil {
+		log.Warn().Err(err).Msg(fmt.Sprintf("could not template application email for %s", recipient))
+		return err
+	}
+	err := s.Send(ApplicationMessageSubject, msg.String(), recipient)
+
+	if err != nil {
+		log.Warn().Err(err).Msg(fmt.Sprintf("could not send application email to %s", recipient))
+		return err
+	}
+
+	log.Info().Msg(fmt.Sprintf("sent register email to %s", recipient))
+	return nil
+}
