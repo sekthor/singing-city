@@ -64,15 +64,18 @@ export class VenueDetailComponent implements OnInit {
   }
 
   addTimeSlot() {
+    let datestring = `${this.newDate}T${this.newTime}:00`
     this.newTimeslot.time = new Date(`${this.newDate}T${this.newTime}:00`)
 
-    if (isNaN(+this.newTimeslot.time))
+    if (isNaN(this.newTimeslot.time.getDate())) {
+      console.log("invalid date")
       return
+    }
 
     this.venueService.addTimeslot(this.id, this.newTimeslot).subscribe(
       response => {
-        this.venue?.slots.push(this.newTimeslot)
-        //this.sortTimeslots()
+        let tsCopy = Object.assign({}, this.newTimeslot)
+        this.venue?.slots.push(tsCopy)
       },
       error => {
         console.log(error)
@@ -124,7 +127,8 @@ export class VenueDetailComponent implements OnInit {
   getValidTimes(): string[] {
     let times: string[] = []
     for (let hour = 0; hour < 24; hour++) {
-      times.push(`${hour}:00`,`${hour}:15`,`${hour}:30`,`${hour}:45`)
+      let h = hour.toString().padStart(2, '0')
+      times.push(`${h}:00`,`${h}:15`,`${h}:30`,`${h}:45`)
     }
     return times
   }
