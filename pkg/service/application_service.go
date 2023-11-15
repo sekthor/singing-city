@@ -2,6 +2,8 @@ package service
 
 import (
 	"errors"
+	"fmt"
+	"strconv"
 
 	"github.com/sekthor/songbird-backend/pkg/model"
 	"github.com/sekthor/songbird-backend/pkg/repo"
@@ -170,6 +172,28 @@ func (s *ApplicationService) AcceptApplication(applicationId int, userId int) er
 	if err != nil {
 		return errors.New("could not delete remaining applications for same timeslot")
 	}
+
+	venue, err := s.venueRepo.FetchById(int(application.Timeslot.VenueID))
+	if err != nil {
+		return errors.New("could find venue")
+	}
+
+	artist, err := s.artistRepo.FetchById(int(application.ArtistID))
+	if err != nil {
+		return errors.New("could find artist")
+	}
+
+	params := ConfirmedMessageParams{
+		Username: artist.Name,
+		Contact:  venue.Contact,
+		Venue:    venue.Name,
+		Wage:     strconv.Itoa(application.Timeslot.Pay),
+		Address:  fmt.Sprintf("%s, %d %s", venue.Address, venue.ZipCode, venue.City),
+		Time:     application.Timeslot.Time.Format("15:04"),
+		Date:     application.Timeslot.Time.Format("02.01.2006"),
+	}
+
+	s.notify.SendConfirmedMessage(artist.Contact, params)
 
 	return nil
 }

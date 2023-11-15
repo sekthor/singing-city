@@ -79,3 +79,26 @@ func (s *NotificationService) SendApplicationMessage(recipient string, params Ap
 	log.Info().Msg(fmt.Sprintf("sent register email to %s", recipient))
 	return nil
 }
+
+func (s *NotificationService) SendConfirmedMessage(recipient string, params ConfirmedMessageParams) error {
+
+	// do not send mails unless it is enabled in the config
+	if !s.conf.EnableMail {
+		return nil
+	}
+
+	var msg bytes.Buffer
+	if err := confirmedMessageTmpl.Execute(&msg, params); err != nil {
+		log.Warn().Err(err).Msg(fmt.Sprintf("could not template confirmed email for %s", recipient))
+		return err
+	}
+	err := s.Send(ConfirmedMessageSubject, msg.String(), recipient)
+
+	if err != nil {
+		log.Warn().Err(err).Msg(fmt.Sprintf("could not send confirmed email to %s", recipient))
+		return err
+	}
+
+	log.Info().Msg(fmt.Sprintf("sent register email to %s", recipient))
+	return nil
+}

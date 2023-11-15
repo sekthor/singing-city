@@ -5,7 +5,7 @@ import "html/template"
 const (
 	RegisterMessageSubject    = "Welcome to Singing City"
 	ApplicationMessageSubject = "NEUE BEWERBUNG für eines deiner SingingCity Zeitfenster"
-	ConfirmedMessageSubject   = "A Timeslot has been confirmed"
+	ConfirmedMessageSubject   = "BESTÄTIGUNG deines Auftrittes"
 
 	RegisterMessage = `<h1>Welcome {{ .Username }}</h1>
 	<p>You have signed up to the <a href="https://singingcity.songbirdfestival.ch">Singing City</a> Platform. You are ready to get started.</p>`
@@ -37,7 +37,61 @@ const (
 	<p>Sincerely,<br>
 	Your SingingCity Team</p>`
 
-	ConfirmedMessage = ``
+	ConfirmedMessage = `
+	<h1>Hallo {{ .Username }}</h1>
+
+	<p>
+	Herzlichen Glückwunsch!
+	Wir freuen uns, dir mitteilen zu können, dass deine Bewerbung bei {{ .Venue }} für das Zeitfenster {{ .Time }} am {{ .Date }} erfolgreich angenommen wurde.
+	Dein Auftritt ist nun fixiert, und dieses Bestätigungsmail dient als verbindlicher Vertrag. Bei weiteren Fragen oder wenn du zusätzliche Informationen benötigst, kannst du dich gerne direkt an die Konzert-Location wenden unter <a href="mailto:{{ .Contact }}">{{ .Contact }}</a>.
+	</p>
+
+	<p>Details:<p>
+
+	<table>
+	<tr><td>Konzert-Location</td><td>{{ .Venue }}</td></tr>
+	<tr><td>Datum</td><td>{{ .Date }}</td></tr>
+	<tr><td>Zeitfenster</td><td>{{ .Time }}</td></tr>
+	<tr><td>Gage</td><td>{{ .Wage }}</td></tr>
+	<tr><td>Adresse:</td><td>{{ .Address }}</td></tr>
+	<tr><td>Kontakt</td><td><a href="mailto:{{ .Contact }}">{{ .Contact }}</a></td></tr>
+	</table>
+
+	<p>Zur Verwaltung deiner Auftritte besuche dein <a href="https://singingcity.songbirdfestival.ch/dashboard">SingingCity Profil</a></p>
+
+	<p>Wir freuen uns schon sehr auf deinen Auftritt!</p>
+
+	<p>Herzlichst,<br>
+	Dein SingingCity Team</p>
+
+	<hr>
+
+	<h1>Hello {{ .Username }}</h1>
+
+	<p>
+	Congratulations!
+	We are pleased to inform you that your application to {{ .Venue }} for the Time slot {{ .Time }} on {{ .Date }} has been successfully accepted.
+	Your performance is now confirmed and this confirmation email serves as a binding contract between the two of you.
+	If you have any further questions or require additional information, please contact the venue directly at <a href="mailto:{{ .Contact }}">{{ .Contact }}</a>.
+	</p>
+
+	<p>Details:</p>
+
+	<table>
+	<tr><td>Venue</td><td>{{ .Venue }}</td></tr>
+	<tr><td>Date</td><td>{{ .Date }}</td></tr>
+	<tr><td>Timeslot</td><td>{{ .Time }}</td></tr>
+	<tr><td>Fee</td><td>{{ .Wage }}</td></tr>
+	<tr><td>Address:</td><td>{{ .Address }}</td></tr>
+	<tr><td>Contact</td><td><a href="mailto:{{ .Contact }}">{{ .Contact }}</a></td></tr>
+	</table>
+
+	<p>To manage your performances visit your <a href="https://singingcity.songbirdfestival.ch/dashboard">SingingCity profile</a></p>
+
+	<p>We are looking forward to your performance!</p>
+
+	<p>Sincerely,<br>
+	Your SingingCity Team</p>`
 )
 
 var (
@@ -51,4 +105,15 @@ type ApplicationMessageParams struct {
 	Artist   string
 	Time     string
 	Date     string
+}
+
+type ConfirmedMessageParams struct {
+	Username string
+	Artist   string
+	Time     string
+	Date     string
+	Contact  string
+	Venue    string
+	Wage     string
+	Address  string
 }
