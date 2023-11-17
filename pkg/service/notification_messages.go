@@ -6,9 +6,21 @@ const (
 	RegisterMessageSubject    = "Welcome to Singing City"
 	ApplicationMessageSubject = "NEUE BEWERBUNG für eines deiner SingingCity Zeitfenster"
 	ConfirmedMessageSubject   = "BESTÄTIGUNG deines Auftrittes"
+	RejectedMessageSubject    = "ABSAGE für deine Bewerbung bei"
 
-	RegisterMessage = `<h1>Welcome {{ .Username }}</h1>
-	<p>You have signed up to the <a href="https://singingcity.songbirdfestival.ch">Singing City</a> Platform. You are ready to get started.</p>`
+	RegisterMessage = `
+	<h1>Willkommen {{ .Username }}</h1>
+	<p>
+	Du hast dich für <a href="https://singingcity.songbirdfestival.ch">Singing City</a> registriert.
+	</p>
+
+	<hr>	
+
+	<h1>Welcome {{ .Username }}</h1>
+	<p>
+	You have signed up to the <a href="https://singingcity.songbirdfestival.ch">Singing City</a> Platform.
+	You are ready to get started.
+	</p>`
 
 	ApplicationMessage = `
 	<h1>Hallo {{ .Username }}</h1>
@@ -92,22 +104,48 @@ const (
 
 	<p>Sincerely,<br>
 	Your SingingCity Team</p>`
+
+	RejectedMessage = `
+	<h1>Hallo {{ .Username }}</h1>
+
+	<p>Leider müssen wir dir mitteilen, dass deine Bewerbung für das offene Zeitfenster {{ .Time }} bei {{ .Venue }} am {{ .Date }} abgelehnt wurde.</p>
+
+	<p>
+	Nicht entmutigen lassen!
+	Es gibt noch viele weitere spannende Auftrittsmöglichkeiten für dich.
+	Schaue dafür regelmässig in dein SingingCity Profil, um keine neue Zeitfenster der Konzert-Locations zu verpassen.
+	</p>
+
+	<a href="https://singingcity.songbirdfestival.ch/dashboard">Zu meinem SingingCity Profil</a>
+	<p>Herzlichst,<br>
+	Dein SingingCity Team</p>
+
+	<hr>
+
+	<h1>Hello {{ .Username }}</h1>
+
+	<p>Unfortunately, we have to inform you that your application for the open timeslot at {{ .Venue }} on {{ .Date }} {{ .Time }} has been rejected.</p>
+
+	<p>
+	Don't be discouraged!
+	There are many more exciting performance opportunities for you.
+	Check your SingingCity profile regularly to make sure you don't miss any new concert venue time slots.
+	</p>
+
+	<a href="https://singingcity.songbirdfestival.ch/dashboard">To my SingingCity profile</a>
+
+	<p>Sincerely,<br>
+	Your SingingCity Team</p>`
 )
 
 var (
 	registerMessageTmpl    = template.Must(template.New("register").Parse(RegisterMessage))
 	applicationMessageTmpl = template.Must(template.New("application").Parse(ApplicationMessage))
 	confirmedMessageTmpl   = template.Must(template.New("confirmed").Parse(ConfirmedMessage))
+	rejectedMessageTmpl    = template.Must(template.New("rejected").Parse(RejectedMessage))
 )
 
-type ApplicationMessageParams struct {
-	Username string
-	Artist   string
-	Time     string
-	Date     string
-}
-
-type ConfirmedMessageParams struct {
+type MessageParams struct {
 	Username string
 	Artist   string
 	Time     string

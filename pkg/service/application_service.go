@@ -48,7 +48,24 @@ func (s *ApplicationService) DeleteById(id int, userId int) error {
 		return ErrorUnauthorized
 	}
 
-	return s.repo.DeleteById(id)
+	if err = s.repo.DeleteById(id); err != nil {
+		return err
+	}
+
+	// if deletion was initiated by venue, notify artist
+	if uint(userId) == app.Timeslot.VenueID {
+		venue, _ := s.venueRepo.FetchById(int(app.Timeslot.VenueID))
+		artist, _ := s.artistRepo.FetchById(int(app.ArtistID))
+		params := MessageParams{
+			Username: artist.Name,
+			Time:     app.Timeslot.Time.Format("15:04"),
+			Date:     app.Timeslot.Time.Format("02.01.2006"),
+			Venue:    venue.Name,
+		}
+		s.notify.SendRejectedMessage(artist.Contact, params)
+	}
+
+	return nil
 }
 
 func (s *ApplicationService) Apply(artistID int, timeslotID int) error {
@@ -92,7 +109,7 @@ func (s *ApplicationService) Apply(artistID int, timeslotID int) error {
 	if err != nil {
 		return err
 	}
-	params := ApplicationMessageParams{
+	params := MessageParams{
 		Username: venue.User.Username,
 		Artist:   artist.Name,
 		Time:     slot.Time.Format("15:04"),
@@ -183,7 +200,7 @@ func (s *ApplicationService) AcceptApplication(applicationId int, userId int) er
 		return errors.New("could find artist")
 	}
 
-	params := ConfirmedMessageParams{
+	params := MessageParams{
 		Username: artist.Name,
 		Contact:  venue.Contact,
 		Venue:    venue.Name,
