@@ -24,6 +24,10 @@ func (s *VenueService) GetAll() []model.Venue {
 	return s.repo.FetchAll()
 }
 
+func (s *VenueService) GetAllWithoutTimeslot() []model.Venue {
+	return s.repo.FetchAll()
+}
+
 func (s *VenueService) Create(venue model.Venue) (model.Venue, error) {
 	return s.repo.Create(venue)
 }
@@ -66,4 +70,8 @@ func (s *VenueService) GetTimeslot(tsid int) (model.Timeslot, error) {
 
 func (s *VenueService) GetTimeslotsByUserId(userId int) ([]model.Timeslot, error) {
 	return s.repo.FetchTimeslotByUserId(userId)
+}
+
+func (s *VenueService) GetAllConfirmedTimeslots() ([]model.Timeslot, error) {
+	return s.repo.FetchAllConfirmedTimeslots()
 }

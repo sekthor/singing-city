@@ -75,7 +75,10 @@ func (api *api) Router() *gin.Engine {
 	// optain jwt token as cookie
 	router.POST("api/login", api.Login)
 
+	// get my profile (user info & either artist or venue)
 	router.GET("api/profile", middleware.RequireAuth, api.GetProfile)
+
+	router.GET("/api/admin", middleware.RequireAuth, api.GetAdminInfo)
 
 	// update own user details
 	router.PUT("api/users/:userid", middleware.RequireResourceOwnerAuth, api.UpdateUser)
