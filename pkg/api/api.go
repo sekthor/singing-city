@@ -20,36 +20,45 @@ type api struct {
 
 func NewApi(conf config.Config) (api, error) {
 
+	log.Info().Msg("api: setting log level to " + conf.Server.Loglevel)
 	zerolog.SetGlobalLevel(conf.Server.GetLoglevel())
 
 	api := api{}
 
 	// establish database connection
+	log.Info().Msg("api: connection to database")
 	db, err := repo.Connect(conf.DB)
 	if err != nil {
+		log.Error().Err(err).Msg("api: could not connect to database")
 		return api, err
 	}
 
 	// migrate database schema
+	log.Info().Msg("api: migrating database schema")
 	err = repo.Migrate(db)
 	if err != nil {
+		log.Error().Err(err).Msg("api: could not migrate database schema")
 		return api, err
 	}
 
+	log.Info().Msg("api: setting middleware secret")
 	middleware.SetServerSecret(conf.Server.Secret)
 
+	log.Info().Msg("api: initializing service layer")
 	api.notificationService = service.NewNotificationService(conf.Smtp)
 	api.userService = service.NewUserService(db, &api.notificationService)
 	api.venueService = service.NewVenueService(db)
 	api.artistService = service.NewArtistService(db)
 	api.applicationService = service.NewApplicationService(db, &api.notificationService)
 
+	log.Info().Msg("api: ensuring presence of admin user")
 	err = api.userService.EnsureAdminUser(conf.Server.AdminPass)
 	if err != nil {
-		log.Error().Err(err).Msg("could not ensure admin user")
+		log.Error().Err(err).Msg("could not ensure presence of admin user")
 		return api, err
 	}
 
+	log.Info().Msg("api: successfully initialized api")
 	return api, nil
 }
 
