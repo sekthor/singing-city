@@ -75,5 +75,13 @@
         "pending": "pending",
         "apply": "apply",
         "delete": "delete"
+    },
+    "admin": {
+        "confirmed": "confirmed",
+        "pending": "pending",
+        "venues": "venues",
+        "artists": "artists",
+        "joined": "joined",
+        "slot": "timeslot"
     }
 }

@@ -8,6 +8,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ArtistDetailComponent } from './components/artist-detail/artist-detail.component';
 import { authGuard } from './auth.guard';
 import { ProfileComponent } from './components/profile/profile.component';
+import { AdminComponent } from './components/admin/admin.component';
 
 const routes: Routes = [
   { path: "", redirectTo: "/dashboard", pathMatch: 'full' },
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: "venues/:id", component: VenueDetailComponent, canActivate: [authGuard] },
   { path: "artists/:id", component: ArtistDetailComponent, canActivate: [authGuard] },
   { path: "profile", component: ProfileComponent, canActivate: [authGuard] },
+  { path: "admin", component: AdminComponent, canActivate: [authGuard] },
   { path: "login", component: LoginComponent },
   { path: "register", component: RegisterComponent }
 ];
