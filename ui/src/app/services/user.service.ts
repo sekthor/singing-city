@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AuthToken, LoginRequest, Profile, RegisterRequest, UserDTO } from '../models/user';
+import { AdminInfo, AuthToken, LoginRequest, Profile, RegisterRequest, UserDTO } from '../models/user';
 
 import jwt_decode from "jwt-decode";
 import { CookieService } from 'ngx-cookie-service';
@@ -44,6 +44,13 @@ export class UserService implements OnInit {
     return this.token !== null
   }
 
+  isAdmin(): boolean {
+    if (this.token) {
+      return this.token.type == 0
+    }
+    return false
+  }
+
   register(register: RegisterRequest): Observable<any> {
     return this.http.post(`/api/register`, register)
   }
@@ -54,6 +61,10 @@ export class UserService implements OnInit {
 
   updateUser(user: UserDTO): Observable<any> {
     return this.http.put(`/api/users/${user.ID}`, user)
+  }
+
+  getAdminInfo(): Observable<AdminInfo> {
+    return this.http.get<AdminInfo>(`/api/admin`)
   }
 
   getSubject(): string {

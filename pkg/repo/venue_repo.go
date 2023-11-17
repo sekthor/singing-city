@@ -43,6 +43,12 @@ func (r *VenueRepo) FetchAll() []model.Venue {
 	return venues
 }
 
+func (r *VenueRepo) FetchAllWithoutTimeslot() []model.Venue {
+	var venues []model.Venue
+	_ = r.db.Find(&venues)
+	return venues
+}
+
 func (r *VenueRepo) DeleteById(id int) error {
 	return r.db.Delete(&model.Venue{}, id).Error
 }

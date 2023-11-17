@@ -1,0 +1,88 @@
+<div class="container mt-4">
+<h1>Admin Panel</h1>
+
+<ul class="nav nav-tabs mt-4">
+    <li class="nav-item nav-link" [ngClass]="{'active': selectedTab === 0}" (click)="selectedTab = 0">{{ "admin.pending" | translate }}</li>
+    <li class="nav-item nav-link" [ngClass]="{'active': selectedTab === 1}" (click)="selectedTab = 1">{{ "admin.confirmed" | translate }}</li>
+    <li class="nav-item nav-link" [ngClass]="{'active': selectedTab === 2}" (click)="selectedTab = 2">{{ "admin.venues" | translate }}</li>
+    <li class="nav-item nav-link" [ngClass]="{'active': selectedTab === 3}" (click)="selectedTab = 3">{{ "admin.artists" | translate }}</li>
+</ul>
+
+<div class="cotainer">
+
+<table class="table mt-4" *ngIf="selectedTab === 0">
+    <thead>
+        <tr>
+            <th>{{ "admin.slot" | translate }}</th>
+            <th>{{ "venue.time" | translate }}</th>
+            <th>{{ "register.venue" | translate }}</th>
+            <th>{{ "register.artist" | translate }}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let application of info.pending">
+            <td>{{ application.timeslot.time | date }}</td>
+            <td>{{ application.timeslot.time | date:"HH:mm" }}</td>
+            <td><a [routerLink]="['/venues', application.timeslot.venueID]">{{ findVenueName(application.timeslot.venueID) }}</a></td>
+            <td><a [routerLink]="['/artists', application.artist.ID]">{{ findAristName(application.artist.ID) }}</a></td>
+        </tr>
+    </tbody>
+</table>
+
+<table class="table mt-4" *ngIf="selectedTab === 1">
+    <thead>
+        <tr>
+            <th>{{ "admin.slot" | translate }}</th>
+            <th>{{ "venue.time" | translate }}</th>
+            <th>{{ "register.venue" | translate }}</th>
+            <th>{{ "register.artist" | translate }}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let slot of info.confirmed">
+            <td>{{ slot.time | date }}</td>
+            <td>{{ slot.time | date:"HH:mm" }}</td>
+            <td><a [routerLink]="['/venues', slot.venueID]">{{ findVenueName(slot.venueID) }}</a></td>
+            <td><a [routerLink]="['/artists', slot.artistID]">{{ findAristName(slot.artistID) }}</a></td>
+        </tr>
+    </tbody>
+</table>
+
+<table class="table mt-4" *ngIf="selectedTab === 2">
+    <thead>
+        <tr>
+            <th>{{ "register.venue" | translate }}</th>
+            <th>{{ "register.address" | translate }}</th>
+            <th>{{ "register.contact" | translate }}</th>
+            <th>{{ "admin.joined" | translate }}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let venue of info.venues">
+            <td>{{ venue.name }}</td>
+            <td>{{ venue.address + ", " + venue.zip + " " + venue.city }}</td>
+            <td><a href="mailto:{{ venue.contact }}">{{ venue.contact }}</a></td>
+            <td>{{ venue.CreatedAt | date }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<table class="table mt-4" *ngIf="selectedTab === 3">
+    <thead>
+        <tr>
+            <th>{{ "register.artist" | translate }}</th>
+            <th>{{ "register.contact" | translate }}</th>
+            <th>{{ "admin.joined" | translate }}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let artist of info.artists">
+            <td>{{ artist.name }}</td>
+            <td><a href="mailto:{{ artist.contact }}">{{ artist.contact }}</a></td>
+            <td>{{ artist.CreatedAt | date }}</td>
+        </tr>
+    </tbody>
+</table>
+
+</div>
+</div>

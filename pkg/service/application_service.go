@@ -30,8 +30,8 @@ func (s *ApplicationService) GetById(id int) (model.Application, error) {
 	return s.repo.FetchById(id)
 }
 
-func (s *ApplicationService) GetAll() []model.Application {
-	return s.repo.FetchAll()
+func (s *ApplicationService) GetAllPending() []model.Application {
+	return s.repo.FetchAllPending()
 }
 
 func (s *ApplicationService) Create(application model.Application) (model.Application, error) {

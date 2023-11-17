@@ -1,5 +1,6 @@
+import { Application } from "./application"
 import { Artist } from "./artist"
-import { Venue } from "./venue"
+import { Timeslot, Venue } from "./venue"
 
 export interface Profile {
   user: UserDTO
@@ -34,4 +35,11 @@ export interface AuthToken {
   sub: string
   name: string
   type: number
+}
+
+export interface AdminInfo {
+  artists: Artist[]
+  venues: Venue[]
+  confirmed: Timeslot[]
+  pending: Application[]
 }

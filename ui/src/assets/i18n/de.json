@@ -22,10 +22,10 @@
         "username": "Benutzername",
         "password": "Passwort",
         "registerAs": "Registeren als",
-        "artist": "Künstler",
+        "artist": "Künstler*in",
         "venue": "Veranstaltungsort",
         "contact": "Kontakt E-Mail",
-        "artistName": "Name Künstler",
+        "artistName": "Name Künstler*in",
         "genere": "Genere",
         "venueName": "Name Veranstaltungsort",
         "address": "Adresse",
@@ -75,5 +75,13 @@
         "pending": "ausstehend",
         "apply": "bewerben",
         "delete": "löschen"
+    },
+    "admin": {
+        "confirmed": "Bestätigt",
+        "pending": "Ausstehend",
+        "venues": "Veranstaltungsorte",
+        "artists": "Künstler*innen",
+        "joined": "Beigetreten",
+        "slot": "Zeitfenster"
     }
 }

@@ -66,9 +66,13 @@ func (r *ApplicationRepo) FetchByArtistIdAndStatus(artistId int, confirmed bool)
 	return applications, result.Error
 }
 
-func (r *ApplicationRepo) FetchAll() []model.Application {
+func (r *ApplicationRepo) FetchAllPending() []model.Application {
 	var applications []model.Application
-	_ = r.db.Find(&applications)
+	_ = r.db.
+		Preload("Timeslot").
+		Preload("Artist").
+		Where("confirmed == false").
+		Find(&applications)
 	return applications
 }
 

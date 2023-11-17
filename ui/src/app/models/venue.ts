@@ -2,6 +2,7 @@ import { Artist } from "./artist"
 
 export interface Venue {
   ID: number
+  CreatedAt?: string
   name: string
   description: string
   slots: Timeslot[]
