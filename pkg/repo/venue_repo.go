@@ -31,6 +31,12 @@ func (r *VenueRepo) FetchById(id int) (model.Venue, error) {
 	return venue, result.Error
 }
 
+func (r *VenueRepo) FetchByIdWithUser(id int) (model.Venue, error) {
+	var venue model.Venue
+	result := r.db.Preload("User").First(&venue, id)
+	return venue, result.Error
+}
+
 func (r *VenueRepo) FetchAll() []model.Venue {
 	var venues []model.Venue
 	_ = r.db.Preload("Slots").Find(&venues)

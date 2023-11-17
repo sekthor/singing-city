@@ -42,7 +42,7 @@ func NewApi(conf config.Config) (api, error) {
 	api.userService = service.NewUserService(db, &api.notificationService)
 	api.venueService = service.NewVenueService(db)
 	api.artistService = service.NewArtistService(db)
-	api.applicationService = service.NewApplicationService(db)
+	api.applicationService = service.NewApplicationService(db, &api.notificationService)
 
 	err = api.userService.EnsureAdminUser(conf.Server.AdminPass)
 	if err != nil {

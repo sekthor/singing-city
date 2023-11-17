@@ -2,6 +2,8 @@ package service
 
 import (
 	"errors"
+	"fmt"
+	"strconv"
 
 	"github.com/sekthor/songbird-backend/pkg/model"
 	"github.com/sekthor/songbird-backend/pkg/repo"
@@ -12,13 +14,15 @@ type ApplicationService struct {
 	repo       repo.ApplicationRepo
 	artistRepo repo.ArtistRepo
 	venueRepo  repo.VenueRepo
+	notify     *NotificationService
 }
 
-func NewApplicationService(db *gorm.DB) ApplicationService {
+func NewApplicationService(db *gorm.DB, notify *NotificationService) ApplicationService {
 	return ApplicationService{
 		repo:       repo.NewApplicationRepo(db),
 		artistRepo: repo.NewArtistRepo(db),
 		venueRepo:  repo.NewVenueRepo(db),
+		notify:     notify,
 	}
 }
 
@@ -44,7 +48,24 @@ func (s *ApplicationService) DeleteById(id int, userId int) error {
 		return ErrorUnauthorized
 	}
 
-	return s.repo.DeleteById(id)
+	if err = s.repo.DeleteById(id); err != nil {
+		return err
+	}
+
+	// if deletion was initiated by venue, notify artist
+	if uint(userId) == app.Timeslot.VenueID {
+		venue, _ := s.venueRepo.FetchById(int(app.Timeslot.VenueID))
+		artist, _ := s.artistRepo.FetchById(int(app.ArtistID))
+		params := MessageParams{
+			Username: artist.Name,
+			Time:     app.Timeslot.Time.Format("15:04"),
+			Date:     app.Timeslot.Time.Format("02.01.2006"),
+			Venue:    venue.Name,
+		}
+		s.notify.SendRejectedMessage(artist.Contact, params)
+	}
+
+	return nil
 }
 
 func (s *ApplicationService) Apply(artistID int, timeslotID int) error {
@@ -78,9 +99,25 @@ func (s *ApplicationService) Apply(artistID int, timeslotID int) error {
 		}
 	}
 
-	_, err = s.repo.Create(application)
+	venue, err := s.venueRepo.FetchByIdWithUser(int(slot.VenueID))
+	if err != nil {
+		return err
+	}
 
-	return err
+	application, err = s.repo.Create(application)
+
+	if err != nil {
+		return err
+	}
+	params := MessageParams{
+		Username: venue.User.Username,
+		Artist:   artist.Name,
+		Time:     slot.Time.Format("15:04"),
+		Date:     slot.Time.Format("02.01.2006"),
+	}
+	s.notify.SendApplicationMessage(venue.Contact, params)
+
+	return nil
 }
 
 func (s *ApplicationService) GetApplicationsByVenue(venueId int, status string) ([]model.Application, error) {
@@ -152,6 +189,28 @@ func (s *ApplicationService) AcceptApplication(applicationId int, userId int) er
 	if err != nil {
 		return errors.New("could not delete remaining applications for same timeslot")
 	}
+
+	venue, err := s.venueRepo.FetchById(int(application.Timeslot.VenueID))
+	if err != nil {
+		return errors.New("could find venue")
+	}
+
+	artist, err := s.artistRepo.FetchById(int(application.ArtistID))
+	if err != nil {
+		return errors.New("could find artist")
+	}
+
+	params := MessageParams{
+		Username: artist.Name,
+		Contact:  venue.Contact,
+		Venue:    venue.Name,
+		Wage:     strconv.Itoa(application.Timeslot.Pay),
+		Address:  fmt.Sprintf("%s, %d %s", venue.Address, venue.ZipCode, venue.City),
+		Time:     application.Timeslot.Time.Format("15:04"),
+		Date:     application.Timeslot.Time.Format("02.01.2006"),
+	}
+
+	s.notify.SendConfirmedMessage(artist.Contact, params)
 
 	return nil
 }
