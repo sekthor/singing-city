@@ -64,7 +64,38 @@
 <label for="description" class="mt-3">{{ "register.description" | translate }}</label>
 <textarea id="description" class="form-control" [(ngModel)]="profile.artist.description"></textarea>
 
+<h4 class="mt-3">{{ "profile.socials" | translate }}</h4>
+<table id="socials">
+    <tr>
+        <th>{{ "profile.platform" | translate}}</th>
+        <th>{{ "profile.link" | translate }}</th>
+    </tr>
+    <tr *ngFor="let link of profile.artist.socials; index as i">
+        <td class="pe-2">
+            <input type="text" class="form-control" [(ngModel)]="profile.artist.socials[i].platform">
+        </td>
+        <td class="pe-2">
+            <input type="text" class="form-control" [(ngModel)]="profile.artist.socials[i].link">
+        </td>
+        <td>
+            <button class="btn btn-outline-danger" (click)="removeSocial(profile.artist.socials[i])">{{ "venue.delete" | translate }}</button>
+        </td>
+    </tr>
+    <tr>
+        <td class="pe-2">
+            <input type="text" class="form-control" [(ngModel)]="newSocial.platform" placeholder="facebook">
+        </td>
+        <td class="pe-2">
+            <input type="text" class="form-control" [(ngModel)]="newSocial.link" placeholder="https://facebook.com/my-profile">
+        </td>
+        <td>
+            <button class="btn btn-outline-success" (click)="addSocial()">{{ "venue.add" | translate }}</button>
+        </td>
+    </tr>
+</table>
+
 <button class="btn btn-success mt-2" (click)="updateArtist()">{{ "profile.update" | translate }}</button>
 <span *ngIf="detailSuccess" class="m-3 text-success">{{ detailSuccess }}</span>
 <span *ngIf="detailError" class="m-3 text-danger">{{ detailError }}</span>
+
 </div>
