@@ -33,7 +33,7 @@ func (api *api) GetAdminInfo(c *gin.Context) {
 
 	venues := api.venueService.GetAllWithoutTimeslot()
 	artists := api.artistService.GetAll()
-	applications := api.applicationService.GetAll()
+	applications := api.applicationService.GetAllPending()
 
 	adminInfo.Confirmed = ts
 	adminInfo.Venues = venues
