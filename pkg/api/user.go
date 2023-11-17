@@ -25,6 +25,7 @@ func (api *api) Register(c *gin.Context) {
 		return
 	}
 
+	log.Trace().Msg("attempting to register user")
 	user, err := api.userService.Register(registerRequest.User)
 
 	if err != nil {
@@ -33,13 +34,16 @@ func (api *api) Register(c *gin.Context) {
 		return
 	}
 
+	log.Trace().Msg("attempting to determine user type")
 	switch user.Type {
 	case 1:
+		log.Trace().Msg("user is of type 'artist'")
 		artist := model.Artist{}
 		artist.ID = user.ID
 		artist.Name = registerRequest.Name
 		artist.User = user
 		artist.Contact = user.Email
+		log.Trace().Msgf("attempting to create artist for user '%d'", user.ID)
 		artist, err = api.artistService.Create(artist)
 		if err != nil {
 			log.Debug().Err(err).Msgf("could not register artist for user '%d'", user.ID)
@@ -48,6 +52,7 @@ func (api *api) Register(c *gin.Context) {
 		}
 		c.JSON(http.StatusAccepted, &artist)
 	case 2:
+		log.Trace().Msg("user is of type 'venue'")
 		venue := model.Venue{}
 		venue.ID = user.ID
 		venue.Name = registerRequest.Name
@@ -56,6 +61,7 @@ func (api *api) Register(c *gin.Context) {
 		venue.ZipCode = registerRequest.ZipCode
 		venue.City = registerRequest.City
 		venue.Contact = user.Email
+		log.Trace().Msgf("attempting to create venue for user '%d'", user.ID)
 		venue, err = api.venueService.Create(venue)
 		if err != nil {
 			log.Debug().Err(err).Msgf("could not register venue for user '%d'", user.ID)

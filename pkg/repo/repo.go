@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/rs/zerolog/log"
 	"github.com/sekthor/songbird-backend/pkg/config"
 	"github.com/sekthor/songbird-backend/pkg/model"
 	"gorm.io/driver/mysql"
@@ -19,14 +20,17 @@ func Connect(conf config.DbConfig) (*gorm.DB, error) {
 		// make sure the sqlite database file exits
 		if _, err := os.Stat(conf.Database); err != nil {
 			if errors.Is(err, os.ErrNotExist) {
+				log.Debug().Msgf("sqlite database at '%s' does not yet exist", conf.Database)
 				file, err := os.Create(conf.Database)
 				if err != nil {
+					log.Debug().Msgf("could not create sqlite database at '%s'", conf.Database)
 					return nil, err
 				}
 				file.Close()
 			}
 		}
 
+		log.Debug().Msgf("opening sqlite database at '%s'", conf.Database)
 		return gorm.Open(sqlite.Open(conf.Database), &gorm.Config{
 			TranslateError: false,
 			Logger:         GormLogger{},

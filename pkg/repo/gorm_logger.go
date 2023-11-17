@@ -31,9 +31,9 @@ func (GormLogger) Trace(ctx context.Context, begin time.Time, fc func() (sql str
 	sql, rows := fc()
 
 	if err != nil {
-		msg = "sql query success"
-	} else {
 		msg = "sql query error"
+	} else {
+		msg = "sql query success"
 	}
 
 	log.Trace().Err(err).

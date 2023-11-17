@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
+	"github.com/rs/zerolog/log"
 	"github.com/sekthor/songbird-backend/pkg/middleware"
 	"github.com/sekthor/songbird-backend/pkg/model"
 	"github.com/sekthor/songbird-backend/pkg/repo"
@@ -76,22 +77,29 @@ func (s *UserService) Register(user model.User) (model.User, error) {
 	var err error
 
 	if err = user.Validate(); err != nil {
+		log.Trace().Msgf("cloud not validate user '%d'", user.ID)
 		return user, err
 	}
 
 	hash, err := bcrypt.GenerateFromPassword([]byte(user.Password), 10)
 
 	if err != nil {
+		log.Trace().Msgf("cloud not generate bcrypt hash for user '%d'", user.ID)
 		return user, ErrorCouldNotHashPassword
 	}
 
 	user.Password = string(hash)
 
 	if user, err = s.repo.Create(user); err != nil {
+		log.Trace().Msgf("cloud not create user '%d'", user.ID)
 		return user, err
 	}
 
-	s.notify.SendRegisterMessage(user)
+	if err = s.notify.SendRegisterMessage(user); err != nil {
+		log.Trace().Err(err).Msgf("could not send register email to user '%d'", user.ID)
+	} else {
+		log.Trace().Msgf("sent register email to user '%d'", user.ID)
+	}
 
 	return user, nil
 }
