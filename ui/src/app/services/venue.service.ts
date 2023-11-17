@@ -33,6 +33,10 @@ export class VenueService {
     return this.http.delete(`/api/timeslots/${tsid}/venues/${venueId}`)
   }
 
+  deleteTimeslotAsAdmin(tsid: number) {
+    return this.http.delete(`/api/timeslots/${tsid}`)
+  }
+
   applyForTimeslot(artistId: number, tsid: number) {
     return this.http.post(`api/timeslots/${tsid}/apply/${artistId}`, {})
   }

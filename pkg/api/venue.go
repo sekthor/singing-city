@@ -104,6 +104,34 @@ func (api *api) DeleteTimeslot(c *gin.Context) {
 	c.Status(http.StatusOK)
 }
 
+func (api *api) DeleteTimeslotAsAdmin(c *gin.Context) {
+
+	id, err := api.getUserIdFromContext(c)
+
+	if err != nil || id != 1 {
+		log.Debug().Err(err).Msgf("user is no authorized admin")
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "unauthorized"})
+		return
+	}
+
+	tsid, err := strconv.Atoi(c.Param("tsid"))
+	if err != nil {
+		log.Debug().Err(err).Msgf("invalid timeslot id: '%s'", c.Param("tsid"))
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid id format"})
+		return
+	}
+
+	err = api.venueService.DeleteTimeslot(tsid)
+
+	if err != nil {
+		log.Debug().Err(err).Msgf("cloud not delete timeslot '%d'", tsid)
+		c.JSON(http.StatusNotFound, gin.H{"error": "could not delete timeslot"})
+		return
+	}
+
+	c.Status(http.StatusOK)
+}
+
 func (api *api) GetTimeslots(c *gin.Context) {
 	userId, err := api.getUserIdFromContext(c)
 

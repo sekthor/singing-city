@@ -17,6 +17,7 @@
             <th>{{ "venue.time" | translate }}</th>
             <th>{{ "register.venue" | translate }}</th>
             <th>{{ "register.artist" | translate }}</th>
+            <th>{{ "venue.option" | translate }}</th>
         </tr>
     </thead>
     <tbody>
@@ -25,6 +26,7 @@
             <td>{{ application.timeslot.time | date:"HH:mm" }}</td>
             <td><a [routerLink]="['/venues', application.timeslot.venueID]">{{ findVenueName(application.timeslot.venueID) }}</a></td>
             <td><a [routerLink]="['/artists', application.artist.ID]">{{ findAristName(application.artist.ID) }}</a></td>
+            <td><button class="btn btn-danger" (click)="deleteApplication(application)">{{ "venue.delete" | translate }}</button></td>
         </tr>
     </tbody>
 </table>
@@ -36,6 +38,7 @@
             <th>{{ "venue.time" | translate }}</th>
             <th>{{ "register.venue" | translate }}</th>
             <th>{{ "register.artist" | translate }}</th>
+            <th>{{ "venue.option" | translate }}</th>
         </tr>
     </thead>
     <tbody>
@@ -44,6 +47,7 @@
             <td>{{ slot.time | date:"HH:mm" }}</td>
             <td><a [routerLink]="['/venues', slot.venueID]">{{ findVenueName(slot.venueID) }}</a></td>
             <td><a [routerLink]="['/artists', slot.artistID]">{{ findAristName(slot.artistID) }}</a></td>
+            <td><button class="btn btn-danger" (click)="deleteTimeslot(slot)">{{ "venue.delete" | translate }}</button></td>
         </tr>
     </tbody>
 </table>
