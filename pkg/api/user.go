@@ -5,6 +5,7 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
+	"github.com/rs/zerolog/log"
 	"github.com/sekthor/songbird-backend/pkg/model"
 )
 
@@ -18,7 +19,8 @@ func (api *api) Register(c *gin.Context) {
 		City    string `json:"city"`
 	}
 
-	if c.BindJSON(&registerRequest) != nil {
+	if err := c.BindJSON(&registerRequest); err != nil {
+		log.Debug().Err(err).Msgf("could not unmarshall user in register request")
 		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid data in login form"})
 		return
 	}
@@ -26,6 +28,7 @@ func (api *api) Register(c *gin.Context) {
 	user, err := api.userService.Register(registerRequest.User)
 
 	if err != nil {
+		log.Debug().Err(err).Msgf("could not register user")
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -39,6 +42,7 @@ func (api *api) Register(c *gin.Context) {
 		artist.Contact = user.Email
 		artist, err = api.artistService.Create(artist)
 		if err != nil {
+			log.Debug().Err(err).Msgf("could not register artist for user '%d'", user.ID)
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
@@ -54,19 +58,22 @@ func (api *api) Register(c *gin.Context) {
 		venue.Contact = user.Email
 		venue, err = api.venueService.Create(venue)
 		if err != nil {
+			log.Debug().Err(err).Msgf("could not register venue for user '%d'", user.ID)
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
 		c.JSON(http.StatusAccepted, &venue)
 	default:
-		c.JSON(http.StatusBadRequest, gin.H{})
+		log.Debug().Err(err).Msgf("invalid user type '%s'", user.Type)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid user type"})
 	}
 }
 
 func (api *api) Login(c *gin.Context) {
 	var user model.User
 
-	if c.BindJSON(&user) != nil {
+	if err := c.BindJSON(&user); err != nil {
+		log.Debug().Err(err).Msgf("could not unmarshall login request")
 		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid data in login form"})
 		return
 	}
@@ -74,6 +81,7 @@ func (api *api) Login(c *gin.Context) {
 	token, err := api.userService.Login(user)
 
 	if err != nil {
+		log.Debug().Err(err).Msgf("could not login user '%d'", user.ID)
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -88,6 +96,7 @@ func (api *api) GetProfile(c *gin.Context) {
 	// get the userid
 	id, err := api.getUserIdFromContext(c)
 	if err != nil {
+		log.Debug().Err(err).Msgf("no userid found in context")
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -100,6 +109,7 @@ func (api *api) GetProfile(c *gin.Context) {
 
 	user, err := api.userService.GetById(id)
 	if err != nil {
+		log.Debug().Err(err).Msgf("user '%d' not found", id)
 		c.JSON(http.StatusNotFound, gin.H{"error": "no such user"})
 		return
 	}
@@ -110,6 +120,7 @@ func (api *api) GetProfile(c *gin.Context) {
 	case 1:
 		artist, err := api.artistService.GetById(id)
 		if err != nil {
+			log.Debug().Err(err).Msgf("artist '%d' not found", id)
 			c.JSON(http.StatusNotFound, gin.H{"error": "artist not found"})
 			return
 		}
@@ -117,6 +128,7 @@ func (api *api) GetProfile(c *gin.Context) {
 	case 2:
 		venue, err := api.venueService.GetById(id)
 		if err != nil {
+			log.Debug().Err(err).Msgf("venue '%d' not found", id)
 			c.JSON(http.StatusNotFound, gin.H{"error": "venue not found"})
 			return
 		}
@@ -130,12 +142,14 @@ func (api *api) UpdateUser(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("userid"))
 
 	if err != nil {
+		log.Debug().Err(err).Msgf("invalid user id: '%s'", c.Param("userId"))
 		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid id format"})
 		return
 	}
 
 	var user model.User
 	if c.BindJSON(&user) != nil {
+		log.Debug().Err(err).Msgf("could not unmarshall user")
 		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid data format"})
 		return
 	}
@@ -143,7 +157,8 @@ func (api *api) UpdateUser(c *gin.Context) {
 	user, err = api.userService.Update(id, user)
 
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "could not update artist"})
+		log.Debug().Err(err).Msgf("could not update user '%d'", id)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "could not update user"})
 		return
 	}
 
