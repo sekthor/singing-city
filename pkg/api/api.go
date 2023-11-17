@@ -104,6 +104,9 @@ func (api *api) Router() *gin.Engine {
 	// as venue owner, delete a timeslot
 	router.DELETE("api/timeslots/:tsid/venues/:userid", middleware.RequireResourceOwnerAuth, api.DeleteTimeslot)
 
+	// as admin delete timeslot
+	router.DELETE("api/timeslots/:tsid", middleware.RequireAuth, api.DeleteTimeslotAsAdmin)
+
 	// as artist, apply for timeslot
 	router.POST("api/timeslots/:tsid/apply/:userid", middleware.RequireResourceOwnerAuth, api.Apply)
 

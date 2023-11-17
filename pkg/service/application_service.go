@@ -44,7 +44,7 @@ func (s *ApplicationService) DeleteById(id int, userId int) error {
 		return err
 	}
 
-	if app.ArtistID != uint(userId) && app.Timeslot.VenueID != uint(userId) {
+	if app.ArtistID != uint(userId) && app.Timeslot.VenueID != uint(userId) && userId != 1 {
 		return ErrorUnauthorized
 	}
 
