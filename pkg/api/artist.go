@@ -9,6 +9,10 @@ import (
 	"github.com/sekthor/songbird-backend/pkg/model"
 )
 
+func (api *api) GetAllArtists(c *gin.Context) {
+	c.JSON(http.StatusOK, api.artistService.GetAll())
+}
+
 func (api *api) GetArtistById(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 

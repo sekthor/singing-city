@@ -16,6 +16,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ArtistDetailComponent } from './components/artist-detail/artist-detail.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { AdminComponent } from './components/admin/admin.component';
+import { ArtistListComponent } from './components/artist-list/artist-list.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -33,6 +34,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ArtistDetailComponent,
     ProfileComponent,
     AdminComponent,
+    ArtistListComponent,
   ],
   imports: [
     BrowserModule,

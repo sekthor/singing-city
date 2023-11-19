@@ -15,11 +15,9 @@ export class VenueListComponent implements OnInit {
 
   constructor(
     private venueService: VenueService,
-    private translate: TranslateService
   ) {}
 
   ngOnInit(): void {
-    this.translate.use(localStorage.getItem("lang") || "en")
     this.venueService.getVenues().subscribe(venues => this.venues = venues);
   }
 

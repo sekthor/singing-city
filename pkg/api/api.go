@@ -95,6 +95,9 @@ func (api *api) Router() *gin.Engine {
 	// get a venue by its ID
 	router.GET("api/venues/:id", middleware.RequireAuth, api.GetVenueByID)
 
+	// get all artists
+	router.GET("api/artists", middleware.RequireAuth, api.GetAllArtists)
+
 	// get an artist by their ID
 	router.GET("api/artists/:id", middleware.RequireAuth, api.GetArtistById)
 

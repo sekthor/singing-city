@@ -9,12 +9,14 @@ import { ArtistDetailComponent } from './components/artist-detail/artist-detail.
 import { authGuard } from './auth.guard';
 import { ProfileComponent } from './components/profile/profile.component';
 import { AdminComponent } from './components/admin/admin.component';
+import { ArtistListComponent } from './components/artist-list/artist-list.component';
 
 const routes: Routes = [
   { path: "", redirectTo: "/dashboard", pathMatch: 'full' },
   { path: "dashboard", component: DashboardComponent, canActivate: [authGuard] },
   { path: "venues", component: VenueListComponent, canActivate: [authGuard] },
   { path: "venues/:id", component: VenueDetailComponent, canActivate: [authGuard] },
+  { path: "artists", component: ArtistListComponent, canActivate: [authGuard] },
   { path: "artists/:id", component: ArtistDetailComponent, canActivate: [authGuard] },
   { path: "profile", component: ProfileComponent, canActivate: [authGuard] },
   { path: "admin", component: AdminComponent, canActivate: [authGuard] },

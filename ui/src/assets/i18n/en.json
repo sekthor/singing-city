@@ -56,6 +56,9 @@
         "platform": "platform",
         "link": "link"
     },
+    "artistlist": {
+        "artists": "Artists"
+    },
     "venuelist": {
         "venues": "Venues"
     },
