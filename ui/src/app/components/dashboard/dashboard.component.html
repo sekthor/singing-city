@@ -66,8 +66,16 @@
             <td>{{ timeslot.pay }} CHF</td>
 
             <td>
-                <a *ngIf="!isArtist" href="mailto:{{ timeslot.artist?.contact }}">{{ timeslot.artist?.contact }}</a>
-                <a *ngIf="isArtist" href="mailto:{{ getVenueContactByVenueID(timeslot.venueID) }}">{{ getVenueContactByVenueID(timeslot.venueID) }}</a>
+                <span *ngIf="!isArtist" >
+                    <a href="mailto:{{ timeslot.artist?.contact }}">{{ timeslot.artist?.contact }}</a>
+                    <br>
+                    <a href="tel:{{ timeslot.artist?.phone}}">{{ timeslot.artist?.phone }}</a>
+                </span>
+                <span *ngIf="isArtist">
+                    <a href="mailto:{{ getVenueContactByVenueID(timeslot.venueID) }}">{{ getVenueContactByVenueID(timeslot.venueID) }}</a>
+                    <br>
+                    <a href="tel:{{ getVenuePhoneByVenueID(timeslot.venueID) }}">{{ getVenuePhoneByVenueID(timeslot.venueID) }}</a>
+                </span>
             </td>
         </tr>
 </table>

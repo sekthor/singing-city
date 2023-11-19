@@ -16,9 +16,6 @@ export class RegisterComponent implements OnInit {
     password: "",
     type: 1,
     name: "",
-    address: "",
-    zip: 0,
-    city: ""
   }
 
   error: string = ""

@@ -33,7 +33,8 @@
         "city": "Ortschaft",
         "description": "Beschreibung",
         "register": "Registrieren",
-        "error": "Fehler"
+        "error": "Fehler",
+        "phone": "Telefonnummer"
     },
     "dashboard": {
         "dashboard": "Übersicht",

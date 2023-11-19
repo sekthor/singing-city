@@ -32,8 +32,9 @@
         "zip": "zip code",
         "city": "city",
         "description": "description",
-        "register": "registrier",
-        "error": "error"
+        "register": "register",
+        "error": "error",
+        "phone": "phone"
     },
     "dashboard": {
         "dashboard": "Dashboard",

@@ -27,16 +27,19 @@
 <input type="text" id="venuename" class="form-control" [(ngModel)]="profile.venue.name">
 
 <label for="venuecontact" class="mt-3">{{ "register.contact" | translate }}</label>
-<input type="text" id="venuecontact" class="form-control" [(ngModel)]="profile.venue.contact">
+<input type="text" id="venuecontact" class="form-control" [(ngModel)]="profile.venue.contact" placeholder="contact@venue.ch">
+
+<label for="venuephone" class="mt-3">{{ "register.phone" | translate }}</label>
+<input type="text" id="venuephone" class="form-control" [(ngModel)]="profile.venue.phone" placeholder="+41 79 111 22 33">
 
 <label for="address" class="mt-3">{{ "register.address" | translate }}</label>
-<input type="text" id="address" class="form-control" [(ngModel)]="profile.venue.address">
+<input type="text" id="address" class="form-control" [(ngModel)]="profile.venue.address" placeholder="Hauptstrasse 1">
 
 <label for="zip" class="mt-3">{{ "register.zip" | translate }}</label>
-<input type="number" id="zip" class="form-control" [(ngModel)]="profile.venue.zip">
+<input type="number" id="zip" class="form-control" [(ngModel)]="profile.venue.zip" placeholder="7260">
 
 <label for="city" class="mt-3">{{ "register.city" | translate }}</label>
-<input type="text" id="city" class="form-control" [(ngModel)]="profile.venue.city">
+<input type="text" id="city" class="form-control" [(ngModel)]="profile.venue.city" placeholder="Davos">
 
 <label for="description" class="mt-3">{{ "register.description" | translate }}</label>
 <textarea id="description" class="form-control" [(ngModel)]="profile.venue.description"></textarea>
@@ -56,13 +59,20 @@
 <input type="text" id="artistname" class="form-control" [(ngModel)]="profile.artist.name">
 
 <label for="artistcontact" class="mt-3">{{ "register.contact" | translate }}</label>
-<input type="text" id="artistcontact" class="form-control" [(ngModel)]="profile.artist.contact">
+<input type="text" id="artistcontact" class="form-control" [(ngModel)]="profile.artist.contact" placeholder="contact@artist.ch">
+
+<label for="artistphone" class="mt-3">{{ "register.phone" | translate }}</label>
+<input type="text" id="artistphone" class="form-control" [(ngModel)]="profile.artist.phone" placeholder="+41 79 111 22 33">
 
 <label for="genere" class="mt-3">{{ "register.genere" | translate }}</label>
 <input type="text" id="genere" class="form-control" [(ngModel)]="profile.artist.genere">
 
 <label for="description" class="mt-3">{{ "register.description" | translate }}</label>
 <textarea id="description" class="form-control" [(ngModel)]="profile.artist.description"></textarea>
+
+
+
+
 
 <h4 class="mt-3">{{ "profile.socials" | translate }}</h4>
 <table id="socials">
