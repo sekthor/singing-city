@@ -25,8 +25,10 @@ func (api *api) Register(c *gin.Context) {
 		return
 	}
 
+	invite := c.Query("invite")
+
 	log.Trace().Msg("attempting to register user")
-	user, err := api.userService.Register(registerRequest.User)
+	user, err := api.userService.Register(registerRequest.User, invite)
 
 	if err != nil {
 		log.Debug().Err(err).Msgf("could not register user")

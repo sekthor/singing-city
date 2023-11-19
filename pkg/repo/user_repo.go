@@ -70,3 +70,25 @@ func (r *UserRepo) SaveOmitPassword(user model.User) (model.User, error) {
 	result := r.db.Omit("Password").Save(&user)
 	return user, result.Error
 }
+
+func (r *UserRepo) CreateInvite(i model.Invite) (model.Invite, error) {
+	result := r.db.Create(&i)
+	return i, result.Error
+}
+
+func (r *UserRepo) DeleteInviteById(id string) error {
+	result := r.db.Where("invite = ?", id).Delete(&model.Invite{})
+	return result.Error
+}
+
+func (r *UserRepo) FetchAllInvites() []model.Invite {
+	var invs []model.Invite
+	_ = r.db.Find(&invs)
+	return invs
+}
+
+func (r *UserRepo) FetchInviteById(id string) (model.Invite, error) {
+	var inv model.Invite
+	result := r.db.Where("invite = ?", id).First(&inv)
+	return inv, result.Error
+}

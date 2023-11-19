@@ -10,5 +10,6 @@ type Artist struct {
 	Contact     string       `json:"contact"`
 	Genere      string       `json:"genere"`
 	Description string       `json:"description"`
+	Phone       string       `json:"phone"`
 	Socials     []SocialLink `json:"socials"`
 }

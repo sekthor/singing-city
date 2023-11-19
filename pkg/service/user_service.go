@@ -1,6 +1,7 @@
 package service
 
 import (
+	"math/rand"
 	"strconv"
 	"time"
 
@@ -72,9 +73,14 @@ func (s *UserService) Update(id int, user model.User) (model.User, error) {
 	return s.repo.SaveOmitPassword(user)
 }
 
-func (s *UserService) Register(user model.User) (model.User, error) {
+func (s *UserService) Register(user model.User, invite string) (model.User, error) {
 
 	var err error
+
+	if inv, err := s.repo.FetchInviteById(invite); err != nil {
+		log.Debug().Msgf("cloud find invite '%s'", inv)
+		return user, ErrorInviteNotFound
+	}
 
 	if err = user.Validate(); err != nil {
 		log.Trace().Msgf("cloud not validate user '%d'", user.ID)
@@ -94,6 +100,8 @@ func (s *UserService) Register(user model.User) (model.User, error) {
 		log.Trace().Msgf("cloud not create user '%d'", user.ID)
 		return user, err
 	}
+
+	s.repo.DeleteInviteById(invite)
 
 	if err = s.notify.SendRegisterMessage(user); err != nil {
 		log.Trace().Err(err).Msgf("could not send register email to user '%d'", user.ID)
@@ -125,4 +133,20 @@ func (s *UserService) EnsureAdminUser(password string) error {
 
 func (s *UserService) DeleteById(id int) error {
 	return s.repo.DeleteById(id)
+}
+
+func (s *UserService) CreateInvite() (model.Invite, error) {
+	var letters = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
+	b := make([]rune, 32)
+	for i := range b {
+		b[i] = letters[rand.Intn(len(letters))]
+	}
+	invite := model.Invite{
+		Invite: string(b),
+	}
+	return s.repo.CreateInvite(invite)
+}
+
+func (s *UserService) GetAllInvites() []model.Invite {
+	return s.repo.FetchAllInvites()
 }

@@ -1,7 +1,7 @@
 {
     "header": {
         "dashboard": "Übersicht",
-        "artists": "Künstler",
+        "artists": "Künstler*innen",
         "venues": "Veranstaltungsorte",
         "profile": "Profil",
         "login": "Login",
@@ -88,6 +88,8 @@
         "venues": "Veranstaltungsorte",
         "artists": "Künstler*innen",
         "joined": "Beigetreten",
-        "slot": "Zeitfenster"
+        "slot": "Zeitfenster",
+        "invitelink": "link",
+        "invites": "Einladungen"
     }
 }

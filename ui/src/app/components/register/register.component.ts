@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RegisterRequest } from 'src/app/models/user';
 import { UserService } from 'src/app/services/user.service';
 
@@ -8,7 +8,7 @@ import { UserService } from 'src/app/services/user.service';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
 
   registerRequest: RegisterRequest = { 
     email: "",
@@ -22,15 +22,21 @@ export class RegisterComponent {
   }
 
   error: string = ""
+  invite: string = ""
 
   constructor(
     private userService: UserService,
-    private router: Router) {}
+    private router: Router,
+    private route: ActivatedRoute) {}
+  
+  ngOnInit(): void {
+    this.invite = this.route.snapshot.queryParamMap.get("invite") || ""
+  }
 
   register() {
     document.getElementById("errormsg")?.classList.add("hide")
 
-    this.userService.register(this.registerRequest).subscribe(
+    this.userService.register(this.registerRequest, this.invite).subscribe(
       response => {
         this.router.navigate(["/login"], { queryParams: { origin: 'register' } })
       },

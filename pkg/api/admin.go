@@ -22,6 +22,7 @@ func (api *api) GetAdminInfo(c *gin.Context) {
 		Pending   []model.Application `json:"pending"`
 		Venues    []model.Venue       `json:"venues"`
 		Artists   []model.Artist      `json:"artists"`
+		Invites   []model.Invite      `json:"invites"`
 	}
 
 	ts, err := api.venueService.GetAllConfirmedTimeslots()
@@ -34,11 +35,13 @@ func (api *api) GetAdminInfo(c *gin.Context) {
 	venues := api.venueService.GetAllWithoutTimeslot()
 	artists := api.artistService.GetAll()
 	applications := api.applicationService.GetAllPending()
+	invites := api.userService.GetAllInvites()
 
 	adminInfo.Confirmed = ts
 	adminInfo.Venues = venues
 	adminInfo.Artists = artists
 	adminInfo.Pending = applications
+	adminInfo.Invites = invites
 
 	c.JSON(http.StatusOK, &adminInfo)
 }

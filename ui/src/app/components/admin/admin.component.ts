@@ -19,7 +19,8 @@ export class AdminComponent implements OnInit {
     venues: [],
     artists: [],
     confirmed: [],
-    pending: []
+    pending: [],
+    invites: []
   }
 
   constructor(
@@ -60,6 +61,13 @@ export class AdminComponent implements OnInit {
   deleteApplication(applicaton: Application) {
     this.applicationService.deleteApplication(applicaton).subscribe(
       response => this.info.pending = this.info.pending.filter(app => applicaton.ID !== app.ID),
+      error => console.log(error)
+    )
+  }
+
+  addInvite() {
+    this.userService.addInvite().subscribe(
+      invite => this.info.invites.push(invite),
       error => console.log(error)
     )
   }

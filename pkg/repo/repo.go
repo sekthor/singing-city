@@ -53,5 +53,6 @@ func Migrate(db *gorm.DB) error {
 		&model.Timeslot{},
 		&model.Application{},
 		&model.SocialLink{},
+		&model.Invite{},
 	)
 }

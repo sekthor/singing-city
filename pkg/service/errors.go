@@ -12,4 +12,5 @@ var (
 	ErrorSlotNotExist         = errors.New("timeslot does not exist")
 	ErrorInvalidStatus        = errors.New("invalid status")
 	ErrorAlreadyApplied       = errors.New("already applied")
+	ErrorInviteNotFound       = errors.New("invite not found")
 )

@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AdminInfo, AuthToken, LoginRequest, Profile, RegisterRequest, UserDTO } from '../models/user';
+import { AdminInfo, AuthToken, Invite, LoginRequest, Profile, RegisterRequest, UserDTO } from '../models/user';
 
 import jwt_decode from "jwt-decode";
 import { CookieService } from 'ngx-cookie-service';
@@ -51,8 +51,13 @@ export class UserService implements OnInit {
     return false
   }
 
-  register(register: RegisterRequest): Observable<any> {
-    return this.http.post(`/api/register`, register)
+  register(register: RegisterRequest, invite: string): Observable<any> {
+    let params = new HttpParams().set("invite", invite)
+    return this.http.post(`/api/register`, register, { params: params })
+  }
+
+  addInvite(): Observable<Invite> {
+    return this.http.post<Invite>("/api/invites", {})
   }
 
   getProfile(): Observable<Profile> {

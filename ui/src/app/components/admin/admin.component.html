@@ -6,6 +6,7 @@
     <li class="nav-item nav-link" [ngClass]="{'active': selectedTab === 1}" (click)="selectedTab = 1">{{ "admin.confirmed" | translate }}</li>
     <li class="nav-item nav-link" [ngClass]="{'active': selectedTab === 2}" (click)="selectedTab = 2">{{ "admin.venues" | translate }}</li>
     <li class="nav-item nav-link" [ngClass]="{'active': selectedTab === 3}" (click)="selectedTab = 3">{{ "admin.artists" | translate }}</li>
+    <li class="nav-item nav-link" [ngClass]="{'active': selectedTab === 4}" (click)="selectedTab = 4">{{ "admin.invites" | translate }}</li>
 </ul>
 
 <div class="cotainer">
@@ -87,6 +88,22 @@
         </tr>
     </tbody>
 </table>
+
+<table class="table mt-4" *ngIf="selectedTab === 4">
+    <thead>
+        <tr>
+            <th>{{ "admin.invites" | translate }}</th>
+            <th>{{ "admin.invitelink" | translate }}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let inv of info.invites">
+            <td>{{ inv.invite }}</td>
+            <td><a href="https://singingcity.songbirdfestival.ch/register?invite={{ inv.invite }}">https://singingcity.songbirdfestival.ch/register?invite={{ inv.invite }}</a></td>
+        </tr>
+    </tbody>
+</table>
+<button *ngIf="selectedTab === 4" class="btn btn-success" (click)="addInvite()">{{ "venue.add" |translate}}</button>
 
 </div>
 </div>

@@ -125,5 +125,7 @@ func (api *api) Router() *gin.Engine {
 	// as venue owner or artist, i can decline/retract an application
 	router.DELETE("api/applications/:id", middleware.RequireAuth, api.DeleteApplication)
 
+	router.POST("api/invites", middleware.RequireAuth, api.CreateInvite)
+
 	return router
 }

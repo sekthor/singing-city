@@ -42,4 +42,9 @@ export interface AdminInfo {
   venues: Venue[]
   confirmed: Timeslot[]
   pending: Application[]
+  invites: Invite[]
+}
+
+export interface Invite {
+  invite: string
 }

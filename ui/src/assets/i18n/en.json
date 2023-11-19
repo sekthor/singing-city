@@ -88,6 +88,8 @@
         "venues": "venues",
         "artists": "artists",
         "joined": "joined",
-        "slot": "timeslot"
+        "slot": "timeslot",
+        "invitelink": "link",
+        "invites": "invites"
     }
 }
