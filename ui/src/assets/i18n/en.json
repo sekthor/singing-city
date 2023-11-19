@@ -32,7 +32,7 @@
         "zip": "zip code",
         "city": "city",
         "description": "description",
-        "register": "registrier",
+        "register": "register",
         "error": "error",
         "phone": "phone"
     },

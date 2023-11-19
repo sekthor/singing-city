@@ -13,10 +13,13 @@ func (api *api) Register(c *gin.Context) {
 
 	var registerRequest struct {
 		model.User
-		Name    string `json:"name"`
-		Address string `json:"address"`
-		ZipCode int    `json:"zip"`
-		City    string `json:"city"`
+		Name        string `json:"name"`
+		Address     string `json:"address"`
+		ZipCode     int    `json:"zip"`
+		City        string `json:"city"`
+		Phone       string `json:"phone"`
+		Genere      string `json:"genere"`
+		Description string `json:"description"`
 	}
 
 	if err := c.BindJSON(&registerRequest); err != nil {
@@ -45,6 +48,9 @@ func (api *api) Register(c *gin.Context) {
 		artist.Name = registerRequest.Name
 		artist.User = user
 		artist.Contact = user.Email
+		artist.Phone = registerRequest.Phone
+		artist.Description = registerRequest.Description
+		artist.Genere = registerRequest.Genere
 		log.Trace().Msgf("attempting to create artist for user '%d'", user.ID)
 		artist, err = api.artistService.Create(artist)
 		if err != nil {
@@ -63,6 +69,7 @@ func (api *api) Register(c *gin.Context) {
 		venue.ZipCode = registerRequest.ZipCode
 		venue.City = registerRequest.City
 		venue.Contact = user.Email
+		venue.Description = registerRequest.Description
 		log.Trace().Msgf("attempting to create venue for user '%d'", user.ID)
 		venue, err = api.venueService.Create(venue)
 		if err != nil {

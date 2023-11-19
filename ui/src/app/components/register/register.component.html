@@ -9,6 +9,9 @@
 <label for="password" class="mt-3">{{ "register.password" | translate }}</label>
 <input id="password" name="password" type="password" class="form-control" [(ngModel)]="registerRequest.password">
 
+<label for="phone" class="mt-3">{{ "register.phone" | translate }}</label>
+<input id="phone" name="phone" type="text" class="form-control" [(ngModel)]="registerRequest.phone">
+
 <label for="type" class="mt-3">{{ "register.registerAs" | translate }}</label>
 <select id="type" class="form-select" aria-label="Default select example" [(ngModel)]="registerRequest.type">
     <option [ngValue]="1">{{ "register.artist" | translate }}</option>
@@ -27,6 +30,12 @@
 
 <label *ngIf="registerRequest.type == 2" for="city" class="mt-3">{{ "register.city" | translate }}</label>
 <input *ngIf="registerRequest.type == 2" id="city" name="city" class="form-control" [(ngModel)]="registerRequest.city">
+
+<label *ngIf="registerRequest.type == 1" for="genere" class="mt-3">{{ "register.genere" | translate }}</label>
+<input *ngIf="registerRequest.type == 1" id="genere" name="genere" class="form-control" [(ngModel)]="registerRequest.genere">
+
+<label for="description" class="mt-3">{{ "register.description" | translate }}</label>
+<textarea id="description" class="form-control" [(ngModel)]="registerRequest.description"></textarea>
  
 <button class="btn btn-primary my-3" (click)="register()">{{ "register.register" | translate }}</button>
 
