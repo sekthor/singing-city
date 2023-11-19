@@ -66,6 +66,10 @@ export class DashboardComponent implements OnInit {
     return this.venues.find(venue => venue.ID === venueId)?.contact || ""
   }
 
+  getVenuePhoneByVenueID(venueId: number): string {
+    return this.venues.find(venue => venue.ID === venueId)?.phone || ""
+  }
+
   acceptApplication(application: Application) {
     this.applicationService.acceptApplication(application).subscribe(
       response => {

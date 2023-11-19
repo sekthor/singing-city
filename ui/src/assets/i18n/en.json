@@ -33,7 +33,8 @@
         "city": "city",
         "description": "description",
         "register": "registrier",
-        "error": "error"
+        "error": "error",
+        "phone": "phone"
     },
     "dashboard": {
         "dashboard": "Dashboard",

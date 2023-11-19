@@ -6,6 +6,7 @@ export interface Artist {
     genere: string
     description?: string
     socials: Social[]
+    phone?: string
 }
 
 export interface Social {

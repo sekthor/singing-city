@@ -17,6 +17,7 @@ type Venue struct {
 	User        User       `json:"-"`
 	UserID      uint       `json:"userID"`
 	Contact     string     `json:"contact"`
+	Phone       string     `json:"phone"`
 }
 
 type Timeslot struct {

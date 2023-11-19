@@ -10,6 +10,7 @@ export interface Venue {
   address: string
   zip: number
   city: string
+  phone?: string
 }
 
 export interface Timeslot {
