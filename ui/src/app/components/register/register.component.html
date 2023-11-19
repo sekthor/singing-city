@@ -1,16 +1,16 @@
 <div class="container p-3 mt-3" style="max-width: 400px;">
 
 <label for="email" class="mt-3">{{ "register.email" | translate }}</label>
-<input id="email" name="email" type="email" class="form-control" [(ngModel)]="registerRequest.email">
+<input id="email" name="email" type="email" class="form-control" [(ngModel)]="registerRequest.email"  placeholder="contact@venue.ch">
 
 <label for="username" class="mt-3">{{ "register.username" | translate }}</label>
-<input id="username" name="username" type="text" class="form-control" [(ngModel)]="registerRequest.username">
+<input id="username" name="username" type="text" class="form-control" [(ngModel)]="registerRequest.username" placeholder="{{ 'register.username' | translate }}">
 
 <label for="password" class="mt-3">{{ "register.password" | translate }}</label>
-<input id="password" name="password" type="password" class="form-control" [(ngModel)]="registerRequest.password">
+<input id="password" name="password" type="password" class="form-control" [(ngModel)]="registerRequest.password" placeholder="{{ 'register.password' | translate }}">
 
 <label for="phone" class="mt-3">{{ "register.phone" | translate }}</label>
-<input id="phone" name="phone" type="text" class="form-control" [(ngModel)]="registerRequest.phone">
+<input id="phone" name="phone" type="text" class="form-control" [(ngModel)]="registerRequest.phone" placeholder="+41 79 123 45 67">
 
 <label for="type" class="mt-3">{{ "register.registerAs" | translate }}</label>
 <select id="type" class="form-select" aria-label="Default select example" [(ngModel)]="registerRequest.type">
@@ -18,21 +18,21 @@
     <option [ngValue]="2">{{ "register.venue" | translate }}</option>
 </select>
 
-<label for="name" class="mt-3">{{ registerRequest.type === 1 ? ("register.artistName" | translate) : ("register.venueName" | translate) }}</label>
-<input id="name" name="name" type="text" class="form-control" [(ngModel)]="registerRequest.name">
+<label for="name" class="mt-3">{{ (registerRequest.type == 1 ? 'register.artistName' : 'register.venueName') | translate }}</label>
+<input id="name" name="name" type="text" class="form-control" [(ngModel)]="registerRequest.name" placeholder="{{ (registerRequest.type == 1 ? 'register.artistName' : 'register.venueName') | translate }}">
 
 
 <label *ngIf="registerRequest.type == 2" for="address" class="mt-3">{{ "register.address" | translate }}</label>
-<input *ngIf="registerRequest.type == 2" id="address" name="address" class="form-control" [(ngModel)]="registerRequest.address">
+<input *ngIf="registerRequest.type == 2" id="address" name="address" class="form-control" [(ngModel)]="registerRequest.address" placeholder="Hauptstrasse 1">
 
 <label *ngIf="registerRequest.type == 2" for="zip" class="mt-3">{{ "register.zip" | translate }}</label>
-<input *ngIf="registerRequest.type == 2" id="zip" name="zip" type="number" class="form-control" [(ngModel)]="registerRequest.zip">
+<input *ngIf="registerRequest.type == 2" id="zip" name="zip" type="number" class="form-control" [(ngModel)]="registerRequest.zip" placeholder="7260">
 
 <label *ngIf="registerRequest.type == 2" for="city" class="mt-3">{{ "register.city" | translate }}</label>
-<input *ngIf="registerRequest.type == 2" id="city" name="city" class="form-control" [(ngModel)]="registerRequest.city">
+<input *ngIf="registerRequest.type == 2" id="city" name="city" class="form-control" [(ngModel)]="registerRequest.city" placeholder="Davos">
 
 <label *ngIf="registerRequest.type == 1" for="genere" class="mt-3">{{ "register.genere" | translate }}</label>
-<input *ngIf="registerRequest.type == 1" id="genere" name="genere" class="form-control" [(ngModel)]="registerRequest.genere">
+<input *ngIf="registerRequest.type == 1" id="genere" name="genere" class="form-control" [(ngModel)]="registerRequest.genere" placeholder="Genre">
 
 <label for="description" class="mt-3">{{ "register.description" | translate }}</label>
 <textarea id="description" class="form-control" [(ngModel)]="registerRequest.description"></textarea>
