@@ -51,7 +51,10 @@
         "updateArtist": "Update artist details",
         "update": "update",
         "success": "updated successfully",
-        "failure": "could not update"
+        "failure": "could not update",
+        "socials": "social media links",
+        "platform": "platform",
+        "link": "link"
     },
     "venuelist": {
         "venues": "Venues"

@@ -4,6 +4,7 @@ import { ArtistService } from 'src/app/services/artist.service';
 import { UserService } from 'src/app/services/user.service';
 import { TranslateService } from '@ngx-translate/core';
 import { VenueService } from 'src/app/services/venue.service';
+import { Social } from 'src/app/models/artist';
 
 @Component({
   selector: 'app-profile',
@@ -17,6 +18,7 @@ export class ProfileComponent implements OnInit {
   userError:string = ""
   detailSuccess: string = ""
   detailError: string = ""
+  newSocial: Social = {platform:"", link:""}
 
   constructor(
     private userService: UserService,
@@ -27,7 +29,7 @@ export class ProfileComponent implements OnInit {
     this.profile = {
       user: {ID:0, username: "", type: 0, email: ""},
       venue: {ID:0, name: "", description:"", slots:[], city:"", zip:0, address: "", contact:""},
-      artist: {ID:0, name: "",contact:"", genere:""}
+      artist: {ID:0, name: "",contact:"", genere:"", socials:[]}
     }
 
     
@@ -81,5 +83,17 @@ export class ProfileComponent implements OnInit {
         this.detailError = this.translate.instant("profile.failure")
       }
     )
+  }
+
+  removeSocial(social: Social) {
+    this.profile.artist.socials = this.profile.artist.socials.filter(
+      link => social.link !== link.link && 
+      social.platform !== link.platform)
+  }
+  addSocial() {
+    let sCopy = Object.assign({}, this.newSocial)
+    this.profile.artist.socials.push(sCopy)
+    this.newSocial.link = ""
+    this.newSocial.platform = ""
   }
 }

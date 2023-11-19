@@ -3,5 +3,11 @@
 <h1>{{ artist.name }}</h1>
 
 <p>{{ artist.genere }}</p>
+<p>{{ artist.description }}</p>
+
+<label for="socials">Socials</label>
+<ul id="socials">
+    <li *ngFor="let link of artist.socials"><a href="{{ link.link }}">{{ link.platform }}</a></li>
+</ul>
 
 </div>

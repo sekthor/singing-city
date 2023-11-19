@@ -51,7 +51,10 @@
         "updateArtist": "Künstlerinfo ändern",
         "update": "ändern",
         "success": "erfolgreich geändert",
-        "failure": "konnte nicht geändert werden"
+        "failure": "konnte nicht geändert werden",
+        "socials": "Social Media Links",
+        "platform": "Plattform",
+        "link": "Link"
     },
     "venuelist": {
         "venues": "Veranstaltungsorte"

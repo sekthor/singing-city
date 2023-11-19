@@ -21,13 +21,16 @@ func (r *ArtistRepo) Create(artist model.Artist) (model.Artist, error) {
 }
 
 func (r *ArtistRepo) Save(artist model.Artist) (model.Artist, error) {
-	result := r.db.Save(&artist)
+	result := r.db.Where("artist_id = ?", artist.ID).Delete(&model.SocialLink{})
+	result = r.db.Save(&artist)
 	return artist, result.Error
 }
 
 func (r *ArtistRepo) FetchById(id int) (model.Artist, error) {
 	var artist model.Artist
-	result := r.db.First(&artist, id)
+	result := r.db.
+		Preload("Socials").
+		First(&artist, id)
 	return artist, result.Error
 }
 
