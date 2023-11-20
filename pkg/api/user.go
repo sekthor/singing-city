@@ -28,6 +28,18 @@ func (api *api) Register(c *gin.Context) {
 		return
 	}
 
+	if registerRequest.Name == "" {
+		log.Debug().Msgf("missing field: name")
+		c.JSON(http.StatusBadRequest, gin.H{"error": "missing field: name"})
+		return
+	}
+
+	if registerRequest.Phone == "" {
+		log.Debug().Msgf("missing field: phone")
+		c.JSON(http.StatusBadRequest, gin.H{"error": "missing field: phone"})
+		return
+	}
+
 	invite := c.Query("invite")
 
 	log.Trace().Msg("attempting to register user")
@@ -68,6 +80,7 @@ func (api *api) Register(c *gin.Context) {
 		venue.Address = registerRequest.Address
 		venue.ZipCode = registerRequest.ZipCode
 		venue.City = registerRequest.City
+		venue.Phone = registerRequest.Phone
 		venue.Contact = user.Email
 		venue.Description = registerRequest.Description
 		log.Trace().Msgf("attempting to create venue for user '%d'", user.ID)

@@ -61,12 +61,12 @@ const (
 	<p>Details:<p>
 
 	<table>
-	<tr><td>Konzert-Location</td><td>{{ .Venue }}</td></tr>
-	<tr><td>Datum</td><td>{{ .Date }}</td></tr>
-	<tr><td>Zeitfenster</td><td>{{ .Time }}</td></tr>
-	<tr><td>Gage</td><td>{{ .Wage }}</td></tr>
+    <tr><td>Konzert-Location:</td><td>{{ .Venue }}</td></tr>
+    <tr><td>Datum:</td><td>{{ .Date }}</td></tr>
+    <tr><td>Zeitfenster:</td><td>{{ .Time }}</td></tr>
+    <tr><td>Gage:</td><td>{{ .Wage }}</td></tr>
 	<tr><td>Adresse:</td><td>{{ .Address }}</td></tr>
-	<tr><td>Kontakt</td><td><a href="mailto:{{ .Contact }}">{{ .Contact }}</a></td></tr>
+    <tr><td>Kontakt:</td><td><a href="mailto:{{ .Contact }}">{{ .Contact }}</a></td></tr>
 	</table>
 
 	<p>Zur Verwaltung deiner Auftritte besuche dein <a href="https://singingcity.songbirdfestival.ch/dashboard">SingingCity Profil</a></p>
@@ -90,12 +90,12 @@ const (
 	<p>Details:</p>
 
 	<table>
-	<tr><td>Venue</td><td>{{ .Venue }}</td></tr>
-	<tr><td>Date</td><td>{{ .Date }}</td></tr>
-	<tr><td>Timeslot</td><td>{{ .Time }}</td></tr>
-	<tr><td>Fee</td><td>{{ .Wage }}</td></tr>
+    <tr><td>Venue:</td><td>{{ .Venue }}</td></tr>
+    <tr><td>Date:</td><td>{{ .Date }}</td></tr>
+    <tr><td>Timeslot:</td><td>{{ .Time }}</td></tr>
+    <tr><td>Fee:</td><td>{{ .Wage }}</td></tr>
 	<tr><td>Address:</td><td>{{ .Address }}</td></tr>
-	<tr><td>Contact</td><td><a href="mailto:{{ .Contact }}">{{ .Contact }}</a></td></tr>
+    <tr><td>Contact:</td><td><a href="mailto:{{ .Contact }}">{{ .Contact }}</a></td></tr>
 	</table>
 
 	<p>To manage your performances visit your <a href="https://singingcity.songbirdfestival.ch/dashboard">SingingCity profile</a></p>

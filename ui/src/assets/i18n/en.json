@@ -12,7 +12,7 @@
         "email": "E-mail",
         "password": "Password",
         "login": "login",
-        "register": "registrier",
+        "register": "register",
         "error": "Error",
         "success": "Success",
         "successMsg": "Registration was successful, please log in"
