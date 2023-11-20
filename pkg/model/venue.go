@@ -29,4 +29,5 @@ type Timeslot struct {
 	Pay      int       `json:"pay"`
 	Private  bool      `json:"private"`
 	Duration int       `json:"duration"`
+	Benefits string    `json:"benefits"`
 }

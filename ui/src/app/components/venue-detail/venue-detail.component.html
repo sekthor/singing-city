@@ -1,102 +1,117 @@
 <div class="container mt-4" *ngIf="venue">
-<h1>{{ venue.name }}</h1>
+  <h1>{{ venue.name }}</h1>
 
-<a href="{{ createGoogleMapsQuery(venue) }}">{{ venue.address }}</a>
+  <a href="{{ createGoogleMapsQuery(venue) }}">{{ venue.address }}</a>
 
-<p>{{ venue.description }}</p>
+  <p>{{ venue.description }}</p>
 
-<table class="table">
-  <thead>
-    <tr>
-      <th>{{ "venue.date" | translate }}</th>
-      <th>{{ "venue.time" | translate }}</th>
-      <th>{{ "venue.duration" | translate }}</th>
-      <th>{{ "venue.type" | translate }}</th>
-      <th class="text-end">{{ "venue.pay" | translate }}</th>
-      <th class="text-center">{{ "venue.availability" | translate }}</th>
-      <th>{{ "venue.option" | translate }}</th>
-    </tr>
-  </thead>
-  <tbody>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>{{ "venue.date" | translate }}</th>
+        <th>{{ "venue.time" | translate }}</th>
+        <th>{{ "venue.duration" | translate }}</th>
+        <th>{{ "venue.type" | translate }}</th>
+        <th class="text-end">{{ "venue.pay" | translate }}</th>
+        <th>{{ "venue.benefits" | translate }}</th>
+        <th class="text-center">{{ "venue.availability" | translate }}</th>
+        <th>{{ "venue.option" | translate }}</th>
+      </tr>
+    </thead>
+    <tbody>
 
-    <tr *ngIf="isRessourceOwner" class="table-success">
-      <td>
-        <div class="form-floating">
-          <input id="newDate" type="date" [(ngModel)]="newDate" min="2023-12-04" max="2023-12-24" class="form-control">
-          <label for="newDate">{{ "venue.newDate" | translate }}</label>
-        </div>
-      </td>
+      <tr *ngIf="isRessourceOwner" class="table-success">
+        <td>
+          <div class="form-floating">
+            <input id="newDate" type="date" [(ngModel)]="newDate" min="2023-12-04" max="2023-12-24"
+              class="form-control">
+            <label for="newDate">{{ "venue.newDate" | translate }}</label>
+          </div>
+        </td>
 
-      <td>
-        <div class="form-floating">
-          <select id="newTime" class="form-select" [(ngModel)]="newTime">
-            <option *ngFor="let time of getValidTimes()" [ngValue]="time">{{ time }}</option>
-          </select>
-          <label for="newTime">{{ "venue.newTime" | translate }}</label>
-        </div>
-      </td>
+        <td>
+          <div class="form-floating">
+            <select id="newTime" class="form-select" [(ngModel)]="newTime">
+              <option *ngFor="let time of getValidTimes()" [ngValue]="time">{{ time }}</option>
+            </select>
+            <label for="newTime">{{ "venue.newTime" | translate }}</label>
+          </div>
+        </td>
 
-      <td>
-        <div class="form-floating">
-          <input id="duration" type="number" [(ngModel)]="newTimeslot.duration" class="form-control">
-          <label for="duration">{{ "venue.durationMinutes" | translate }}</label>
-        </div>
-      </td>
+        <td>
+          <div class="form-floating" style="max-width: 100px;">
+            <input id="duration" type="number" [(ngModel)]="newTimeslot.duration" class="form-control">
+            <label for="duration">{{ "venue.durationMinutes" | translate }}</label>
+          </div>
+        </td>
 
-      <td>
-        <div class="form-floating">
-          <select id="newType" class="form-select" [(ngModel)]="newTimeslot.private">
-            <option [ngValue]="false">{{ "venue.public" | translate }}</option>
-            <option [ngValue]="true">{{ "venue.private" | translate }}</option>
-          </select>
-          <label for="newType">{{ "venue.type" | translate }}</label>
-        </div>
-      </td>
+        <td>
+          <div class="form-floating">
+            <select id="newType" class="form-select" [(ngModel)]="newTimeslot.private">
+              <option [ngValue]="false">{{ "venue.public" | translate }}</option>
+              <option [ngValue]="true">{{ "venue.private" | translate }}</option>
+            </select>
+            <label for="newType">{{ "venue.type" | translate }}</label>
+          </div>
+        </td>
 
-      <td class="w-25">
-        <div class="form-floating">
-          <input id="pay" type="number" [(ngModel)]="newTimeslot.pay" class="form-control">
-          <label for="pay">CHF</label>
-        </div>
-      </td>
+        <td>
+          <div class="form-floating" style="max-width: 100px;">
+            <input id="pay" type="number" [(ngModel)]="newTimeslot.pay" class="form-control">
+            <label for="pay">CHF</label>
+          </div>
+        </td>
 
-      <td></td>
+        <td>
+          <div class="form-floating">
+            <input id="benefits" type="text" [(ngModel)]="newTimeslot.benefits" class="form-control">
+            <label for="benefits">{{ "venue.benefits" | translate }}</label>
+          </div>
+        </td>
 
-      <td>
-        <button class="btn btn-outline-success" (click)="addTimeSlot()">{{ "venue.add" | translate }}</button>
-      </td>
-    </tr>
+        <td></td>
 
-    <tr *ngFor="let slot of venue.slots">
+        <td>
+          <button class="btn btn-outline-success" (click)="addTimeSlot()">{{ "venue.add" | translate }}</button>
+        </td>
+      </tr>
 
-      <td>{{ slot.time | date:"dd. MMM yyyy" }}</td>
-      <td>{{ slot.time | date:"HH:mm" }}</td>
+      <tr *ngFor="let slot of venue.slots">
 
-      <td class="text-end">{{ slot.duration }} min</td>
+        <td>{{ slot.time | date:"dd. MMM yyyy" }}</td>
+        <td>{{ slot.time | date:"HH:mm" }}</td>
 
-      <td><i class="{{ slot.private ? 'bi bi-house-lock' : 'bi bi-people-fill' }}" title="{{ slot.private ? ('venue.private' | translate) : ('venue.public' | translate) }}"></i></td>
-      
-      <td class="text-end">{{ slot.pay }} CHF</td>
+        <td class="text-end">{{ slot.duration }} min</td>
 
-      <td class="text-center">
-        <span *ngIf="slot.artistID !== 0" class="badge text-bg-warning">{{ "venue.booked" | translate }}</span>
-        <span *ngIf="slot.artistID === 0" class="badge text-bg-success">{{ "venue.available" | translate }}</span>
-      </td>
+        <td><i class="{{ slot.private ? 'bi bi-house-lock' : 'bi bi-people-fill' }}"
+            title="{{ slot.private ? ('venue.private' | translate) : ('venue.public' | translate) }}"></i></td>
 
-      <td *ngIf="!isRessourceOwner && isArtist">
-        <button *ngIf="slot.artistID === 0" class="btn"
-          class="{{ hasAlreadyApplied(slot) ? 'disabled btn-sm btn-outline-warning' : 'btn-success' }}" 
-          (click)="applyForTimeslot($event, slot)">{{ hasAlreadyApplied(slot) ? ("venue.pending" | translate) : ("venue.apply" | translate) }}</button>
-      </td>
+        <td class="text-end">{{ slot.pay }} CHF</td>
 
-      <td *ngIf="!isRessourceOwner && !isArtist"></td>
+        <td>{{ slot.benefits }}</td>
 
-      <td *ngIf="isRessourceOwner">
-        <button *ngIf="slot.artistID === 0" class="btn btn-outline-danger" (click)="deleteTimeslot(slot)">{{ "venue.delete" | translate }}</button>
-        <button *ngIf="slot.artistID !== 0" class="btn btn-outline-secondary" disabled>{{ "venue.delete" | translate }}</button>
-      </td>
+        <td class="text-center">
+          <span *ngIf="slot.artistID !== 0" class="badge text-bg-warning">{{ "venue.booked" | translate }}</span>
+          <span *ngIf="slot.artistID === 0" class="badge text-bg-success">{{ "venue.available" | translate }}</span>
+        </td>
 
-    </tr>
-  </tbody>
-</table>
+        <td *ngIf="!isRessourceOwner && isArtist">
+          <button *ngIf="slot.artistID === 0" class="btn"
+            class="{{ hasAlreadyApplied(slot) ? 'disabled btn-sm btn-outline-warning' : 'btn-success' }}"
+            (click)="applyForTimeslot($event, slot)">{{ hasAlreadyApplied(slot) ? ("venue.pending" | translate) :
+            ("venue.apply" | translate) }}</button>
+        </td>
+
+        <td *ngIf="!isRessourceOwner && !isArtist"></td>
+
+        <td *ngIf="isRessourceOwner">
+          <button *ngIf="slot.artistID === 0" class="btn btn-outline-danger" (click)="deleteTimeslot(slot)">{{
+            "venue.delete" | translate }}</button>
+          <button *ngIf="slot.artistID !== 0" class="btn btn-outline-secondary" disabled>{{ "venue.delete" | translate
+            }}</button>
+        </td>
+
+      </tr>
+    </tbody>
+  </table>
 </div>

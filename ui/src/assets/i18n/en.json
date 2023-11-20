@@ -81,7 +81,8 @@
         "available": "avaliable",
         "pending": "pending",
         "apply": "apply",
-        "delete": "delete"
+        "delete": "delete",
+        "benefits": "benefits"
     },
     "admin": {
         "confirmed": "confirmed",

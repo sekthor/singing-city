@@ -22,4 +22,5 @@ export interface Timeslot {
   pay: number
   private: boolean
   duration: number
+  benefits?: string
 }

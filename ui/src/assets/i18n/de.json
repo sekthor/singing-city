@@ -81,7 +81,8 @@
         "available": "verfügbar",
         "pending": "ausstehend",
         "apply": "bewerben",
-        "delete": "löschen"
+        "delete": "löschen",
+        "benefits": "Benefits"
     },
     "admin": {
         "confirmed": "Bestätigt",
