@@ -82,7 +82,8 @@
         "pending": "pending",
         "apply": "apply",
         "delete": "delete",
-        "benefits": "benefits"
+        "benefits": "benefits",
+        "translate": "translate"
     },
     "admin": {
         "confirmed": "confirmed",

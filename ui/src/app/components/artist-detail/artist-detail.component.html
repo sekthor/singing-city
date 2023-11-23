@@ -3,7 +3,11 @@
 <h1>{{ artist.name }}</h1>
 
 <p><span class="badge bg-success rounded-pill">{{ artist.genere }}</span></p>
-<p>{{ artist.description }}</p>
+<p>
+    {{ artist.description }}
+    <br>
+    <a href="{{ translationLink }}" *ngIf="translationLink">{{ "venue.translate" | translate }}</a>
+</p>
 
 <label for="socials">Socials</label>
 <ul id="socials">

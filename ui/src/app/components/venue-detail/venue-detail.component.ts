@@ -25,6 +25,8 @@ export class VenueDetailComponent implements OnInit {
   newDate: string = ""
   newTime: string = ""
 
+  translationLink = ""
+
   constructor(
     private venueService: VenueService,
     private route: ActivatedRoute,
@@ -49,13 +51,18 @@ export class VenueDetailComponent implements OnInit {
         "artist", this.userService.getSubject(), "open").subscribe(
           applications => this.openApplications = applications
         )
+
+
+    this.translate.onLangChange.subscribe(
+      () => this.translationLink = this.getTranslationLink(this.venue?.description || "")
+    )
   }
 
   getVenue(id: number) {
     this.venueService.getVenue(id).subscribe(
       venue => {
         this.venue = venue
-        //this.sortTimeslots()
+        this.translationLink = this.getTranslationLink(this.venue?.description || "")
       },
       error => {
         console.log(error)
@@ -131,6 +138,21 @@ export class VenueDetailComponent implements OnInit {
       times.push(`${h}:00`,`${h}:15`,`${h}:30`,`${h}:45`)
     }
     return times
+  }
+
+  getTranslationLink(text: string): string {
+    if (!text) 
+      return text
+
+    let src = "de"
+    let dst = "en"
+
+    if (this.translate.currentLang === "de") {
+      dst = src
+      src = "en"
+    }
+    
+    return `https://translate.google.com/?sl=${src}&tl=${dst}&text=${text}&op=translate`
   }
 
 }

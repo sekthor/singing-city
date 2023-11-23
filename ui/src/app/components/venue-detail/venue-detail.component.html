@@ -3,7 +3,11 @@
 
   <a href="{{ createGoogleMapsQuery(venue) }}">{{ venue.address }}</a>
 
-  <p>{{ venue.description }}</p>
+  <p>
+    {{ venue.description }}
+    <br>
+    <a href="{{ translationLink }}" *ngIf="translationLink">{{ "venue.translate" | translate }}</a>
+  </p>
 
   <table class="table">
     <thead>

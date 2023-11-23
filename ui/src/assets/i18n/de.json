@@ -82,7 +82,8 @@
         "pending": "ausstehend",
         "apply": "bewerben",
         "delete": "löschen",
-        "benefits": "Benefits"
+        "benefits": "Benefits",
+        "translate": "übersetzen"
     },
     "admin": {
         "confirmed": "Bestätigt",

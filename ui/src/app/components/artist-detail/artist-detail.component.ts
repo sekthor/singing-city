@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { Artist } from 'src/app/models/artist';
 import { ArtistService } from 'src/app/services/artist.service';
 
@@ -12,10 +13,12 @@ export class ArtistDetailComponent implements OnInit {
 
   artist?: Artist
   artistID: string = ""
+  translationLink = ""
 
   constructor(
     private artistService: ArtistService,
-    private route: ActivatedRoute) {}
+    private route: ActivatedRoute,
+    private translate: TranslateService) {}
 
 
   ngOnInit(): void {
@@ -24,13 +27,35 @@ export class ArtistDetailComponent implements OnInit {
       this.artistID = id
       this.getArtist(id)
     }
+
+    this.translate.onLangChange.subscribe(
+      () => this.translationLink = this.getTranslationLink(this.artist?.description || "")
+    )
   }
 
   getArtist(id: string) {
     this.artistService.getArtistById(id).subscribe(
-      artist => this.artist = artist,
+      artist => {
+        this.artist = artist;
+        this.translationLink = this.getTranslationLink(this.artist.description || "")
+      },
       error => console.log(error)
     )
+  }
+
+  getTranslationLink(text: string): string {
+    if (!text) 
+      return text
+
+    let src = "de"
+    let dst = "en"
+
+    if (this.translate.currentLang === "de") {
+      dst = src
+      src = "en"
+    }
+    
+    return `https://translate.google.com/?sl=${src}&tl=${dst}&text=${text}&op=translate`
   }
 
 }
