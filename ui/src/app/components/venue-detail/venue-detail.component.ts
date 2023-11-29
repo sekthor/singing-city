@@ -122,7 +122,7 @@ export class VenueDetailComponent implements OnInit {
   }
 
   createGoogleMapsQuery(venue: Venue): string {
-    let query = encodeURI(`${venue.address} ${venue.zip} ${venue.city}`)
+    let query = encodeURIComponent(`${venue.address} ${venue.zip} ${venue.city}`)
     return `https://www.google.com/maps/search/?api=1&query=${query}`
   }
 
@@ -152,7 +152,7 @@ export class VenueDetailComponent implements OnInit {
       src = "en"
     }
     
-    return `https://translate.google.com/?sl=${src}&tl=${dst}&text=${text}&op=translate`
+    return `https://translate.google.com/?sl=${src}&tl=${dst}&text=${encodeURIComponent(text)}&op=translate`
   }
 
 }
