@@ -6,7 +6,7 @@
   <p>
     {{ venue.description }}
     <br>
-    <a href="{{ translationLink }}" *ngIf="translationLink">{{ "venue.translate" | translate }}</a>
+    <a href="{{ translationLink }}" *ngIf="translationLink"><small>{{ "venue.translate" | translate }}</small></a>
   </p>
 
   <table class="table">
@@ -92,7 +92,11 @@
 
         <td class="text-end">{{ slot.pay }} CHF</td>
 
-        <td>{{ slot.benefits }}</td>
+        <td>
+          {{ slot.benefits }}
+          <br>
+          <a *ngIf="slot.benefits" href="{{ getTranslationLink(slot.benefits) }}"><small>{{ "venue.translate" | translate }}</small></a>
+        </td>
 
         <td class="text-center">
           <span *ngIf="slot.artistID !== 0" class="badge text-bg-warning">{{ "venue.booked" | translate }}</span>
