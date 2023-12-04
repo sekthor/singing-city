@@ -83,7 +83,10 @@
         "apply": "apply",
         "delete": "delete",
         "benefits": "Benefits",
-        "translate": "translate"
+        "translate": "translate",
+        "amplifier": "Amplifier",
+        "yes": "yes",
+        "no": "no"
     },
     "admin": {
         "confirmed": "confirmed",

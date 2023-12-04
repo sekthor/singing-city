@@ -22,12 +22,13 @@ type Venue struct {
 
 type Timeslot struct {
 	gorm.Model
-	VenueID  uint      `json:"venueID"`
-	Time     time.Time `json:"time"`
-	Artist   Artist    `json:"artist"`
-	ArtistID uint      `json:"artistID"`
-	Pay      int       `json:"pay"`
-	Private  bool      `json:"private"`
-	Duration int       `json:"duration"`
-	Benefits string    `json:"benefits"`
+	VenueID   uint      `json:"venueID"`
+	Time      time.Time `json:"time"`
+	Artist    Artist    `json:"artist"`
+	ArtistID  uint      `json:"artistID"`
+	Pay       int       `json:"pay"`
+	Private   bool      `json:"private"`
+	Duration  int       `json:"duration"`
+	Benefits  string    `json:"benefits"`
+	Amplifier bool      `json:"amplifier"`
 }

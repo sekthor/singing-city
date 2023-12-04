@@ -83,7 +83,10 @@
         "apply": "bewerben",
         "delete": "löschen",
         "benefits": "Benefits",
-        "translate": "übersetzen"
+        "translate": "übersetzen",
+        "amplifier": "Verstärker",
+        "yes": "ja",
+        "no": "nein"
     },
     "admin": {
         "confirmed": "Bestätigt",

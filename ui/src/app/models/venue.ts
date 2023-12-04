@@ -23,4 +23,5 @@ export interface Timeslot {
   private: boolean
   duration: number
   benefits?: string
+  amplifier?: boolean
 }

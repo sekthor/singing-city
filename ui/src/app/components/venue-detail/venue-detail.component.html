@@ -18,6 +18,7 @@
         <th>{{ "venue.type" | translate }}</th>
         <th class="text-end">{{ "venue.pay" | translate }}</th>
         <th>{{ "venue.benefits" | translate }}</th>
+        <th>{{ "venue.amplifier" | translate }}</th>
         <th class="text-center">{{ "venue.availability" | translate }}</th>
         <th>{{ "venue.option" | translate }}</th>
       </tr>
@@ -73,6 +74,13 @@
           </div>
         </td>
 
+        <td>
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" id="ampavailable" [(ngModel)]="newTimeslot.amplifier">
+                {{ (newTimeslot.amplifier ? "venue.yes" : "venue.no") | translate }}
+            </div>
+        </td>
+
         <td></td>
 
         <td>
@@ -87,8 +95,11 @@
 
         <td class="text-end">{{ slot.duration }} min</td>
 
-        <td><i class="{{ slot.private ? 'bi bi-house-lock' : 'bi bi-people-fill' }}"
-            title="{{ slot.private ? ('venue.private' | translate) : ('venue.public' | translate) }}"></i></td>
+        <td>
+          <i class="{{ slot.private ? 'bi bi-house-lock' : 'bi bi-people-fill' }}"
+            title="{{ slot.private ? ('venue.private' | translate) : ('venue.public' | translate) }}">
+          </i>
+        </td>
 
         <td class="text-end">{{ slot.pay }} CHF</td>
 
@@ -96,6 +107,12 @@
           {{ slot.benefits }}
           <br>
           <a *ngIf="slot.benefits" href="{{ getTranslationLink(slot.benefits) }}"><small>{{ "venue.translate" | translate }}</small></a>
+        </td>
+
+        <td>
+          <i class="{{ slot.amplifier ? 'bi bi-speaker-fill' : 'bi bi-volume-mute-fill' }}"
+            title="{{ (slot.amplifier ? 'venue.yes' : 'venue.no') | translate }}">
+          </i>
         </td>
 
         <td class="text-center">
