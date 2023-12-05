@@ -27,7 +27,7 @@
     <tbody>
         <tr *ngFor="let application of openApplications">
             <td>{{ application.timeslot.time | date:"dd. MMM yyyy" }}</td>
-            <td>{{ application.timeslot.time | date:"HH:mm" }}</td>
+            <td>{{ application.timeslot.time | date:"HH:mm":'UTC+1' }}</td>
 
             <td *ngIf="!isArtist"><a [routerLink]="['/artists', application.artist.ID]">{{ application.artist.name }}</a></td>
             <td *ngIf="isArtist"><a [routerLink]="['/venues', application.timeslot.venueID]">{{ getVenueNameByVenueID(application.timeslot.venueID) }}</a></td>
@@ -58,7 +58,7 @@
     <tbody>
         <tr *ngFor="let timeslot of confirmedTimeslots">
             <td>{{ timeslot.time | date:"dd. MMM yyyy" }}</td>
-            <td>{{ timeslot.time | date:"HH:mm" }}</td>
+            <td>{{ timeslot.time | date:"HH:mm":'UTC+1' }}</td>
 
             <td *ngIf="!isArtist"><a [routerLink]="['/artists', timeslot.artistID]">{{ timeslot.artist?.name }}</a></td>
             <td *ngIf="isArtist"><a [routerLink]="['/venues', timeslot.venueID]">{{ getVenueNameByVenueID(timeslot.venueID) }}</a></td>

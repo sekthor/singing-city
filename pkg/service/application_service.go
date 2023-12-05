@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"strconv"
+	"time"
 
 	"github.com/sekthor/songbird-backend/pkg/model"
 	"github.com/sekthor/songbird-backend/pkg/repo"
@@ -56,10 +57,12 @@ func (s *ApplicationService) DeleteById(id int, userId int) error {
 	if uint(userId) == app.Timeslot.VenueID {
 		venue, _ := s.venueRepo.FetchById(int(app.Timeslot.VenueID))
 		artist, _ := s.artistRepo.FetchById(int(app.ArtistID))
+        loc, _ := time.LoadLocation("Europe/Zurich")
+        localTime := app.Timeslot.Time.In(loc)
 		params := MessageParams{
 			Username: artist.Name,
-			Time:     app.Timeslot.Time.Format("15:04"),
-			Date:     app.Timeslot.Time.Format("02.01.2006"),
+			Time:     localTime.Format("15:04"),
+			Date:     localTime.Format("02.01.2006"),
 			Venue:    venue.Name,
 		}
 		s.notify.SendRejectedMessage(artist.Contact, params)
@@ -109,11 +112,13 @@ func (s *ApplicationService) Apply(artistID int, timeslotID int) error {
 	if err != nil {
 		return err
 	}
+    loc, _ := time.LoadLocation("Europe/Zurich")
+    localTime := slot.Time.In(loc)
 	params := MessageParams{
 		Username: venue.User.Username,
 		Artist:   artist.Name,
-		Time:     slot.Time.Format("15:04"),
-		Date:     slot.Time.Format("02.01.2006"),
+		Time:     localTime.Format("15:04"),
+		Date:     localTime.Format("02.01.2006"),
 	}
 	s.notify.SendApplicationMessage(venue.Contact, params)
 
@@ -200,14 +205,17 @@ func (s *ApplicationService) AcceptApplication(applicationId int, userId int) er
 		return errors.New("could find artist")
 	}
 
+    loc, _ := time.LoadLocation("Europe/Zurich")
+    localTime := application.Timeslot.Time.In(loc)
+
 	params := MessageParams{
 		Username: artist.Name,
 		Contact:  venue.Contact,
 		Venue:    venue.Name,
 		Wage:     strconv.Itoa(application.Timeslot.Pay),
 		Address:  fmt.Sprintf("%s, %d %s", venue.Address, venue.ZipCode, venue.City),
-		Time:     application.Timeslot.Time.Format("15:04"),
-		Date:     application.Timeslot.Time.Format("02.01.2006"),
+		Time:     localTime.Format("15:04"),
+		Date:     localTime.Format("02.01.2006"),
 	}
 
 	s.notify.SendConfirmedMessage(artist.Contact, params)

@@ -91,7 +91,7 @@
       <tr *ngFor="let slot of venue.slots">
 
         <td>{{ slot.time | date:"dd. MMM yyyy" }}</td>
-        <td>{{ slot.time | date:"HH:mm" }}</td>
+        <td>{{ slot.time | date:"HH:mm":'UTC+1' }}</td>
 
         <td class="text-end">{{ slot.duration }} min</td>
 
