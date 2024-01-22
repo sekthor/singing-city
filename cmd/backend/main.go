@@ -2,8 +2,8 @@ package main
 
 import (
 	"github.com/rs/zerolog/log"
-	"github.com/sekthor/songbird-backend/pkg/api"
-	"github.com/sekthor/songbird-backend/pkg/config"
+	"github.com/sekthor/singing-city/pkg/api"
+	"github.com/sekthor/singing-city/pkg/config"
 )
 
 func main() {

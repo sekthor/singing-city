@@ -3,7 +3,7 @@ package repo
 import (
 	"errors"
 
-	"github.com/sekthor/songbird-backend/pkg/model"
+	"github.com/sekthor/singing-city/pkg/model"
 	"gorm.io/gorm"
 )
 

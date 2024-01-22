@@ -6,7 +6,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog/log"
-	"github.com/sekthor/songbird-backend/pkg/model"
+	"github.com/sekthor/singing-city/pkg/model"
 )
 
 func (api *api) GetAllArtists(c *gin.Context) {

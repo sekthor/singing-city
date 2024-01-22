@@ -7,8 +7,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog/log"
-	"github.com/sekthor/songbird-backend/pkg/model"
-	"github.com/sekthor/songbird-backend/pkg/service"
+	"github.com/sekthor/singing-city/pkg/model"
+	"github.com/sekthor/singing-city/pkg/service"
 )
 
 func (api *api) Apply(c *gin.Context) {

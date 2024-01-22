@@ -1,7 +1,7 @@
 package repo
 
 import (
-	"github.com/sekthor/songbird-backend/pkg/model"
+	"github.com/sekthor/singing-city/pkg/model"
 	"gorm.io/gorm"
 )
 

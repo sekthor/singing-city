@@ -6,8 +6,8 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/sekthor/songbird-backend/pkg/model"
-	"github.com/sekthor/songbird-backend/pkg/repo"
+	"github.com/sekthor/singing-city/pkg/model"
+	"github.com/sekthor/singing-city/pkg/repo"
 	"gorm.io/gorm"
 )
 
@@ -57,8 +57,8 @@ func (s *ApplicationService) DeleteById(id int, userId int) error {
 	if uint(userId) == app.Timeslot.VenueID {
 		venue, _ := s.venueRepo.FetchById(int(app.Timeslot.VenueID))
 		artist, _ := s.artistRepo.FetchById(int(app.ArtistID))
-        loc, _ := time.LoadLocation("Europe/Zurich")
-        localTime := app.Timeslot.Time.In(loc)
+		loc, _ := time.LoadLocation("Europe/Zurich")
+		localTime := app.Timeslot.Time.In(loc)
 		params := MessageParams{
 			Username: artist.Name,
 			Time:     localTime.Format("15:04"),
@@ -112,8 +112,8 @@ func (s *ApplicationService) Apply(artistID int, timeslotID int) error {
 	if err != nil {
 		return err
 	}
-    loc, _ := time.LoadLocation("Europe/Zurich")
-    localTime := slot.Time.In(loc)
+	loc, _ := time.LoadLocation("Europe/Zurich")
+	localTime := slot.Time.In(loc)
 	params := MessageParams{
 		Username: venue.User.Username,
 		Artist:   artist.Name,
@@ -205,8 +205,8 @@ func (s *ApplicationService) AcceptApplication(applicationId int, userId int) er
 		return errors.New("could find artist")
 	}
 
-    loc, _ := time.LoadLocation("Europe/Zurich")
-    localTime := application.Timeslot.Time.In(loc)
+	loc, _ := time.LoadLocation("Europe/Zurich")
+	localTime := application.Timeslot.Time.In(loc)
 
 	params := MessageParams{
 		Username: artist.Name,

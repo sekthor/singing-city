@@ -7,8 +7,8 @@ import (
 
 	"github.com/jordan-wright/email"
 	"github.com/rs/zerolog/log"
-	"github.com/sekthor/songbird-backend/pkg/config"
-	"github.com/sekthor/songbird-backend/pkg/model"
+	"github.com/sekthor/singing-city/pkg/config"
+	"github.com/sekthor/singing-city/pkg/model"
 )
 
 type NotificationService struct {

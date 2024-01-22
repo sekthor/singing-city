@@ -4,10 +4,10 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
-	"github.com/sekthor/songbird-backend/pkg/config"
-	"github.com/sekthor/songbird-backend/pkg/middleware"
-	"github.com/sekthor/songbird-backend/pkg/repo"
-	"github.com/sekthor/songbird-backend/pkg/service"
+	"github.com/sekthor/singing-city/pkg/config"
+	"github.com/sekthor/singing-city/pkg/middleware"
+	"github.com/sekthor/singing-city/pkg/repo"
+	"github.com/sekthor/singing-city/pkg/service"
 )
 
 type api struct {

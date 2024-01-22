@@ -7,9 +7,9 @@ import (
 
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/rs/zerolog/log"
-	"github.com/sekthor/songbird-backend/pkg/middleware"
-	"github.com/sekthor/songbird-backend/pkg/model"
-	"github.com/sekthor/songbird-backend/pkg/repo"
+	"github.com/sekthor/singing-city/pkg/middleware"
+	"github.com/sekthor/singing-city/pkg/model"
+	"github.com/sekthor/singing-city/pkg/repo"
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 )

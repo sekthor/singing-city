@@ -1,4 +1,4 @@
-module github.com/sekthor/songbird-backend
+module github.com/sekthor/singing-city
 
 go 1.20
 

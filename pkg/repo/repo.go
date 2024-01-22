@@ -6,8 +6,8 @@ import (
 	"os"
 
 	"github.com/rs/zerolog/log"
-	"github.com/sekthor/songbird-backend/pkg/config"
-	"github.com/sekthor/songbird-backend/pkg/model"
+	"github.com/sekthor/singing-city/pkg/config"
+	"github.com/sekthor/singing-city/pkg/model"
 	"gorm.io/driver/mysql"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"

@@ -1,8 +1,8 @@
 package service
 
 import (
-	"github.com/sekthor/songbird-backend/pkg/model"
-	"github.com/sekthor/songbird-backend/pkg/repo"
+	"github.com/sekthor/singing-city/pkg/model"
+	"github.com/sekthor/singing-city/pkg/repo"
 	"gorm.io/gorm"
 )
 
