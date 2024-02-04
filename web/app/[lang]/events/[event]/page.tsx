@@ -19,7 +19,7 @@ export default function EventDetailPage() {
         <>
         <Navbar />
         <main className="max-w-3xl mt-6 px-4 mx-auto">
-            <h1 className="text-xl mb-4">{event.name}</h1>
+            <h1 className="text-xl font-semibold mb-4">{event.name}</h1>
             <p>{event.description}</p>
             {
                 invitation ? 
