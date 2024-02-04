@@ -1,11 +1,16 @@
 "use client"
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectGroup, SelectLabel, SelectItem } from "@/components/ui/select";
 
+const languages = ["en", "de"];
 
-export default function Navbar() {
+type NavbarProps = {
+    lang: string
+}
+
+export default function Navbar({ lang }:NavbarProps) {
 
     return (
-        <nav className="p-2 border">
+        <nav className="p-2 border flex">
             <Select>
                 <SelectTrigger className="w-[180px]">
                     <SelectValue placeholder="Select an event" />
@@ -18,6 +23,22 @@ export default function Navbar() {
                         <SelectItem value="blueberry">Blueberry</SelectItem>
                         <SelectItem value="grapes">Grapes</SelectItem>
                         <SelectItem value="pineapple">Pineapple</SelectItem>
+                    </SelectGroup>
+                </SelectContent>
+            </Select>
+
+            <Select>
+                <SelectTrigger className="w-[80px]">
+                    <SelectValue placeholder={lang} />
+                </SelectTrigger>
+                <SelectContent>
+                    <SelectGroup>
+                        <SelectLabel>Language</SelectLabel>
+                        {
+                            languages.map(lang =>
+                                <SelectItem value={lang}>{lang}</SelectItem>
+                            )
+                        }
                     </SelectGroup>
                 </SelectContent>
             </Select>

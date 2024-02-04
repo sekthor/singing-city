@@ -4,10 +4,10 @@ import { Performance } from "@/model/performance"
 
 let performances: Performance[] = []
 
-export default function PerformancePage() {
+export default function PerformancePage({ params }: { params: { lang: string }}) {
     return(
         <>
-            <Navbar />
+            <Navbar lang={params.lang} />
             <PerformanceList performances={performances} />
         </>
     )

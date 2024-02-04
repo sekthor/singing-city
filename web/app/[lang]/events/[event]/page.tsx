@@ -5,7 +5,7 @@ import Navbar from "@/components/navbar"
 import { Button } from "@/components/ui/button"
 import { Event } from "@/model/event"
 
-export default function EventDetailPage() {
+export default function EventDetailPage({ params }: { params: { lang: string }}) {
     let event: Event = {
         id: "uuid",
         name: "Songbird Festival 2024",
@@ -17,7 +17,7 @@ export default function EventDetailPage() {
 
     return (
         <>
-        <Navbar />
+        <Navbar lang={params.lang}/>
         <main className="max-w-3xl mt-6 px-4 mx-auto">
             <h1 className="text-xl font-semibold mb-4">{event.name}</h1>
             <p>{event.description}</p>

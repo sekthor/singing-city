@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { Artist } from "@/model/artist";
 
-export default function ArtistDetailPage() {
+export default function ArtistDetailPage({ params }: { params: { lang: string }}) {
     let artist: Artist = {
         id: "uuid",
         name: "Cool Band Name",
@@ -17,7 +17,7 @@ export default function ArtistDetailPage() {
     }
     return (
         <>
-            <Navbar />
+            <Navbar lang={params.lang} />
             <main className="max-w-3xl mx-auto p-2">
                 <Carousel>
                     <CarouselContent>
