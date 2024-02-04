@@ -1,4 +1,7 @@
+"use client"
+
 import { Performance } from "@/model/performance";
+import { Table } from "@/components/ui/table";
 
 type PerformanceListProps = {
     performances: Performance[];
@@ -7,7 +10,11 @@ type PerformanceListProps = {
 export default function PerformanceList({performances}:PerformanceListProps ) {
     return (
         <>
-            <p>This is a list of performances</p>
+            <h1>Performances</h1>
+
+            <Table>
+
+            </Table>
         </>
     )
 }

@@ -1,5 +1,5 @@
 import Navbar from "@/components/navbar";
-import PerformanceList from "@/components/performancelist";
+import PerformanceList from "@/components/performancelist/performancelist";
 import { Performance } from "@/model/performance"
 
 let performances: Performance[] = []
