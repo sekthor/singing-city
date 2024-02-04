@@ -3,4 +3,5 @@ export interface Artist {
     name: string;
     description: string;
     generes: string[];
+    images: string[];
 }
