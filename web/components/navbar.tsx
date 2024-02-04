@@ -28,7 +28,7 @@ export default function Navbar({ lang }:NavbarProps) {
             </Select>
 
             <Select>
-                <SelectTrigger className="w-[80px]">
+                <SelectTrigger className="w-[60px]">
                     <SelectValue placeholder={lang} />
                 </SelectTrigger>
                 <SelectContent>
