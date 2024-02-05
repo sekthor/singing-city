@@ -18,8 +18,12 @@ export default function ArtistDetailPage({ params }: { params: { lang: string }}
     return (
         <>
             <Navbar lang={params.lang} />
-            <main className="max-w-3xl mx-auto p-2">
-                <Carousel>
+            <main className="max-w-3xl mx-auto mt-8 p-2">
+                <h1 className="text-3xl">{artist.name}</h1>
+                <div className="flex space-x-2 py-2">
+                    {artist.generes.map(genere => <Badge>{genere}</Badge>)}
+                </div>
+                <Carousel className="my-6">
                     <CarouselContent>
                         {
                             artist.images.map(image => (
@@ -32,10 +36,6 @@ export default function ArtistDetailPage({ params }: { params: { lang: string }}
                     <CarouselPrevious />
                     <CarouselNext />
                 </Carousel>
-                <h1 className="text-3xl">{artist.name}</h1>
-                <div className="flex space-x-2 py-2">
-                    {artist.generes.map(genere => <Badge>{genere}</Badge>)}
-                </div>
                 <p>{artist.description}</p>
             </main>
         </>
