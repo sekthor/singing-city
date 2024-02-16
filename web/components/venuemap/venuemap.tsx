@@ -1,9 +1,10 @@
 "use client"
 import { Venue } from "@/model/venue"
 
-import { MapContainer, Marker, TileLayer } from "react-leaflet"
+import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet"
 import { Icon } from "leaflet"
 import "leaflet/dist/leaflet.css";
+import { useEffect, useState } from "react";
 
 
 const customIcon = new Icon({
@@ -29,7 +30,9 @@ export default function VenueMap({venues}: VenueMapProps) {
                     <Marker 
                         position={[venue.location?.longitude||0, venue.location?.latitude||0]}
                         icon={customIcon}
-                    ></Marker>
+                    >
+                        <Popup>{venue.name}</Popup>
+                    </Marker>
                 )
             }
         </MapContainer>
