@@ -6,11 +6,12 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { useForm } from "react-hook-form"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
+import { toast } from "@/components/ui/use-toast"
 
 const formSchema = z.object({
-    id: z.string().uuid(),
+    //id: z.string().uuid(),
     username: z.string().min(2).max(50),
-    email: z.string().email()
+    //email: z.string().email()
 })
 
 export default function UserForm() {
@@ -18,13 +19,17 @@ export default function UserForm() {
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            id: "",
+            //id: "",
             username: "",
         },
     })
 
     function onSubmit(values: z.infer<typeof formSchema>) {
-        console.log(values)
+        console.log("whoops")
+        toast({
+            title: "form submitted",
+            description: "whale whale",
+        })
     }
 
     return (
