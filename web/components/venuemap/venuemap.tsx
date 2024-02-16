@@ -19,7 +19,8 @@ type VenueMapProps = {
 export default function VenueMap({venues}: VenueMapProps) {
 
     return (
-        <MapContainer center={[46.80429, 9.83723]} zoom={13} className="h-96">
+        <>
+        <MapContainer id="map" center={[46.80429, 9.83723]} zoom={13} attributionControl={false} className="h-96">
             <TileLayer
                 attribution="&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a>"
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -36,5 +37,7 @@ export default function VenueMap({venues}: VenueMapProps) {
                 )
             }
         </MapContainer>
+        <label htmlFor="map" className="text-[0.5rem] float-right">Leaflet & Openstreetmap</label>
+        </>
     )
 }
