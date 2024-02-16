@@ -6,10 +6,18 @@ import { Button } from "@/components/ui/button"
 import { Event } from "@/model/event"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { TabsContent } from '@radix-ui/react-tabs'
-import VenueMap from '@/components/venuemap/venuemap'
 import { Venue } from '@/model/venue'
 
+import dynamic from 'next/dynamic'
+
 export default function EventDetailPage({ params }: { params: { lang: string }}) {
+    
+    // we import the venueMap like this, because leaflet wants to access "window"
+    // this is not possible with Server Side Rendering (SSR)
+    const MapWithNoSSR = dynamic(() => import("@/components/venuemap/venuemap"), {
+        ssr: false
+    });
+
     let event: Event = {
         id: "uuid",
         name: "Songbird Festival 2024",
@@ -33,6 +41,8 @@ export default function EventDetailPage({ params }: { params: { lang: string }})
             <TabsList className='my-4'>
                 <TabsTrigger value="info">Info</TabsTrigger>
                 <TabsTrigger value="venues">Venues</TabsTrigger>
+                <TabsTrigger value="program">Program</TabsTrigger>
+                <TabsTrigger value="timeslots">Timeslots</TabsTrigger>
             </TabsList>
 
             <TabsContent value="info">
@@ -46,7 +56,7 @@ export default function EventDetailPage({ params }: { params: { lang: string }})
             </TabsContent>
 
             <TabsContent value='venues'>
-                <VenueMap venues={venues}/>
+                <MapWithNoSSR venues={venues}/>
             </TabsContent>
 
             </Tabs>
