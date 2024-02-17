@@ -9,9 +9,8 @@ import { Button } from "@/components/ui/button"
 import { toast } from "@/components/ui/use-toast"
 
 const formSchema = z.object({
-    //id: z.string().uuid(),
     username: z.string().min(2).max(50),
-    //email: z.string().email()
+    email: z.string().email()
 })
 
 export default function UserForm() {
@@ -19,8 +18,8 @@ export default function UserForm() {
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            //id: "",
             username: "",
+            email: "",
         },
     })
 
@@ -36,7 +35,7 @@ export default function UserForm() {
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
 
-                <FormField 
+                <FormField
                     control={form.control}
                     name="username"
                     render={({ field }) => (
@@ -47,6 +46,23 @@ export default function UserForm() {
                             </FormControl>
                             <FormDescription>
                                 This is your public display name.
+                            </FormDescription>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+
+                <FormField 
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>E-Mail</FormLabel>
+                            <FormControl>
+                                <Input placeholder="e-mail" {...field} />
+                            </FormControl>
+                            <FormDescription>
+                                The e-mail address linked to you personal profile.
                             </FormDescription>
                             <FormMessage />
                         </FormItem>
