@@ -62,6 +62,9 @@ export class VenueDetailComponent implements OnInit {
     this.venueService.getVenue(id).subscribe(
       venue => {
         this.venue = venue
+        this.venue.slots = this.venue.slots.sort(function(x, y): number{
+          return (x.time.getTime() - y.time.getTime())
+        });
         this.translationLink = this.getTranslationLink(this.venue?.description || "")
       },
       error => {

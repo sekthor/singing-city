@@ -24,7 +24,7 @@
     <tbody>
         <tr *ngFor="let application of info.pending">
             <td>{{ application.timeslot.time | date }}</td>
-            <td>{{ application.timeslot.time | date:"HH:mm" }}</td>
+            <td>{{ application.timeslot.time | date:"HH:mm":'UTC+1' }}</td>
             <td><a [routerLink]="['/venues', application.timeslot.venueID]">{{ findVenueName(application.timeslot.venueID) }}</a></td>
             <td><a [routerLink]="['/artists', application.artist.ID]">{{ findAristName(application.artist.ID) }}</a></td>
             <td><button class="btn btn-danger" (click)="deleteApplication(application)">{{ "venue.delete" | translate }}</button></td>
@@ -45,7 +45,7 @@
     <tbody>
         <tr *ngFor="let slot of info.confirmed">
             <td>{{ slot.time | date }}</td>
-            <td>{{ slot.time | date:"HH:mm" }}</td>
+            <td>{{ slot.time | date:"HH:mm":'UTC+1' }}</td>
             <td><a [routerLink]="['/venues', slot.venueID]">{{ findVenueName(slot.venueID) }}</a></td>
             <td><a [routerLink]="['/artists', slot.artistID]">{{ findAristName(slot.artistID) }}</a></td>
             <td><button class="btn btn-danger" (click)="deleteTimeslot(slot)">{{ "venue.delete" | translate }}</button></td>

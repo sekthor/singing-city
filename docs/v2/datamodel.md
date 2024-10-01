@@ -10,13 +10,13 @@ erDiagram
         Email string
         Password string
         Phone string
-    }
+    };
     Event {
         ID UUID
         Name string
         Start Time
         End Time
-    }
+    };
     Artist {
         ID UUID
         Name string
