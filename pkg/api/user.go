@@ -192,3 +192,28 @@ func (api *api) UpdateUser(c *gin.Context) {
 
 	c.JSON(http.StatusAccepted, &user)
 }
+
+func (api *api) ResetPassword(c *gin.Context) {
+	var resetRequest struct {
+		Email string `email`
+	}
+
+	if err := c.BindJSON(&resetRequest); err != nil {
+		log.Debug().Err(err).Msgf("could not unmarshal password reset request")
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid data in password reset form"})
+		return
+	}
+
+	if resetRequest.Email == "" {
+		log.Debug().Msgf("missing field: email")
+		c.JSON(http.StatusBadRequest, gin.H{"error": "missing field: email"})
+		return
+	}
+
+	if err := api.userService.ResetPassword(resetRequest.Email); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "could not request password reset"})
+		return
+	}
+
+	c.JSON(http.StatusAccepted, gin.H{"status": "password reset link was sent to user"})
+}

@@ -150,3 +150,38 @@ func (s *UserService) CreateInvite() (model.Invite, error) {
 func (s *UserService) GetAllInvites() []model.Invite {
 	return s.repo.FetchAllInvites()
 }
+
+func (s *UserService) ResetPassword(email string) error {
+
+	user, err := s.repo.FetchByEmail(email)
+	if err != nil {
+		return err
+	}
+
+	var letters = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
+	b := make([]rune, 64)
+	for i := range b {
+		b[i] = letters[rand.Intn(len(letters))]
+	}
+
+	resetRequest := model.PasswordReset{
+		UserID:  user.ID,
+		Time:    time.Now(),
+		Request: string(b),
+	}
+
+	resetRequest, err = s.repo.CreatePasswordResetRequest(resetRequest)
+
+	if err != nil {
+		return err
+	}
+
+	params := MessageParams{
+		Username: user.Username,
+		Link:     resetRequest.Request,
+	}
+
+	err = s.notify.SendPasswordResetLink(user.Email, params)
+
+	return err
+}

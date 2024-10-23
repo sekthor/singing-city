@@ -92,3 +92,8 @@ func (r *UserRepo) FetchInviteById(id string) (model.Invite, error) {
 	result := r.db.Where("invite = ?", id).First(&inv)
 	return inv, result.Error
 }
+
+func (r *UserRepo) CreatePasswordResetRequest(pr model.PasswordReset) (model.PasswordReset, error) {
+	result := r.db.Create(&pr)
+	return pr, result.Error
+}

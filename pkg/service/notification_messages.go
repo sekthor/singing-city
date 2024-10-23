@@ -7,6 +7,7 @@ const (
 	ApplicationMessageSubject = "NEUE BEWERBUNG für eines deiner SingingCity Zeitfenster"
 	ConfirmedMessageSubject   = "BESTÄTIGUNG deines Auftrittes"
 	RejectedMessageSubject    = "ABSAGE für deine Bewerbung bei"
+	PasswordResetSubject      = "Passwort zurücksetzen"
 
 	RegisterMessage = `
 	<h1>Willkommen {{ .Username }}</h1>
@@ -136,6 +137,21 @@ const (
 
 	<p>Sincerely,<br>
 	Your SingingCity Team</p>`
+
+	PasswordResetMessage = `
+	<h1>Hallo {{ .Username }}</h1>
+	<p>
+	Du kannst dein Passwort unter folgendem Link zurücksetzen: 
+	<a href="https://singingcity.songbirdfestival.ch/reset-password?link={{ .Link }}">Passwort zurücksetzen</a>.
+	</p>
+
+	<hr>	
+
+	<h1>Hello {{ .Username }}</h1>
+	<p>
+	You can reset your password using the following link:
+	<a href="https://singingcity.songbirdfestival.ch/reset-password?link={{ .Link }}">Reset Password</a>.
+	</p>`
 )
 
 var (
@@ -143,6 +159,7 @@ var (
 	applicationMessageTmpl = template.Must(template.New("application").Parse(ApplicationMessage))
 	confirmedMessageTmpl   = template.Must(template.New("confirmed").Parse(ConfirmedMessage))
 	rejectedMessageTmpl    = template.Must(template.New("rejected").Parse(RejectedMessage))
+	passwordResetMessage   = template.Must(template.New("reset").Parse(PasswordResetMessage))
 )
 
 type MessageParams struct {
@@ -154,4 +171,5 @@ type MessageParams struct {
 	Venue    string
 	Wage     string
 	Address  string
+	Link     string
 }

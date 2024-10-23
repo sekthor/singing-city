@@ -72,8 +72,11 @@ func (api *api) Router() *gin.Engine {
 	// register as user
 	router.POST("api/register", api.Register)
 
-	// optain jwt token as cookie
+	// obtain jwt token as cookie
 	router.POST("api/login", api.Login)
+
+	// request a link to reset password
+	router.POST("api/reset-password", api.ResetPassword)
 
 	// get my profile (user info & either artist or venue)
 	router.GET("api/profile", middleware.RequireAuth, api.GetProfile)

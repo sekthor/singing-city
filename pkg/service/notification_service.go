@@ -126,3 +126,26 @@ func (s *NotificationService) SendRejectedMessage(recipient string, params Messa
 	log.Info().Msg(fmt.Sprintf("sent rejected email to %s", recipient))
 	return nil
 }
+
+func (s *NotificationService) SendPasswordResetLink(recipient string, params MessageParams) error {
+	// do not send mails unless it is enabled in the config
+	if !s.conf.EnableMail {
+		return nil
+	}
+
+	var msg bytes.Buffer
+	if err := passwordResetMessage.Execute(&msg, params); err != nil {
+		log.Warn().Err(err).Msg(fmt.Sprintf("could not template password reset email for %s", recipient))
+		return err
+	}
+
+	err := s.Send(PasswordResetSubject, msg.String(), recipient)
+
+	if err != nil {
+		log.Warn().Err(err).Msg(fmt.Sprintf("could not send password reset email to %s", recipient))
+		return err
+	}
+
+	log.Info().Msg(fmt.Sprintf("sent password reset email to %s", recipient))
+	return nil
+}

@@ -54,5 +54,6 @@ func Migrate(db *gorm.DB) error {
 		&model.Application{},
 		&model.SocialLink{},
 		&model.Invite{},
+		&model.PasswordReset{},
 	)
 }
