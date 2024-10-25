@@ -1,3 +1,4 @@
+import { Time } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -56,6 +57,7 @@ export class VenueDetailComponent implements OnInit {
     this.translate.onLangChange.subscribe(
       () => this.translationLink = this.getTranslationLink(this.venue?.description || "")
     )
+
   }
 
   getVenue(id: number) {
@@ -63,6 +65,7 @@ export class VenueDetailComponent implements OnInit {
       venue => {
         this.venue = venue
         this.translationLink = this.getTranslationLink(this.venue?.description || "")
+        this.sortTimeslots()
       },
       error => {
         console.log(error)
@@ -83,6 +86,7 @@ export class VenueDetailComponent implements OnInit {
       response => {
         let tsCopy = Object.assign({}, this.newTimeslot)
         this.venue?.slots.push(tsCopy)
+        this.sortTimeslots()
       },
       error => {
         console.log(error)
@@ -104,8 +108,11 @@ export class VenueDetailComponent implements OnInit {
   }
 
   sortTimeslots() {
-    if (this.venue)
-      this.venue?.slots.sort((a: Timeslot, b: Timeslot) => { return a.time.getTime() - b.time.getTime()})
+    this.venue?.slots.sort((a,b) =>{
+          let c = new Date(a.time).getTime() 
+          let d = new Date(b.time).getTime() 
+          return c - d
+        })
   }
 
   applyForTimeslot(event: any, slot: Timeslot) {
