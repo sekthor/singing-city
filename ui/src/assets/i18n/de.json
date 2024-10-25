@@ -15,7 +15,8 @@
         "register": "registrieren",
         "error": "Fehler",
         "success": "Erfolgreich",
-        "successMsg": "Registrierung war erfolgreich, bitte loggen sie sich ein"
+        "successMsg": "Registrierung war erfolgreich, bitte loggen sie sich ein",
+        "forgot-password": "Passwort vergessen"
     },
     "register": {
         "email": "E-Mail",
@@ -35,6 +36,16 @@
         "register": "Registrieren",
         "error": "Fehler",
         "phone": "Telefonnummer"
+    },
+    "forgot": {
+        "reset": "Anfrage verschickt",
+        "success": "Success",
+        "successMsg": "Eine E-Mail mit einem Link wurde an Sie verschickt."
+    },
+    "reset": {
+        "set": "Neues Passwort setzen",
+        "success": "Erfolg",
+        "successMsg": "Neues Passwort wurde erfolgreich gesetzt"
     },
     "dashboard": {
         "dashboard": "Übersicht",

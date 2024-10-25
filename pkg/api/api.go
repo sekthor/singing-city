@@ -46,7 +46,7 @@ func NewApi(conf config.Config) (api, error) {
 
 	log.Info().Msg("api: initializing service layer")
 	api.notificationService = service.NewNotificationService(conf.Smtp)
-	api.userService = service.NewUserService(db, &api.notificationService)
+	api.userService = service.NewUserService(db, &api.notificationService, conf.FrontendBaseUrl)
 	api.venueService = service.NewVenueService(db)
 	api.artistService = service.NewArtistService(db)
 	api.applicationService = service.NewApplicationService(db, &api.notificationService)
@@ -72,8 +72,14 @@ func (api *api) Router() *gin.Engine {
 	// register as user
 	router.POST("api/register", api.Register)
 
-	// optain jwt token as cookie
+	// obtain jwt token as cookie
 	router.POST("api/login", api.Login)
+
+	// request a link to reset password
+	router.POST("api/forgot-password", api.ForgotPassword)
+
+	// reset password with code from email
+	router.POST("api/reset-password", api.ResetPassword)
 
 	// get my profile (user info & either artist or venue)
 	router.GET("api/profile", middleware.RequireAuth, api.GetProfile)

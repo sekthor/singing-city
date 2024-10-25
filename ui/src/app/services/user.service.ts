@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AdminInfo, AuthToken, Invite, LoginRequest, Profile, RegisterRequest, UserDTO } from '../models/user';
+import { AdminInfo, AuthToken, ForgotPasswordRequest, Invite, LoginRequest, Profile, RegisterRequest, ResetPasswordRequest, UserDTO } from '../models/user';
 
 import jwt_decode from "jwt-decode";
 import { CookieService } from 'ngx-cookie-service';
@@ -70,6 +70,14 @@ export class UserService implements OnInit {
 
   getAdminInfo(): Observable<AdminInfo> {
     return this.http.get<AdminInfo>(`/api/admin`)
+  }
+
+  forgotPassword(req: ForgotPasswordRequest): Observable<any> {
+    return this.http.post("/api/forgot-password", req)
+  }
+
+  resetPassword(req: ResetPasswordRequest): Observable<any> {
+    return this.http.post("/api/reset-password", req)
   }
 
   getSubject(): string {

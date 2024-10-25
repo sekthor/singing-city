@@ -92,3 +92,25 @@ func (r *UserRepo) FetchInviteById(id string) (model.Invite, error) {
 	result := r.db.Where("invite = ?", id).First(&inv)
 	return inv, result.Error
 }
+
+func (r *UserRepo) CreatePasswordResetRequest(pr model.PasswordReset) (model.PasswordReset, error) {
+	result := r.db.Create(&pr)
+	return pr, result.Error
+}
+
+func (r *UserRepo) FetchPasswordResetRequestByCode(code string) (model.PasswordReset, error) {
+	var req model.PasswordReset
+	result := r.db.Where("code = ?", code).First(&req)
+	return req, result.Error
+}
+
+func (r *UserRepo) DeletePasswordResetRequestsByUserID(userId uint) error {
+	result := r.db.Where("user_id = ?", userId).Delete(&model.PasswordReset{})
+	return result.Error
+}
+
+func (r *UserRepo) SetNewPasswordForUser(userId uint, passwordHash string) error {
+	return r.db.Model(&model.User{}).
+		Where("id = ?", userId).
+		Update("password", passwordHash).Error
+}

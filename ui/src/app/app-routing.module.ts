@@ -10,6 +10,8 @@ import { authGuard } from './auth.guard';
 import { ProfileComponent } from './components/profile/profile.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { ArtistListComponent } from './components/artist-list/artist-list.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 
 const routes: Routes = [
   { path: "", redirectTo: "/dashboard", pathMatch: 'full' },
@@ -21,7 +23,9 @@ const routes: Routes = [
   { path: "profile", component: ProfileComponent, canActivate: [authGuard] },
   { path: "admin", component: AdminComponent, canActivate: [authGuard] },
   { path: "login", component: LoginComponent },
-  { path: "register", component: RegisterComponent }
+  { path: "register", component: RegisterComponent },
+  { path: "forgot-password", component: ForgotPasswordComponent },
+  { path: "reset-password", component: ResetPasswordComponent }
 ];
 
 @NgModule({

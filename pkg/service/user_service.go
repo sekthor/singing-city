@@ -1,6 +1,7 @@
 package service
 
 import (
+	"errors"
 	"math/rand"
 	"strconv"
 	"time"
@@ -15,14 +16,16 @@ import (
 )
 
 type UserService struct {
-	repo   repo.UserRepo
-	notify NotificationService
+	repo            repo.UserRepo
+	notify          NotificationService
+	FrontendBaseUrl string
 }
 
-func NewUserService(db *gorm.DB, notify *NotificationService) UserService {
+func NewUserService(db *gorm.DB, notify *NotificationService, frontendbaseurl string) UserService {
 	return UserService{
-		repo:   repo.NewUserRepo(db),
-		notify: *notify,
+		repo:            repo.NewUserRepo(db),
+		notify:          *notify,
+		FrontendBaseUrl: frontendbaseurl,
 	}
 }
 
@@ -149,4 +152,66 @@ func (s *UserService) CreateInvite() (model.Invite, error) {
 
 func (s *UserService) GetAllInvites() []model.Invite {
 	return s.repo.FetchAllInvites()
+}
+
+func (s *UserService) ForgotPassword(email string) error {
+
+	user, err := s.repo.FetchByEmail(email)
+	if err != nil {
+		return err
+	}
+
+	var letters = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
+	b := make([]rune, 64)
+	for i := range b {
+		b[i] = letters[rand.Intn(len(letters))]
+	}
+
+	resetRequest := model.PasswordReset{
+		UserID: user.ID,
+		Time:   time.Now(),
+		Code:   string(b),
+	}
+
+	resetRequest, err = s.repo.CreatePasswordResetRequest(resetRequest)
+
+	if err != nil {
+		return err
+	}
+
+	params := MessageParams{
+		Username: user.Username,
+		Code:     resetRequest.Code,
+		BaseUrl:  s.FrontendBaseUrl,
+	}
+
+	err = s.notify.SendPasswordResetLink(user.Email, params)
+
+	return err
+}
+
+func (s *UserService) ResetPassword(code string, password string) error {
+
+	resetRequest, err := s.repo.FetchPasswordResetRequestByCode(code)
+	if err != nil {
+		return errors.New("invalid reset request code")
+	}
+
+	if resetRequest.Time.Before(time.Now().Add(time.Minute * -15)) {
+		s.repo.DeletePasswordResetRequestsByUserID(resetRequest.UserID)
+		return errors.New("reset request has expired")
+	}
+
+	if err := s.repo.DeletePasswordResetRequestsByUserID(resetRequest.UserID); err != nil {
+		return err
+	}
+
+	hash, err := bcrypt.GenerateFromPassword([]byte(password), 10)
+
+	if err != nil {
+		log.Trace().Msgf("cloud not generate bcrypt hash for user '%d'", resetRequest.UserID)
+		return ErrorCouldNotHashPassword
+	}
+
+	return s.repo.SetNewPasswordForUser(resetRequest.UserID, string(hash))
 }
