@@ -7,9 +7,10 @@ import (
 )
 
 type Config struct {
-	Server ServerConfig
-	DB     DbConfig
-	Smtp   SmtpConfig
+	FrontendBaseUrl string
+	Server          ServerConfig
+	DB              DbConfig
+	Smtp            SmtpConfig
 }
 
 type ServerConfig struct {
@@ -40,6 +41,7 @@ type SmtpConfig struct {
 
 func LoadConfig() Config {
 	conf := Config{}
+	conf.FrontendBaseUrl = os.Getenv("FRONTENDBASEURL")
 	conf.Server.Host = os.Getenv("SERVERHOST")
 	conf.Server.Port = os.Getenv("SERVERPORT")
 	conf.Server.Secret = os.Getenv("SERVERSECRET")

@@ -142,7 +142,7 @@ const (
 	<h1>Hallo {{ .Username }}</h1>
 	<p>
 	Du kannst dein Passwort unter folgendem Link zurücksetzen: 
-	<a href="https://singingcity.songbirdfestival.ch/reset-password?link={{ .Link }}">Passwort zurücksetzen</a>.
+	<a href="{{ .BaseUrl }}/reset-password?code={{ .Code }}">Passwort zurücksetzen</a>.
 	</p>
 
 	<hr>	
@@ -150,7 +150,7 @@ const (
 	<h1>Hello {{ .Username }}</h1>
 	<p>
 	You can reset your password using the following link:
-	<a href="https://singingcity.songbirdfestival.ch/reset-password?link={{ .Link }}">Reset Password</a>.
+	<a href="{{ .BaseUrl}}/reset-password?code={{ .Code }}">Reset Password</a>.
 	</p>`
 )
 
@@ -171,5 +171,6 @@ type MessageParams struct {
 	Venue    string
 	Wage     string
 	Address  string
-	Link     string
+	Code     string
+	BaseUrl  string
 }

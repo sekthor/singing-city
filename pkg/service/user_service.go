@@ -16,14 +16,16 @@ import (
 )
 
 type UserService struct {
-	repo   repo.UserRepo
-	notify NotificationService
+	repo            repo.UserRepo
+	notify          NotificationService
+	FrontendBaseUrl string
 }
 
-func NewUserService(db *gorm.DB, notify *NotificationService) UserService {
+func NewUserService(db *gorm.DB, notify *NotificationService, frontendbaseurl string) UserService {
 	return UserService{
-		repo:   repo.NewUserRepo(db),
-		notify: *notify,
+		repo:            repo.NewUserRepo(db),
+		notify:          *notify,
+		FrontendBaseUrl: frontendbaseurl,
 	}
 }
 
@@ -179,7 +181,8 @@ func (s *UserService) ForgotPassword(email string) error {
 
 	params := MessageParams{
 		Username: user.Username,
-		Link:     resetRequest.Code,
+		Code:     resetRequest.Code,
+		BaseUrl:  s.FrontendBaseUrl,
 	}
 
 	err = s.notify.SendPasswordResetLink(user.Email, params)
@@ -195,8 +198,12 @@ func (s *UserService) ResetPassword(code string, password string) error {
 	}
 
 	if resetRequest.Time.Before(time.Now().Add(time.Minute * -15)) {
-		s.repo.DeletePasswordResetRequestByCode(resetRequest.Code)
+		s.repo.DeletePasswordResetRequestsByUserID(resetRequest.UserID)
 		return errors.New("reset request has expired")
+	}
+
+	if err := s.repo.DeletePasswordResetRequestsByUserID(resetRequest.UserID); err != nil {
+		return err
 	}
 
 	hash, err := bcrypt.GenerateFromPassword([]byte(password), 10)

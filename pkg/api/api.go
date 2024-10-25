@@ -46,7 +46,7 @@ func NewApi(conf config.Config) (api, error) {
 
 	log.Info().Msg("api: initializing service layer")
 	api.notificationService = service.NewNotificationService(conf.Smtp)
-	api.userService = service.NewUserService(db, &api.notificationService)
+	api.userService = service.NewUserService(db, &api.notificationService, conf.FrontendBaseUrl)
 	api.venueService = service.NewVenueService(db)
 	api.artistService = service.NewArtistService(db)
 	api.applicationService = service.NewApplicationService(db, &api.notificationService)
