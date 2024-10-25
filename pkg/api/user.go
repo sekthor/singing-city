@@ -193,7 +193,7 @@ func (api *api) UpdateUser(c *gin.Context) {
 	c.JSON(http.StatusAccepted, &user)
 }
 
-func (api *api) ResetPassword(c *gin.Context) {
+func (api *api) ForgotPassword(c *gin.Context) {
 	var resetRequest struct {
 		Email string `email`
 	}
@@ -210,7 +210,7 @@ func (api *api) ResetPassword(c *gin.Context) {
 		return
 	}
 
-	if err := api.userService.ResetPassword(resetRequest.Email); err != nil {
+	if err := api.userService.ForgotPassword(resetRequest.Email); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "could not request password reset"})
 		return
 	}

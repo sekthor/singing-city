@@ -151,7 +151,7 @@ func (s *UserService) GetAllInvites() []model.Invite {
 	return s.repo.FetchAllInvites()
 }
 
-func (s *UserService) ResetPassword(email string) error {
+func (s *UserService) ForgotPassword(email string) error {
 
 	user, err := s.repo.FetchByEmail(email)
 	if err != nil {
