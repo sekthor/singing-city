@@ -36,6 +36,7 @@ export class DashboardComponent implements OnInit {
     this.applicationService.getApplications(userType, this.userService.getSubject(), "open").subscribe(
       applications => {
         this.openApplications = applications
+        this.sortTimeslots()
       },
       error => {
         console.log(error)
@@ -53,7 +54,10 @@ export class DashboardComponent implements OnInit {
 
   getConfirmedPerformances() {
     this.venueService.getTimeslots().subscribe(
-      timeslots => this.confirmedTimeslots = timeslots,
+      timeslots => {
+        this.confirmedTimeslots = timeslots
+        this.sortTimeslots()
+      },
       error => console.log(error)
     )
   } 
@@ -92,6 +96,21 @@ export class DashboardComponent implements OnInit {
         console.log(error)
       }
     )
+  }
+
+
+  sortTimeslots() {
+    this.openApplications.sort((a,b) => {
+      let c = new Date(a.timeslot.time).getTime() 
+      let d = new Date(b.timeslot.time).getTime() 
+      return c - d
+    })
+
+    this.confirmedTimeslots.sort((a,b)=>{
+      let c = new Date(a.time).getTime() 
+      let d = new Date(b.time).getTime() 
+      return c - d
+    })
   }
 
 }
