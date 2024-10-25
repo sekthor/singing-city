@@ -106,7 +106,7 @@ func (s *UserService) Register(user model.User, invite string) (model.User, erro
 
 	s.repo.DeleteInviteById(invite)
 
-	if err = s.notify.SendRegisterMessage(user); err != nil {
+	if err = s.notify.SendRegisterMessage(user, s.FrontendBaseUrl); err != nil {
 		log.Trace().Err(err).Msgf("could not send register email to user '%d'", user.ID)
 	} else {
 		log.Trace().Msgf("sent register email to user '%d'", user.ID)

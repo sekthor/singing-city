@@ -34,7 +34,7 @@ func (s *NotificationService) Send(subject string, msg string, recipients ...str
 	return e.Send(host, auth)
 }
 
-func (s *NotificationService) SendRegisterMessage(user model.User) error {
+func (s *NotificationService) SendRegisterMessage(user model.User, frontendBaseUrl string) error {
 
 	// do not send mails unless it is enabled in the config
 	if !s.conf.EnableMail {
@@ -42,7 +42,15 @@ func (s *NotificationService) SendRegisterMessage(user model.User) error {
 	}
 
 	var msg bytes.Buffer
-	if err := registerMessageTmpl.Execute(&msg, user); err != nil {
+
+	var params struct {
+		model.User
+		BaseUrl string
+	}
+	params.User = user
+	params.BaseUrl = frontendBaseUrl
+
+	if err := registerMessageTmpl.Execute(&msg, params); err != nil {
 		log.Warn().Err(err).Msg(fmt.Sprintf("could not template register email for %s", user.Email))
 		return err
 	}

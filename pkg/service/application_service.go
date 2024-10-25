@@ -12,18 +12,20 @@ import (
 )
 
 type ApplicationService struct {
-	repo       repo.ApplicationRepo
-	artistRepo repo.ArtistRepo
-	venueRepo  repo.VenueRepo
-	notify     *NotificationService
+	repo            repo.ApplicationRepo
+	artistRepo      repo.ArtistRepo
+	venueRepo       repo.VenueRepo
+	notify          *NotificationService
+	frontendBaseUrl string
 }
 
-func NewApplicationService(db *gorm.DB, notify *NotificationService) ApplicationService {
+func NewApplicationService(db *gorm.DB, notify *NotificationService, frontendBaseUrl string) ApplicationService {
 	return ApplicationService{
-		repo:       repo.NewApplicationRepo(db),
-		artistRepo: repo.NewArtistRepo(db),
-		venueRepo:  repo.NewVenueRepo(db),
-		notify:     notify,
+		repo:            repo.NewApplicationRepo(db),
+		artistRepo:      repo.NewArtistRepo(db),
+		venueRepo:       repo.NewVenueRepo(db),
+		notify:          notify,
+		frontendBaseUrl: frontendBaseUrl,
 	}
 }
 
@@ -64,6 +66,7 @@ func (s *ApplicationService) DeleteById(id int, userId int) error {
 			Time:     localTime.Format("15:04"),
 			Date:     localTime.Format("02.01.2006"),
 			Venue:    venue.Name,
+			BaseUrl:  s.frontendBaseUrl,
 		}
 		s.notify.SendRejectedMessage(artist.Contact, params)
 	}
@@ -119,6 +122,7 @@ func (s *ApplicationService) Apply(artistID int, timeslotID int) error {
 		Artist:   artist.Name,
 		Time:     localTime.Format("15:04"),
 		Date:     localTime.Format("02.01.2006"),
+		BaseUrl:  s.frontendBaseUrl,
 	}
 	s.notify.SendApplicationMessage(venue.Contact, params)
 
@@ -216,6 +220,7 @@ func (s *ApplicationService) AcceptApplication(applicationId int, userId int) er
 		Address:  fmt.Sprintf("%s, %d %s", venue.Address, venue.ZipCode, venue.City),
 		Time:     localTime.Format("15:04"),
 		Date:     localTime.Format("02.01.2006"),
+		BaseUrl:  s.frontendBaseUrl,
 	}
 
 	s.notify.SendConfirmedMessage(artist.Contact, params)

@@ -12,14 +12,14 @@ const (
 	RegisterMessage = `
 	<h1>Willkommen {{ .Username }}</h1>
 	<p>
-	Du hast dich für <a href="https://singingcity.songbirdfestival.ch">Singing City</a> registriert.
+	Du hast dich für <a href="{{ .BaseUrl }}">Singing City</a> registriert.
 	</p>
 
 	<hr>	
 
 	<h1>Welcome {{ .Username }}</h1>
 	<p>
-	You have signed up to the <a href="https://singingcity.songbirdfestival.ch">Singing City</a> Platform.
+	You have signed up to the <a href="{{ .BaseUrl }}">Singing City</a> Platform.
 	You are ready to get started.
 	</p>`
 
@@ -32,7 +32,7 @@ const (
 	Schaue dir die Bewerbung an und sage zu oder ab. Bestätigst du den Auftritt, so erhält <em>{{ .Artist }}</em> ein Bestätigungsmail, das zugleich als Vertrag zwischen euch dient.
 	Solltest du weitere Fragen haben, kannst du <em>{{ .Artist }}</em> nach der Zusage direkt via der neu angezeigten E-Mail-Adresse kontaktieren.
 	</p>
-	<a href="https://singingcity.songbirdfestival.ch/dashboard">Zu meinem SingingCity Profil</a>
+	<a href="{{ .BaseUrl }}/dashboard">Zu meinem SingingCity Profil</a>
 	<p>Herzlichst,<br>
 	Dein SingingCity Team</p>
 
@@ -46,7 +46,7 @@ const (
 	Take a look at the application and accept or decline. If you confirm the performance, <em>{{ .Artist }}</em> will receive a confirmation email, which also serves as a contract between the two of you.
 	If you have any further questions, you can contact <em>{{ .Artist }}</em> directly via the newly displayed e-mail address after you have accepted.
 	</p>
-	<a href="https://singingcity.songbirdfestival.ch/dashboard">To my SingingCity profile</a>
+	<a href="{{ .BaseUrl }}/dashboard">To my SingingCity profile</a>
 	<p>Sincerely,<br>
 	Your SingingCity Team</p>`
 
@@ -70,7 +70,7 @@ const (
     <tr><td>Kontakt:</td><td><a href="mailto:{{ .Contact }}">{{ .Contact }}</a></td></tr>
 	</table>
 
-	<p>Zur Verwaltung deiner Auftritte besuche dein <a href="https://singingcity.songbirdfestival.ch/dashboard">SingingCity Profil</a></p>
+	<p>Zur Verwaltung deiner Auftritte besuche dein <a href="{{ .BaseUrl }}/dashboard">SingingCity Profil</a></p>
 
 	<p>Wir freuen uns schon sehr auf deinen Auftritt!</p>
 
@@ -99,7 +99,7 @@ const (
     <tr><td>Contact:</td><td><a href="mailto:{{ .Contact }}">{{ .Contact }}</a></td></tr>
 	</table>
 
-	<p>To manage your performances visit your <a href="https://singingcity.songbirdfestival.ch/dashboard">SingingCity profile</a></p>
+	<p>To manage your performances visit your <a href="{{ .BaseUrl }}/dashboard">SingingCity profile</a></p>
 
 	<p>We are looking forward to your performance!</p>
 
@@ -117,7 +117,7 @@ const (
 	Schaue dafür regelmässig in dein SingingCity Profil, um keine neue Zeitfenster der Konzert-Locations zu verpassen.
 	</p>
 
-	<a href="https://singingcity.songbirdfestival.ch/dashboard">Zu meinem SingingCity Profil</a>
+	<a href="{{ .BaseUrl }}/dashboard">Zu meinem SingingCity Profil</a>
 	<p>Herzlichst,<br>
 	Dein SingingCity Team</p>
 
@@ -133,7 +133,7 @@ const (
 	Check your SingingCity profile regularly to make sure you don't miss any new concert venue time slots.
 	</p>
 
-	<a href="https://singingcity.songbirdfestival.ch/dashboard">To my SingingCity profile</a>
+	<a href="{{ .BaseUrl }}/dashboard">To my SingingCity profile</a>
 
 	<p>Sincerely,<br>
 	Your SingingCity Team</p>`
@@ -150,7 +150,7 @@ const (
 	<h1>Hello {{ .Username }}</h1>
 	<p>
 	You can reset your password using the following link:
-	<a href="{{ .BaseUrl}}/reset-password?code={{ .Code }}">Reset Password</a>.
+	<a href="{{ .BaseUrl }}/reset-password?code={{ .Code }}">Reset Password</a>.
 	</p>`
 )
 

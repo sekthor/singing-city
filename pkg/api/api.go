@@ -49,7 +49,7 @@ func NewApi(conf config.Config) (api, error) {
 	api.userService = service.NewUserService(db, &api.notificationService, conf.FrontendBaseUrl)
 	api.venueService = service.NewVenueService(db)
 	api.artistService = service.NewArtistService(db)
-	api.applicationService = service.NewApplicationService(db, &api.notificationService)
+	api.applicationService = service.NewApplicationService(db, &api.notificationService, conf.FrontendBaseUrl)
 
 	log.Info().Msg("api: ensuring presence of admin user")
 	err = api.userService.EnsureAdminUser(conf.Server.AdminPass)
