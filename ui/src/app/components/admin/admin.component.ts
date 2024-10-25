@@ -36,7 +36,10 @@ export class AdminComponent implements OnInit {
     }
 
     this.userService.getAdminInfo().subscribe(
-      info => this.info = info,
+      info => {
+        this.info = info
+        this.sortTimeslots()
+      },
       error => console.log(error)
     )
   }
@@ -53,6 +56,7 @@ export class AdminComponent implements OnInit {
     this.venueService.deleteTimeslotAsAdmin(ts.ID).subscribe(
       response => {
         this.info.confirmed = this.info.confirmed.filter(slot => ts.ID !== slot.ID)
+        this.sortTimeslots()
       },
       error => console.log(error)
     )
@@ -60,7 +64,10 @@ export class AdminComponent implements OnInit {
 
   deleteApplication(applicaton: Application) {
     this.applicationService.deleteApplication(applicaton).subscribe(
-      response => this.info.pending = this.info.pending.filter(app => applicaton.ID !== app.ID),
+      response => {
+        this.info.pending = this.info.pending.filter(app => applicaton.ID !== app.ID)
+        this.sortTimeslots()
+      },
       error => console.log(error)
     )
   }
