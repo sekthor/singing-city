@@ -72,4 +72,17 @@ export class AdminComponent implements OnInit {
     )
   }
 
+  sortTimeslots() {
+    this.info.confirmed.sort((a,b) =>{
+      let c = new Date(a.time).getTime() 
+      let d = new Date(b.time).getTime() 
+      return c - d
+    })
+    this.info.pending.sort((a,b) =>{
+      let c = new Date(a.timeslot.time).getTime() 
+      let d = new Date(b.timeslot.time).getTime() 
+      return c - d
+    })
+  }
+
 }

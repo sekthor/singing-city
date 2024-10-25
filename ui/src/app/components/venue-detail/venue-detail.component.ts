@@ -109,10 +109,10 @@ export class VenueDetailComponent implements OnInit {
 
   sortTimeslots() {
     this.venue?.slots.sort((a,b) =>{
-          let c = new Date(a.time).getTime() 
-          let d = new Date(b.time).getTime() 
-          return c - d
-        })
+      let c = new Date(a.time).getTime() 
+      let d = new Date(b.time).getTime() 
+      return c - d
+    })
   }
 
   applyForTimeslot(event: any, slot: Timeslot) {
