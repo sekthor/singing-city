@@ -9,7 +9,11 @@
 
 <div class="d-grid gap-2">
 <button class="btn btn-primary mt-3" id="loginbtn" (click)="login()">{{ "login.login" | translate }}</button>
-<a routerLink="/register">{{ "login.register" | translate }}</a>
+
+<div class="d-flex justify-content-between">
+    <a routerLink="/register">{{ "login.register" | translate }}</a>
+    <a routerLink="/forgot-password">{{ "login.forgot-password" | translate }}</a>
+</div>
 </div>
 </form>
 

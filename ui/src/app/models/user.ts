@@ -32,6 +32,15 @@ export interface RegisterRequest {
   description?: string
 }
 
+export interface ForgotPasswordRequest {
+  email: string
+}
+
+export interface ResetPasswordRequest {
+  password: string
+  code: string
+}
+
 export interface AuthToken {
   exp: number
   iat: number

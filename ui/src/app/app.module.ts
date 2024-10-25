@@ -17,6 +17,8 @@ import { ArtistDetailComponent } from './components/artist-detail/artist-detail.
 import { ProfileComponent } from './components/profile/profile.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { ArtistListComponent } from './components/artist-list/artist-list.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -35,6 +37,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     ProfileComponent,
     AdminComponent,
     ArtistListComponent,
+    ResetPasswordComponent,
+    ForgotPasswordComponent,
   ],
   imports: [
     BrowserModule,
