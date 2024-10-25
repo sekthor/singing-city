@@ -1,6 +1,7 @@
 package service
 
 import (
+	"errors"
 	"math/rand"
 	"strconv"
 	"time"
@@ -165,9 +166,9 @@ func (s *UserService) ForgotPassword(email string) error {
 	}
 
 	resetRequest := model.PasswordReset{
-		UserID:  user.ID,
-		Time:    time.Now(),
-		Request: string(b),
+		UserID: user.ID,
+		Time:   time.Now(),
+		Code:   string(b),
 	}
 
 	resetRequest, err = s.repo.CreatePasswordResetRequest(resetRequest)
@@ -178,10 +179,32 @@ func (s *UserService) ForgotPassword(email string) error {
 
 	params := MessageParams{
 		Username: user.Username,
-		Link:     resetRequest.Request,
+		Link:     resetRequest.Code,
 	}
 
 	err = s.notify.SendPasswordResetLink(user.Email, params)
 
 	return err
+}
+
+func (s *UserService) ResetPassword(code string, password string) error {
+
+	resetRequest, err := s.repo.FetchPasswordResetRequestByCode(code)
+	if err != nil {
+		return errors.New("invalid reset request code")
+	}
+
+	if resetRequest.Time.Before(time.Now().Add(time.Minute * -15)) {
+		s.repo.DeletePasswordResetRequestByCode(resetRequest.Code)
+		return errors.New("reset request has expired")
+	}
+
+	hash, err := bcrypt.GenerateFromPassword([]byte(password), 10)
+
+	if err != nil {
+		log.Trace().Msgf("cloud not generate bcrypt hash for user '%d'", resetRequest.UserID)
+		return ErrorCouldNotHashPassword
+	}
+
+	return s.repo.SetNewPasswordForUser(resetRequest.UserID, string(hash))
 }

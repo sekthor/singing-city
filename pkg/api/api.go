@@ -78,6 +78,9 @@ func (api *api) Router() *gin.Engine {
 	// request a link to reset password
 	router.POST("api/forgot-password", api.ForgotPassword)
 
+	// reset password with code from email
+	router.POST("api/reset-password", api.ResetPassword)
+
 	// get my profile (user info & either artist or venue)
 	router.GET("api/profile", middleware.RequireAuth, api.GetProfile)
 
