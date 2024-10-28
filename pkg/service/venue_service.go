@@ -56,6 +56,11 @@ func (s *VenueService) DeleteById(id int) error {
 
 func (s *VenueService) AddTimeslot(venueId int, slot model.Timeslot) error {
 	slot.VenueID = uint(venueId)
+
+	if slot.Pay < 50 {
+		return ErrorPayTooLow
+	}
+
 	_, err := s.repo.CreateTimeSlot(slot)
 	return err
 }

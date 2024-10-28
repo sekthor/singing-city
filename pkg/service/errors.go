@@ -13,4 +13,5 @@ var (
 	ErrorInvalidStatus        = errors.New("invalid status")
 	ErrorAlreadyApplied       = errors.New("already applied")
 	ErrorInviteNotFound       = errors.New("invite not found")
+	ErrorPayTooLow            = errors.New("pay is lower than minimal fee")
 )
