@@ -6,6 +6,7 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/rs/zerolog/log"
 	"github.com/sekthor/singing-city/pkg/model"
 	"github.com/sekthor/singing-city/pkg/repo"
 	"gorm.io/gorm"
@@ -59,8 +60,12 @@ func (s *ApplicationService) DeleteById(id int, userId int) error {
 	if uint(userId) == app.Timeslot.VenueID {
 		venue, _ := s.venueRepo.FetchById(int(app.Timeslot.VenueID))
 		artist, _ := s.artistRepo.FetchById(int(app.ArtistID))
-		loc, _ := time.LoadLocation("Europe/Zurich")
+		loc, err := time.LoadLocation("Europe/Zurich")
+		if err != nil {
+			log.Error().Err(err).Msg("could not load timezone for message")
+		}
 		localTime := app.Timeslot.Time.In(loc)
+
 		params := MessageParams{
 			Username: artist.Name,
 			Time:     localTime.Format("15:04"),
@@ -68,7 +73,10 @@ func (s *ApplicationService) DeleteById(id int, userId int) error {
 			Venue:    venue.Name,
 			BaseUrl:  s.frontendBaseUrl,
 		}
-		s.notify.SendRejectedMessage(artist.Contact, params)
+		err = s.notify.SendRejectedMessage(artist.Contact, params)
+		if err != nil {
+			log.Error().Err(err).Msg("could not send rejected message")
+		}
 	}
 
 	return nil
@@ -115,7 +123,10 @@ func (s *ApplicationService) Apply(artistID int, timeslotID int) error {
 	if err != nil {
 		return err
 	}
-	loc, _ := time.LoadLocation("Europe/Zurich")
+	loc, err := time.LoadLocation("Europe/Zurich")
+	if err != nil {
+		log.Error().Err(err).Msg("could not load timezone for message")
+	}
 	localTime := slot.Time.In(loc)
 	params := MessageParams{
 		Username: venue.User.Username,
@@ -124,7 +135,10 @@ func (s *ApplicationService) Apply(artistID int, timeslotID int) error {
 		Date:     localTime.Format("02.01.2006"),
 		BaseUrl:  s.frontendBaseUrl,
 	}
-	s.notify.SendApplicationMessage(venue.Contact, params)
+	err = s.notify.SendApplicationMessage(venue.Contact, params)
+	if err != nil {
+		log.Error().Err(err).Msg("could not send application message")
+	}
 
 	return nil
 }
@@ -209,7 +223,10 @@ func (s *ApplicationService) AcceptApplication(applicationId int, userId int) er
 		return errors.New("could find artist")
 	}
 
-	loc, _ := time.LoadLocation("Europe/Zurich")
+	loc, err := time.LoadLocation("Europe/Zurich")
+	if err != nil {
+		log.Error().Err(err).Msg("could not load timezone for message")
+	}
 	localTime := application.Timeslot.Time.In(loc)
 
 	params := MessageParams{
@@ -223,7 +240,10 @@ func (s *ApplicationService) AcceptApplication(applicationId int, userId int) er
 		BaseUrl:  s.frontendBaseUrl,
 	}
 
-	s.notify.SendConfirmedMessage(artist.Contact, params)
+	err = s.notify.SendConfirmedMessage(artist.Contact, params)
+	if err != nil {
+		log.Error().Err(err).Msg("could not send confirmed message")
+	}
 
 	return nil
 }
